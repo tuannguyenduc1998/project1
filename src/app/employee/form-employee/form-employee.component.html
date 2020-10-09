@@ -1,0 +1,83 @@
+<!-- <button (click)="onChangesub()">-</button>
+{{age}}
+<button (click)="onChangeplus()">+</button> -->
+<form (ngSubmit)="onSubmit(form.value)" #form="ngForm" class="row form m-5">
+  <div class="col-md-12 font mt-4 d-flex justify-content-between align-items-center">
+      <label for="tieude" class="color-label d-flex justify-content-start">TẠO MỚI NHÂN VIÊN</label>
+      <div class="mr-5 font">
+      <button class="color-btn1  mr-2 " type="submit">LƯU</button>
+      <button class="color-btn2" type="click" (click)="onReset(form)">HỦY</button>
+      </div>
+  </div>
+  <div class="col-md-12 font">
+    <div class="col-md-6">
+      <div class="text-center">
+        <img [src]="url" class="img" (click)="upload.click()"><br/>
+        <input #upload class="upload" type='file' (change)="onSelectFile($event)" [(ngModel)]="model.avatar" ngModel name="employeeimg">
+      </div>
+      <div class="form-group">
+        <div class="form-check">
+          <input type="checkbox" class="form-check-input " name="active" id="form-check" value="checkedValue" [(ngModel)]="model.active" checked>
+          <label class="form-check-label ml-4"> Hoạt động</label>
+        </div>
+     </div>
+      <div class="form-group">
+         <label for="text-input" class="col-md-12 col-form-label">Mã nhân viên:</label>
+         <div class="col-md-12">
+            <input class="form-control" type="text" id="text-input" ngModel name="employeecode" [(ngModel)]="model.namecode">
+        </div>
+      </div>
+      <div class="form-group">
+         <label for="text-input" class="col-md-12 col-form-label">Tên nhân viên:<a class="astist">*</a></label>
+       <div class="col-md-12">
+          <input class="form-control color-input" type="text" id="text-input" [(ngModel)]="model.name" name="employeename" #name="ngModel" [class.is-invalid]="name.invalid && name.touched" required>
+             <div *ngIf="name.invalid && (name.dirty || name.touched)"
+                    class="text-danger">
+                        <div *ngIf="name.errors.required">
+                            Name is required.
+                        </div>
+                      </div>
+        </div>
+      </div>
+    </div>
+  <div class="col-md-6 mt-4">
+    <div class="form-group">
+      <label for="email-input" class="col-md-12 col-form-label">Email:</label>
+      <div class="col-md-12">
+        <input class="form-control color-input"  type="email" id="email-input" [(ngModel)]="model.email" name="employeeemail" #email="ngModel" [class.is-invalid]="email.invalid && email.touched" email  required>
+        <div *ngIf="email.invalid && (email.dirty || email.touched)"
+                    class="text-danger">
+                        <div *ngIf="email.errors.required">
+                            Email is required.
+                        </div>
+                        <div *ngIf="email.errors.email">
+                            Please enter a valid email.
+                        </div>
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="text-input" class="col-md-12 col-form-label">Dân tộc:</label>
+      <div class="col-md-12">
+        <input class="form-control color-input" type="text" id="text-input" ngModel name="employeenation" [(ngModel)]="model.comment">
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="level" class="col-md-12 col-form-label">Tình trạng hôn nhân:</label>
+      <div class="col-md-12">
+         <select class="form-control color-input" [(ngModel)]="model.status" #level="ngModel" name="employeestatus" id="level" [(ngModel)]="model.status" required>
+          <option *ngFor="let lvl of status" [value]="lvl" >{{ lvl }}</option>
+        </select>
+       </div>
+     </div>
+    <div class="form-group">
+      <label for="textarea-input" class="col-md-12 col-form-label">Ghi chú:</label>
+      <div class="col-md-12">
+        <textarea class="form-control color-input" type="tel" id="textarea-input" ngModel name="employeecomment"></textarea>
+      </div>
+    </div>
+  </div>
+</div>
+</form>
+<!-- <p>Form value</p>
+<pre>{{form.value| json}}</pre> -->
