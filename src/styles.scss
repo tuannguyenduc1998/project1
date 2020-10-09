@@ -3,3 +3,17 @@
 
 /* Importing Bootstrap SCSS file. */
 @import '~bootstrap/scss/bootstrap';
+
+.form-control {
+    font-size: 13px;
+}
+
+button {
+    padding: 5px 12px;
+    border-radius: 5px;
+}
+
+.warning {
+    padding-top: 2px;
+    font-size: 80%;
+}

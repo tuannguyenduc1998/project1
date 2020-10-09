@@ -1,13 +1,14 @@
 .img{
-  width: 80px;
-  height: 80px;
+  width: 180px;
+  height: 180px;
   border-radius: 50%;
+  cursor: pointer;
 }
 .upload{
   visibility: hidden;
 }
 .color-input{
-  background-color: rgb(188, 207, 200);
+  background-color: white;
 }
 .font{
   font-size: 15px;
@@ -21,12 +22,12 @@
 }
 .color-label{
   color: rgb(28, 117, 62);
-  margin-left: 30px;
+  margin-left: 15px;
 }
 .astist{
   color: red;
 }
 .form{
-  background-color: rgb(224, 174, 82);
+  background-color: #d6e4d6;
   border-radius: 10px;
 }
