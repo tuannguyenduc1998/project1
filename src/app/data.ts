@@ -1,12 +1,12 @@
-export class User {
+export class Employees {
+  public active: boolean;
   public avatar: string;
-  public namecode: string;
+  public namecode: number;
   public name: string;
   public email: string;
   public nation: string;
   public status: string;
   public comment: string;
-  public active: boolean;
 }
 export const status = [
   'Độc thân',

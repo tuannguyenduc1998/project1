@@ -4,6 +4,10 @@
   border-radius: 50%;
   cursor: pointer;
 }
+.boxshaw{
+  background-color: #d6e4d6;
+  box-shadow: 3px 0px 3px 3px #ffffff;
+}
 .upload{
   visibility: hidden;
 }
@@ -16,9 +20,14 @@
 .color-btn1{
   background-color: rgb(59, 143, 112);
   color: white;
+  border: none;
 }
 .color-btn2{
   color:  rgb(59, 143, 112);
+  border: none;
+}
+button:focus {
+  outline:none;
 }
 .color-label{
   color: rgb(28, 117, 62);
@@ -27,7 +36,14 @@
 .astist{
   color: red;
 }
+input:focus {
+    outline: none;
+}
 .form{
   background-color: #d6e4d6;
   border-radius: 10px;
+  box-shadow: 3px 0px 3px 3px #d4d4d4;
+}
+.group2{
+  margin-top: 92px;
 }

@@ -1,12 +1,12 @@
 <!-- <button (click)="onChangesub()">-</button>
 {{age}}
 <button (click)="onChangeplus()">+</button> -->
-<form (ngSubmit)="onSubmit(form.value)" #form="ngForm" class="row form m-5 p-4">
-  <div class="col-md-12 font mt-4 d-flex justify-content-between align-items-center">
+<form (ngSubmit)="onSubmit(form)" #form="ngForm" class="row form m-5 p-4">
+  <div class="col-md-12 font mt-4 d-flex justify-content-between align-items-center boxshaw">
     <h2 for="tieude" class="color-label d-flex justify-content-start">TẠO MỚI NHÂN VIÊN</h2>
-    <div class="mr-5 font">
+    <div class="font">
       <button class="color-btn1  mr-2 " type="submit">LƯU</button>
-      <button class="color-btn2" type="click" (click)="onReset(form)">HỦY</button>
+      <button class="color-btn2" type="submit" (click)="onReset(form)">HỦY</button>
     </div>
   </div>
   <div class="col-md-12 font pb-4 pt-3">
@@ -15,11 +15,11 @@
         <div class="text-center">
           <img [src]="url" class="img" (click)="upload.click()"><br />
           <input #upload class="upload" type='file' (change)="onSelectFile($event)" [(ngModel)]="model.avatar" ngModel
-            name="employeeimg">
+            name="avatar">
         </div>
         <div class="form-group row">
           <div class="form-check">
-            <input type="checkbox" class="form-check-input " name="active" id="activeId" value="checkedValue"
+            <input type="checkbox" class="form-check-input " ngModel name="active" id="activeId" value="checkedValue"
               [(ngModel)]="model.active" checked>&nbsp;
             <label class="form-check-label ml-4" for="activeId">Hoạt động</label>
           </div>
@@ -27,7 +27,7 @@
         <div class="form-group row">
           <label for="text-input" class="col-md-12 col-form-label">Mã nhân viên:</label>
           <div class="col-md-12">
-            <input class="form-control" type="text" id="text-input" ngModel name="employeecode"
+            <input class="form-control" type="text" id="text-input" ngModel name="namecode"
               [(ngModel)]="model.namecode">
           </div>
         </div>
@@ -35,9 +35,9 @@
           <label for="text-input" class="col-md-12 col-form-label">Tên nhân viên:<a class="astist">*</a></label>
           <div class="col-md-12">
             <input class="form-control color-input" type="text" id="text-input" [(ngModel)]="model.name"
-              name="employeename" #name="ngModel" [class.is-invalid]="name.invalid && name.touched" required>
-            <div *ngIf="name.invalid && (name.dirty || name.touched)" class="text-danger">
-              <div *ngIf="name.errors.required">
+              name="name" #name="ngModel" [class.is-invalid]="name.invalid && name.touched && isSubmit" required>
+            <div *ngIf="name.invalid && (name.dirty || name.touched || isSubmit)" class="text-danger">
+              <div *ngIf="name.errors.required && isSubmit">
                 Name is required.
               </div>
             </div>
@@ -46,12 +46,12 @@
       </div>
 
 
-      <div class="col-md-6 mt-4">
+      <div class="col-md-6 group2">
         <div class="form-group row">
           <label for="email-input" class="col-md-12 col-form-label">Email:</label>
           <div class="col-md-12">
             <input class="form-control color-input" type="email" id="email-input" [(ngModel)]="model.email"
-              name="employeeemail" #email="ngModel" [class.is-invalid]="email.invalid && isSubmit" email>
+              name="email" #email="ngModel" [class.is-invalid]="email.invalid && isSubmit" email>
             <div *ngIf="email.invalid && (email.dirty || email.touched)" class="text-danger">
               <div *ngIf="email.errors.email && isSubmit" class="warning">
                 Email sai định dạng.
@@ -62,14 +62,14 @@
         <div class="form-group row">
           <label for="text-input" class="col-md-12 col-form-label">Dân tộc:</label>
           <div class="col-md-12">
-            <input class="form-control color-input" type="text" id="text-input" ngModel name="employeenation"
-              [(ngModel)]="model.comment">
+            <input class="form-control color-input" type="text" id="text-input" ngModel name="nation"
+              [(ngModel)]="model.nation">
           </div>
         </div>
         <div class="form-group row">
           <label for="level" class="col-md-12 col-form-label">Tình trạng hôn nhân:</label>
           <div class="col-md-12">
-            <select class="form-control color-input" [(ngModel)]="model.status" #level="ngModel" name="employeestatus"
+            <select class="form-control color-input" [(ngModel)]="model.status" #level="ngModel" name="status"
               id="level" [(ngModel)]="model.status" required>
               <option *ngFor="let lvl of status" [value]="lvl">{{ lvl }}</option>
             </select>
@@ -79,7 +79,7 @@
           <label for="textarea-input" class="col-md-12 col-form-label">Ghi chú:</label>
           <div class="col-md-12">
             <textarea class="form-control color-input" type="tel" id="textarea-input" ngModel
-              name="employeecomment"></textarea>
+              name="comment" [(ngModel)]="model.comment"></textarea>
           </div>
         </div>
       </div>
