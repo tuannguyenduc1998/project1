@@ -1,7 +1,6 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
-import { NgForm, NgModel } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { Employees, status} from 'src/app/data';
 import { MyserviceService } from 'src/app/myservice.service';
 
@@ -13,12 +12,14 @@ import { MyserviceService } from 'src/app/myservice.service';
 export class FormEmployeeComponent implements OnInit, OnDestroy {
   constructor(private myserviceService: MyserviceService, private route: ActivatedRoute, private router: Router) { }
   @Input() age;
+  @Input() id;
   sub: Subscription;
   status = status;
   model = new Employees();
   url =  './assets/images.png';
   isSubmit: boolean;
   currentEmployee = new Employees();
+  employees: Employees[];
   // tslint:disable-next-line: no-output-on-prefix
   @Output() onChanges = new EventEmitter<number>();
 
@@ -28,6 +29,7 @@ export class FormEmployeeComponent implements OnInit, OnDestroy {
     });
     if (this.myserviceService.currentEmployee) {
       this.model = this.myserviceService.currentEmployee;
+      this.url = this.model.avatar;
     }
   }
   // tslint:disable-next-line: typedef
@@ -45,26 +47,30 @@ export class FormEmployeeComponent implements OnInit, OnDestroy {
     this.sub.unsubscribe();
   }
   // tslint:disable-next-line: typedef
-  onSubmit(form: NgForm) {
+  onSubmit() {
     this.isSubmit = true;
     // if (this.model.name !== undefined || this.model.email !== undefined) {
-    console.log(form);
     // }
     // else { console.log('Tên nhân viên hoặc email đang không có dữ liệu'); }
-    const employee: Employees = {
-      avatar: form.value.avatar,
-      namecode: form.value.namecode,
-      name: form.value.name,
-      email: form.value.email,
-      nation: form.value.nation,
-      status: form.value.status,
-      comment: form.value.comment,
-      active: form.value.active,
+    const id = Math.max(...this.myserviceService.employees.map(item => item.id), 0);
+    const employee: Employees = this.model && {
+      id: id + 1,
+      avatar: this.model.avatar,
+      namecode: this.model.namecode,
+      name: this.model.name,
+      email: this.model.email,
+      nation: this.model.nation,
+      status: this.model.status,
+      comment: this.model.comment,
+      active: this.model.active,
     };
-    if (form.value.namecode && form.value.name){
+    if (this.model.namecode && this.model.name){
       this.myserviceService.onAdd(employee);
       this.router.navigateByUrl(`/employee/listemployee`);
     }
+  }
+  onUpdate(employ: Employees){
+    this.myserviceService.onUpdate(employ);
   }
   // tslint:disable-next-line: typedef
   onReset(form) {
@@ -81,5 +87,26 @@ export class FormEmployeeComponent implements OnInit, OnDestroy {
         this.url = event.target.result;
       };
     }
+  }
+
+  updateAvatar(event) {
+    this.getBase64(event.target.files[0]).subscribe(res => {
+      // Todo
+      this.model.avatar = res;
+    })
+  }
+
+  getBase64(file): Observable<any> {
+    return new Observable(res => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => {
+        res.next(reader.result);
+      };
+      reader.onerror = function (error) {
+        console.log('Error: ', error);
+      };
+    })
+
   }
 }

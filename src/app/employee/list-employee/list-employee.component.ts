@@ -13,6 +13,7 @@ import { MyserviceService } from 'src/app/myservice.service';
 export class ListEmployeeComponent implements OnInit{
   employees: Employees[];
   searchTerm$ = new BehaviorSubject('');
+  fieldsetDisabled = false;
 
   constructor(private myserviceService: MyserviceService, private router: Router
     ) {
@@ -27,7 +28,6 @@ export class ListEmployeeComponent implements OnInit{
   // tslint:disable-next-line:typedef
   viewEmployee(item: Employees) {
     this.myserviceService.currentEmployee = item;
-    this.router.navigate(['/employee/formemployee']);
   }
 
   onsearch() {
@@ -37,6 +37,11 @@ export class ListEmployeeComponent implements OnInit{
          ( item && item.name.toLowerCase().search(this.searchTerm$.value.toLowerCase().trim()) !== -1)
         )
       ];
+  }
+
+  onDelete(id: number){
+    this.myserviceService.onDelete(id);
+    this.employees = this.myserviceService.employees;
   }
 
 }

@@ -1,7 +1,15 @@
-.bi{
+.icon{
   cursor: pointer;
-  margin-left: 50%;
+  margin-left: 20%;
+}
+.icon-eye{
   color: rgb(197, 197, 14);
+}
+.icon-edit{
+  color: rgb(0, 65, 245);
+}
+.icon-delete{
+  color: rgb(197, 35, 14);
 }
 input,
 input:active,
@@ -9,6 +17,10 @@ input:focus {
     outline: 0;
     outline-style: none;
     outline-width: 0;
+}
+.input-list{
+  background-color: rgb(59, 143, 112);
+  border: none;
 }
 .imgs{
   cursor: pointer;
@@ -37,17 +49,16 @@ button:focus {
   background-color: #d6e4d6;
   border-radius: 10px;
   box-shadow: 3px 0px 3px 3px #dadada;
-  padding: 2% 4% 20% 4% ;
+  padding: 2% 2% 20% 2% ;
 }
 table, th , td  {
   border: 1px solid #f1f1f1;
   border-collapse: collapse;
   font-size: 15px;
 }
-table tr:nth-child(odd) {
+table {
   border: 1px solid #f1f1f1;
   background-color: white;
-  border-collapse: collapse;
   font-size: 15px;
 }
 th{

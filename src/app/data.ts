@@ -1,4 +1,5 @@
 export class Employees {
+  public id: number;
   public active: boolean;
   public avatar: string;
   public namecode: number;

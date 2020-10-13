@@ -1,19 +1,19 @@
 <form class="row form m-5">
 <div class="col-md-12 font mb-5 d-flex justify-content-between align-items-center boxshaw">
   <h2 for="tieude" class="color-label ml-5">QUẢN LÝ NHÂN VIÊN</h2>
-  <button [routerLink]="['/employee/formemployee']" class="color-btn1 mr-5" type="submit">THÊM NHÂN VIÊN</button>
+  <button [routerLink]="['/employee/create']" class="color-btn1 mr-5" type="submit">THÊM NHÂN VIÊN</button>
 </div>
 <div class="col-md-12 font d-flex justify-content-between">
   <h2 for="tieude" class="color-label ml-5">DANH SÁCH NHÂN VIÊN</h2>
-  <div class="font header color-btn1 mr-5">
-    <input #search type="text" name="search" ngModel #name="ngModel" (change)="searchTerm$.next($event.target.value)" [value]="searchTerm$.value">
-    <img class="imgs"(click)="search.click()" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABmJLR0QA/wD/AP+gvaeTAAABL0lEQVRIie3UsUpDQRCF4U9RREwlWCqonZYpxE4fwDfwCQJJa5VagkVArPQJRBstU6axsLHUQgtBEQRtVMQiWuwGJCZk15BGPHBZLnf2/DN7Z5Z/DaBJVNDEI95xjX0UBzVfwS0+cY5d1HCIZ7Swh/Hfmr/hCqtdvhcirIUjjOSYT8bMLzHdJ7YsVFjKAVRiZt0y76YGHjCWCmgKZ56qDaGK9V4Box3vSzjLALRjl1MBU3jNALzEtZAKuMd8BmAhrnepGw6EPu+ZUYeqQlPMpQKKcUMtIXYWTzhJNW9rL0LKfcwv8IHFXMA4joX2awitOIMJocuqQuYfMaaeCyCMf0kYos+Op4XTmHl9EAhhQteE49rCpp8/dGBIira/QbIuvxy1K9kZFkA0vxkm4A/qCzQ5RK3c4OI+AAAAAElFTkSuQmCC"/>
+  <div class="font header input-list mr-5">
+    <input #search type="text" name="search" placeholder="Tìm theo tên nhân viên" ngModel #name="ngModel" (change)="searchTerm$.next($event.target.value)" [value]="searchTerm$.value">
+    <i class="fa fa-search imgs" aria-hidden="true" (click)="search.click()"></i>
   </div>
 </div>
-<div class="container mt-5">
+<div class="row col-md-12 mt-5">
   <table class="table ">
   <thead>
-    <!-- <th>STT</th> -->
+    <th class="tht">STT</th>
     <th>Mã nhân viên</th>
     <th>Tên nhân viên</th>
     <th>Email</th>
@@ -21,13 +21,14 @@
   </thead>
   <tbody>
     <tr *ngFor="let employee of employees">
+      <td class="tht">{{employee.id}}</td>
       <td>{{employee.namecode}}</td>
       <td>{{employee.name}}</td>
       <td>{{employee.email}}</td>
-      <td><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-eye-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg" (click)="seen.click()">
-        <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"/>
-        <path fill-rule="evenodd" d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z"/>
-      </svg><a #seen (click)="viewEmployee(employee)"></a> </td>
+      <td><i [routerLink]="['/employee/view',employee.id]" class="fa fa-eye icon icon-eye" aria-hidden="true" (click)="viewEmployee(employee)" ></i>
+          <i [routerLink]="['/employee/edit',employee.id]" class="fa fa-edit icon icon-edit" aria-hidden="true" (click)="viewEmployee(employee)"></i>
+          <i class="fa fa-trash icon icon-delete" aria-hidden="true" (click)="onDelete(employee.id)"></i>
+        </td>
     </tr>
   </tbody>
   </table>

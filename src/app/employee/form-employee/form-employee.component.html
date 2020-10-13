@@ -1,20 +1,13 @@
 <!-- <button (click)="onChangesub()">-</button>
 {{age}}
 <button (click)="onChangeplus()">+</button> -->
-<form (ngSubmit)="onSubmit(form)" #form="ngForm" class="row form m-5 p-4">
-  <div class="col-md-12 font mt-4 d-flex justify-content-between align-items-center boxshaw">
-    <h2 for="tieude" class="color-label d-flex justify-content-start">TẠO MỚI NHÂN VIÊN</h2>
-    <div class="font">
-      <button class="color-btn1  mr-2 " type="submit">LƯU</button>
-      <button class="color-btn2" type="submit" (click)="onReset(form)">HỦY</button>
-    </div>
-  </div>
+<form (ngSubmit)="onSubmit()" #form="ngForm" class="row form m-5 p-4" >
   <div class="col-md-12 font pb-4 pt-3">
     <div class="row">
       <div class="col-md-6">
         <div class="text-center">
           <img [src]="url" class="img" (click)="upload.click()"><br />
-          <input #upload class="upload" type='file' (change)="onSelectFile($event)" [(ngModel)]="model.avatar" ngModel
+          <input #upload class="upload" type='file' (change)="onSelectFile($event)" [(ngModel)]="model.avatar"
             name="avatar">
         </div>
         <div class="form-group row">

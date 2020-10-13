@@ -9,10 +9,10 @@ import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 export class MyserviceService {
   age = new BehaviorSubject(18);
   currentEmployee = new Employees();
-  searchText: Employees[];
   employees: Employees[] = [
     {
-      avatar: 'Ảnh1',
+      id: 1,
+      avatar: 'assets/img-men.jpg',
       active: true,
       namecode: 312022161161,
       name: 'Nguyễn Đức Tuấn',
@@ -22,7 +22,8 @@ export class MyserviceService {
       comment: 'không có gì'
     },
     {
-      avatar: './assets/icon.jpg',
+      id: 2,
+      avatar: 'assets/img-girl.jpg',
       active: true,
       namecode: 312022161162,
       name: 'Đặng Bảo Quyền',
@@ -45,8 +46,20 @@ export class MyserviceService {
   onGetEmployee(name: string) {
     return this.employees.filter(x => x.name === name);
   }
-  onLoad1(){
-    return this.searchText;
+  onDelete(id: number){
+    this.employees = this.employees.filter(item => item.id !== id);
+  }
+  onUpdate(employee: Employees){
+    const employeeOld = this.employees.find(x => x.id === employee.id);
+    employeeOld.id = employeeOld.id;
+    employeeOld.namecode = employee.namecode;
+    employeeOld.name = employee.name;
+    employeeOld.active = employee.active;
+    employeeOld.avatar = employee.avatar;
+    employeeOld.email = employee.email;
+    employeeOld.nation = employee.nation;
+    employeeOld.status = employee.status;
+    employeeOld.comment = employee.comment;
   }
   search(terms: Observable<string>) {
     return terms.pipe(debounceTime(400))

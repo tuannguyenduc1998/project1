@@ -19,3 +19,13 @@ button {
 }
 /* Importing Bootstrap SCSS file. */
 @import '~bootstrap/scss/bootstrap';
+
+.color-btn1{
+  background-color: rgb(59, 143, 112);
+  color: white;
+  border: none;
+}
+.color-btn2{
+  color:  rgb(59, 143, 112);
+  border: none;
+}
