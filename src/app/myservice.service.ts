@@ -49,13 +49,13 @@ export class MyserviceService {
   onDelete(id: number){
     this.employees = this.employees.filter(item => item.id !== id);
   }
-  onUpdate(employee: Employees){
+  onUpdate(employee: Employees, src: string){
     const employeeOld = this.employees.find(x => x.id === employee.id);
     employeeOld.id = employeeOld.id;
     employeeOld.namecode = employee.namecode;
     employeeOld.name = employee.name;
     employeeOld.active = employee.active;
-    employeeOld.avatar = employee.avatar;
+    employeeOld.avatar = src;
     employeeOld.email = employee.email;
     employeeOld.nation = employee.nation;
     employeeOld.status = employee.status;

@@ -70,7 +70,8 @@ export class FormEmployeeComponent implements OnInit, OnDestroy {
     }
   }
   onUpdate(employ: Employees){
-    this.myserviceService.onUpdate(employ);
+    const src = employ.avatar.replace('C:\\fakepath\\', 'assets/');
+    this.myserviceService.onUpdate(employ, src);
   }
   // tslint:disable-next-line: typedef
   onReset(form) {
@@ -89,24 +90,23 @@ export class FormEmployeeComponent implements OnInit, OnDestroy {
     }
   }
 
-  updateAvatar(event) {
-    this.getBase64(event.target.files[0]).subscribe(res => {
-      // Todo
-      this.model.avatar = res;
-    })
-  }
+  // updateAvatar(event) {
+  //   this.getBase64(event.target.files[0]).subscribe(res => {
+  //     // Todo
+  //     this.model.avatar = res;
+  //   });
+  // }
 
-  getBase64(file): Observable<any> {
-    return new Observable(res => {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = () => {
-        res.next(reader.result);
-      };
-      reader.onerror = function (error) {
-        console.log('Error: ', error);
-      };
-    })
-
-  }
+  // getBase64(file): Observable<any> {
+  //   return new Observable(res => {
+  //     const reader = new FileReader();
+  //     reader.readAsDataURL(file);
+  //     reader.onload = () => {
+  //       res.next(reader.result);
+  //     };
+  //     reader.onerror = function(error) {
+  //       console.log('Error: ', error);
+  //     };
+  //   });
+  // }
 }
