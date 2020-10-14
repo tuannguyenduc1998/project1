@@ -38,14 +38,17 @@ export class FormEmployeeComponent implements OnInit {
       comment: this.model.comment,
       active: this.model.active,
     };
-    if (this.model.namecode && this.model.name){
+    if (this.model.name){
       this.myserviceService.onAdd(employee);
-      this.router.navigateByUrl(`/employee/listemployee`);
+      this.router.navigateByUrl(`/employee/list`);
     }
   }
   onUpdate(employ: Employees): void {
     const src = employ.avatar.replace('C:\\fakepath\\', 'assets/');
-    this.myserviceService.onUpdate(employ, src);
+    if (this.model.name){
+        this.myserviceService.onUpdate(employ, src);
+        this.router.navigateByUrl(`/employee/list`);
+    }
   }
   onReset(form): void {
     this.isSubmit = false;

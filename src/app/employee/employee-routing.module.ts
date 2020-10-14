@@ -12,11 +12,11 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        redirectTo: 'listemployee',
+        redirectTo: 'list',
         pathMatch: 'full'
       },
       {
-        path: 'listemployee',
+        path: 'list',
         component: ListEmployeeComponent
       },
       {

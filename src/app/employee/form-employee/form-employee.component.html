@@ -30,11 +30,11 @@
                 <span class="input-group-text"> <i class="fa fa-user"></i> </span>
               </div>
               <input class="form-control color-input" type="text" id="text-input" [(ngModel)]="model.name" name="name"
-                #name="ngModel" [class.is-invalid]="name.invalid && name.touched && isSubmit" required>
-              <div *ngIf="name.invalid && (name.dirty || name.touched || isSubmit)" class="text-danger">
-                <div *ngIf="name.errors.required && isSubmit">
-                  Name is required.
-                </div>
+                #name="ngModel" [class.is-invalid]="name.invalid && isSubmit" required>
+            </div>
+            <div *ngIf="name.invalid && (name.dirty || name.touched || isSubmit)" class="text-danger">
+              <div *ngIf="name.errors.required && isSubmit" class="warning">
+                Name is required.
               </div>
             </div>
           </div>
@@ -48,10 +48,10 @@
               </div>
               <input class="form-control color-input" type="email" id="email-input" [(ngModel)]="model.email"
                 name="email" #email="ngModel" [class.is-invalid]="email.invalid && isSubmit" email>
-              <div *ngIf="email.invalid && (email.dirty || email.touched)" class="text-danger">
-                <div *ngIf="email.errors.email && isSubmit" class="warning">
-                  Email sai định dạng.
-                </div>
+            </div>
+            <div *ngIf="email.invalid && (email.dirty || email.touched)" class="text-danger">
+              <div *ngIf="email.errors.email && isSubmit" class="warning">
+                Email sai định dạng.
               </div>
             </div>
           </div>
