@@ -35,7 +35,7 @@ export class ListEmployeeComponent implements OnInit{
 
   onsearch(): void {
     this.employees = [
-        ...this.employees
+        ...this.myserviceService.employees
         .filter(item =>
          ( item && item.name.toLowerCase().search(this.searchTerm$.value.toLowerCase().trim()) !== -1)
         )
