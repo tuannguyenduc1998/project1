@@ -1,11 +1,10 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { CreateComponent } from './create/create.component';
+import { EditComponent } from './edit/edit.component';
 import { EmployeeComponent } from './employee.component';
-import { CreateComponent } from './form-employee/create/create.component';
-import { EditComponent } from './form-employee/edit/edit.component';
-import { FormEmployeeComponent } from './form-employee/form-employee.component';
-import { ViewComponent } from './form-employee/view/view.component';
 import { ListEmployeeComponent } from './list-employee/list-employee.component';
+import { ViewComponent } from './view/view.component';
 const routes: Routes = [
   {
     path: '',

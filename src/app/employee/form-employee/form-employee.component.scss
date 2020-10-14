@@ -22,14 +22,29 @@ button:focus {
 .astist{
   color: red;
 }
-input:focus {
-    outline: none;
-}
+
 .form{
   background-color: #d6e4d6;
   border-radius: 10px;
   box-shadow: 3px 0px 3px 3px #d4d4d4;
 }
+
 .group2{
-  margin-top: 92px;
+  margin-top: 4%;
+}
+
+.label-generate{
+  padding-left: 2px;
+}
+
+input,
+input:active,
+input:focus,
+select,
+select:focus,
+textarea,
+textarea:focus {
+    outline-style: none;
+    border: none;
+    box-shadow: none;
 }

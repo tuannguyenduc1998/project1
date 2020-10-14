@@ -2,8 +2,9 @@ import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
-import { Employees } from 'src/app/data';
-import { MyserviceService } from 'src/app/myservice.service';
+import { TypeForm } from 'src/app/constant/type-form';
+import { Employees } from 'src/app/model/data';
+import { MyserviceService } from 'src/app/service/myservice.service';
 
 @Component({
   selector: 'app-list-employee',
@@ -12,6 +13,8 @@ import { MyserviceService } from 'src/app/myservice.service';
 })
 export class ListEmployeeComponent implements OnInit{
   employees: Employees[];
+  model = new Employees();
+  typeForm = TypeForm;
   searchTerm$ = new BehaviorSubject('');
   fieldsetDisabled = false;
 
@@ -25,12 +28,12 @@ export class ListEmployeeComponent implements OnInit{
   ngOnInit(): void {
     this.employees = this.myserviceService.onLoad();
   }
-  // tslint:disable-next-line:typedef
-  viewEmployee(item: Employees) {
+
+  viewEmployee(item: Employees): void {
     this.myserviceService.currentEmployee = item;
   }
 
-  onsearch() {
+  onsearch(): void {
     this.employees = [
         ...this.employees
         .filter(item =>
@@ -39,7 +42,7 @@ export class ListEmployeeComponent implements OnInit{
       ];
   }
 
-  onDelete(id: number){
+  onDelete(id: number): void{
     this.myserviceService.onDelete(id);
     this.employees = this.myserviceService.employees;
   }

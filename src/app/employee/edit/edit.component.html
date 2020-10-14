@@ -7,4 +7,4 @@
   </div>
 </div>
 
-<app-form-employee #form [id]="id"><app-form-employee>
+<app-form-employee #form *ngIf="employee" [model]="employee" [type]="type"><app-form-employee>

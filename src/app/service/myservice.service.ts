@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { Employees } from './data';
 import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
+import { Employees } from '../model/data';
 // Injectable dùng để trích xuất dữ liệu ra
 @Injectable({
   providedIn: 'root'

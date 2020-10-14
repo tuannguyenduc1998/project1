@@ -3,8 +3,8 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { MyserviceService } from './myservice.service';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { MyserviceService } from './service/myservice.service';
 
 @NgModule({
   declarations: [

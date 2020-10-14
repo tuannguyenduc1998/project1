@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormEmployeeComponent } from '../form-employee.component';
+import { FormEmployeeComponent } from '../form-employee/form-employee.component';
 
 @Component({
   selector: 'app-create',
@@ -11,6 +11,6 @@ export class CreateComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-  }
+    }
 
 }
