@@ -1,5 +1,5 @@
 <fieldset [disabled]="type === typeForm.view">
-<form (ngSubmit)="onSubmit()" #form="ngForm" class="row form m-5 p-4">
+<form [formGroup]="employeeFormGroup" (ngSubmit)="onSave()" #form="ngForm" class="row form m-5 p-4">
     <div class="col-md-12 font pb-4 pt-3">
       <div class="row">
         <div class="col-md-6 pl-5">
@@ -9,7 +9,7 @@
           </div>
           <div class="form-group row">
             <div class="form-check label-generate">
-              <input type="checkbox" class="form-check-input " name="active" [(ngModel)]="model.active" checked>&nbsp;
+              <input type="checkbox" class="form-check-input " name="active" checked>&nbsp;
               <label class="form-check-label ml-4" for="activeId">Hoạt động</label>
             </div>
           </div>
@@ -19,8 +19,8 @@
               <div class="input-group-prepend">
                 <span class="input-group-text"> <i class="fa fa-qrcode"></i></span>
              </div>
-              <input class="form-control" type="text" id="text-input" ngModel name="namecode"
-                [(ngModel)]="model.namecode">
+              <input class="form-control" type="text" id="text-input" formControlName="namecode"
+                >
             </div>
           </div>
           <div class="form-group row">
@@ -29,14 +29,9 @@
               <div class="input-group-prepend">
                 <span class="input-group-text"> <i class="fa fa-user"></i> </span>
               </div>
-              <input class="form-control color-input" type="text" id="text-input" [(ngModel)]="model.name" name="name"
-                #name="ngModel" [class.is-invalid]="name.invalid && isSubmit" required>
+              <input class="form-control color-input" type="text" id="text-input" formControlName="name" [class.is-invalid]="employeeFormGroup.get('name').invalid && isSubmit" required>
             </div>
-            <div *ngIf="name.invalid && (name.dirty || name.touched || isSubmit)" class="text-danger">
-              <div *ngIf="name.errors.required && isSubmit" class="warning">
-                Name is required.
-              </div>
-            </div>
+            <p *ngIf="employeeFormGroup.get('name').invalid && isSubmit" class="warning text-danger">Tên nhân viên là bắt buộc</p>
           </div>
         </div>
         <div class="col-md-6 group2 pl-5">
@@ -46,14 +41,9 @@
               <div class="input-group-prepend">
                 <span class="input-group-text"> <i class="fa fa-envelope" aria-hidden="true"></i> </span>
               </div>
-              <input class="form-control color-input" type="email" id="email-input" [(ngModel)]="model.email"
-                name="email" #email="ngModel" [class.is-invalid]="email.invalid && isSubmit" email>
+              <input class="form-control color-input" type="email" id="email-input" formControlName="email" [class.is-invalid]="employeeFormGroup.get('email')?.errors && employeeFormGroup.get('email').errors?.email && isSubmit" email pattern>
             </div>
-            <div *ngIf="email.invalid && (email.dirty || email.touched)" class="text-danger">
-              <div *ngIf="email.errors.email && isSubmit" class="warning">
-                Email sai định dạng.
-              </div>
-            </div>
+            <p *ngIf="employeeFormGroup.get('email')?.errors && employeeFormGroup.get('email').errors?.email && isSubmit" class="warning text-danger">Email sai định dạng</p>
           </div>
           <div class="form-group row">
             <label for="text-input" class="col-md-12 col-form-label label-generate">Dân tộc:</label>
@@ -61,8 +51,7 @@
               <div class="input-group-prepend">
                 <span class="input-group-text"> <i class="fa fa-flag" aria-hidden="true"></i></span>
               </div>
-              <input class="form-control color-input" type="text" id="text-input" ngModel name="nation"
-                [(ngModel)]="model.nation">
+              <input class="form-control color-input" type="text" id="text-input" formControlName="nation"  >
             </div>
           </div>
           <div class="form-group row">
@@ -71,8 +60,7 @@
               <div class="input-group-prepend">
                 <span class="input-group-text"> <i class="fa fa-user-plus" aria-hidden="true"></i></span>
               </div>
-              <select class="form-control color-input" [(ngModel)]="model.status" #level="ngModel" name="status"
-                id="level" [(ngModel)]="model.status" required>
+              <select class="form-control color-input"  formControlName="status" id="level"  required>
                 <option *ngFor="let lvl of status" [value]="lvl">{{ lvl }}</option>
               </select>
             </div>
@@ -83,8 +71,7 @@
               <div class="input-group-prepend">
                 <span class="input-group-text"> <i class="fa fa-comment" aria-hidden="true"></i></span>
               </div>
-              <textarea class="form-control color-input" type="tel" id="textarea-input" ngModel name="comment"
-                [(ngModel)]="model.comment"></textarea>
+              <textarea class="form-control color-input" type="tel" id="textarea-input"  formControlName="comment"></textarea>
             </div>
           </div>
         </div>
@@ -93,4 +80,5 @@
 </form>
 </fieldset>
 <!-- <p>Form value</p>
-<pre>{{form.value| json}}</pre> -->
+<pre>{{employeeFormGroup.value| json}}</pre>
+<pre>{{employeeFormGroup.status| json}}</pre> -->

@@ -1,6 +1,6 @@
-import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { Router } from '@angular/router';
-import { BehaviorSubject, Subject } from 'rxjs';
+import { BehaviorSubject} from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 import { TypeForm } from 'src/app/constant/type-form';
 import { Employees } from 'src/app/model/data';
@@ -20,17 +20,13 @@ export class ListEmployeeComponent implements OnInit{
 
   constructor(private myserviceService: MyserviceService, private router: Router
     ) {
-        this.searchTerm$.pipe(debounceTime(600)).subscribe(_ => {
+        this.searchTerm$.pipe(debounceTime(200)).subscribe(_ => {
           this.onsearch();
        });
     }
 
   ngOnInit(): void {
     this.employees = this.myserviceService.onLoad();
-  }
-
-  viewEmployee(item: Employees): void {
-    this.myserviceService.currentEmployee = item;
   }
 
   onsearch(): void {

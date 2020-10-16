@@ -1,13 +1,11 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
+import { Router } from '@angular/router';
 import { Employees } from '../model/data';
 // Injectable dùng để trích xuất dữ liệu ra
 @Injectable({
   providedIn: 'root'
 })
 export class MyserviceService {
-  age = new BehaviorSubject(18);
   currentEmployee = new Employees();
   employees: Employees[] = [
     {
@@ -34,14 +32,30 @@ export class MyserviceService {
     }
   ];
   // Subject: khi vào nó sẽ không biết gì cả BehaviorSubject: thì ngược lại
-  constructor() { }
+  constructor(private router: Router) { }
   // tslint:disable-next-line:typedef
   onLoad(){
     return this.employees;
   }
+
+  GetEmployee(id: string) {
+    this.currentEmployee = this.employees.find(x => x.id === +id);
+    return this.currentEmployee;
+  }
   // tslint:disable-next-line:typedef
   onAdd(employee: Employees){
-    this.employees.push(employee);
+    const id = Math.max(...this.employees.map(item => item.id), 0);
+    this.employees.push({
+      id: id + 1,
+      avatar: employee.avatar !== null ? employee.avatar.replace('C:\\fakepath\\', 'assets/') : '',
+      namecode: employee.namecode,
+      name: employee.name,
+      email: employee.email,
+      nation: employee.nation,
+      status: employee.status,
+      comment: employee.comment,
+      active: employee.active,
+    });
   }
   onGetEmployee(name: string) {
     return this.employees.filter(x => x.name === name);
@@ -49,8 +63,9 @@ export class MyserviceService {
   onDelete(id: number){
     this.employees = this.employees.filter(item => item.id !== id);
   }
-  onUpdate(employee: Employees, src: string){
-    const employeeOld = this.employees.find(x => x.id === employee.id);
+  onUpdate(employee: Employees, id: number){
+    const src = employee.avatar.replace('C:\\fakepath\\', 'assets/');
+    const employeeOld = this.employees.find(x => x.id === id);
     employeeOld.id = employeeOld.id;
     employeeOld.namecode = employee.namecode;
     employeeOld.name = employee.name;
@@ -60,11 +75,6 @@ export class MyserviceService {
     employeeOld.nation = employee.nation;
     employeeOld.status = employee.status;
     employeeOld.comment = employee.comment;
-  }
-  search(terms: Observable<string>) {
-    return terms.pipe(debounceTime(400))
-      .pipe(distinctUntilChanged())
-      .pipe(switchMap(term => this.onGetEmployee(term)));
   }
 }
 

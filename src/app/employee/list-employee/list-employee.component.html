@@ -25,8 +25,8 @@
       <td>{{employee.namecode}}</td>
       <td>{{employee.name}}</td>
       <td>{{employee.email}}</td>
-      <td><i [routerLink]="['/employee/view',employee.id]" class="fa fa-eye icon icon-eye" aria-hidden="true" (click)="viewEmployee(employee)" ></i>
-          <i [routerLink]="['/employee/edit',employee.id]" class="fa fa-edit icon icon-edit" aria-hidden="true" (click)="viewEmployee(employee)"></i>
+      <td><i [routerLink]="['/employee/view',employee.id]" class="fa fa-eye icon icon-eye" aria-hidden="true" ></i>
+          <i [routerLink]="['/employee/edit',employee.id]" class="fa fa-edit icon icon-edit" aria-hidden="true"></i>
           <i class="fa fa-trash icon icon-delete" aria-hidden="true" (click)="onDelete(employee.id)"></i>
         </td>
     </tr>
