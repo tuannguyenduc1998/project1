@@ -34,7 +34,7 @@ export class MyserviceService {
   // Subject: khi vào nó sẽ không biết gì cả BehaviorSubject: thì ngược lại
   constructor(private router: Router) { }
   // tslint:disable-next-line:typedef
-  onLoad(){
+  onLoad() {
     return this.employees;
   }
 
@@ -42,8 +42,27 @@ export class MyserviceService {
     this.currentEmployee = this.employees.find(x => x.id === +id);
     return this.currentEmployee;
   }
-  // tslint:disable-next-line:typedef
-  onAdd(employee: Employees){
+  onGetEmployee(name: string) {
+    return this.employees.filter(x => x.name === name);
+  }
+  onDelete(id: number) {
+    this.employees = this.employees.filter(item => item.id !== id);
+  }
+  createOrUpdate(employee: Employees) {
+    if (employee.id) {
+      const src = employee.avatar.replace('C:\\fakepath\\', 'assets/');
+      const employeeOld = this.employees.find(x => x.id === employee.id);
+      employeeOld.id = employeeOld.id;
+      employeeOld.namecode = employee.namecode;
+      employeeOld.name = employee.name;
+      employeeOld.active = employee.active;
+      employeeOld.avatar = src;
+      employeeOld.email = employee.email;
+      employeeOld.nation = employee.nation;
+      employeeOld.status = employee.status;
+      employeeOld.comment = employee.comment;
+      return;
+    }
     const id = Math.max(...this.employees.map(item => item.id), 0);
     this.employees.push({
       id: id + 1,
@@ -56,25 +75,6 @@ export class MyserviceService {
       comment: employee.comment,
       active: employee.active,
     });
-  }
-  onGetEmployee(name: string) {
-    return this.employees.filter(x => x.name === name);
-  }
-  onDelete(id: number){
-    this.employees = this.employees.filter(item => item.id !== id);
-  }
-  onUpdate(employee: Employees, id: number){
-    const src = employee.avatar.replace('C:\\fakepath\\', 'assets/');
-    const employeeOld = this.employees.find(x => x.id === id);
-    employeeOld.id = employeeOld.id;
-    employeeOld.namecode = employee.namecode;
-    employeeOld.name = employee.name;
-    employeeOld.active = employee.active;
-    employeeOld.avatar = src;
-    employeeOld.email = employee.email;
-    employeeOld.nation = employee.nation;
-    employeeOld.status = employee.status;
-    employeeOld.comment = employee.comment;
   }
 }
 

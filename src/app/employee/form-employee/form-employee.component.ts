@@ -25,13 +25,22 @@ export class FormEmployeeComponent implements OnInit {
   id: string;
   // tslint:disable-next-line: no-output-on-prefix
   @Output() onChanges = new EventEmitter<number>();
+  // Validate form
+  invalidMessages: string[] = [];
+  formErrors = {
+    name: '',
+    email: ''
+  };
+  validationMessages = {
+    required: 'Trường này là bắt buộc nhập',
+    email: 'Email không đúng định dạng',
+    formatLogin: 'Định dạng tên đăng nhập chưa đúng'
+  };
   constructor(private formBuilder: FormBuilder, private myserviceService: MyserviceService,
     private route: ActivatedRoute, private router: Router, private location: Location) {
   }
   ngOnInit(): void {
     this.createForm();
-    // problem: Không cần biến này
-    this.id = this.route.snapshot.params.id;
   }
 
   createForm(): void {
@@ -42,23 +51,15 @@ export class FormEmployeeComponent implements OnInit {
       name: [this.model.name, Validators.required],
       nation: [this.model.nation],
       status: [this.model.status],
-      email: [this.model.email, Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')],
+      email: [this.model.email, Validators.email],
       comment: [this.model.comment]
     });
   }
 
-  onSave(): void {
+  onSubmit(): void {
     this.isSubmit = true;
-    if (!this.employeeFormGroup.invalid) {
-      this.myserviceService.onAdd(this.employeeFormGroup.value);
-      this.router.navigateByUrl(`/employee/list`);
-    }
-  }
-
-  onUpdate(employ: Employees): void {
-    this.isSubmit = true;
-    if (employ.name) { // problem: Thiếu trường hợp validate email
-      this.myserviceService.onUpdate(employ, +this.id);
+    if (this.validateForm()) {
+      this.myserviceService.createOrUpdate(this.employeeFormGroup.value);
       this.router.navigateByUrl(`/employee/list`);
     }
   }
@@ -80,4 +81,36 @@ export class FormEmployeeComponent implements OnInit {
   goBack(): void {
     this.location.back();
   }
+
+  validateForm(): boolean {
+    this.invalidMessages = this.getInvalidMessages(
+      this.employeeFormGroup,
+      this.formErrors
+    );
+    return this.invalidMessages.length === 0;
+  }
+
+  getInvalidMessages(
+    form: FormGroup,
+    formErrors: object): string[] {
+    if (!form) { return; }
+    const errorMessages = [];
+    for (let field in formErrors) {
+      formErrors[field] = '';
+      const control = form.get(field);
+      if (control && !control.valid) {
+        for (const key in control.errors) {
+          formErrors[field] += this.validationMessages[key] + '';
+          break;
+        }
+      }
+    }
+    for (const key in formErrors) {
+      if (formErrors.hasOwnProperty(key) && formErrors[key].length > 0) {
+        errorMessages.push(formErrors[key]);
+      }
+    }
+    return errorMessages;
+  }
+
 }

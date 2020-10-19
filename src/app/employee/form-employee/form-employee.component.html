@@ -1,5 +1,5 @@
 <fieldset [disabled]="type === typeForm.view">
-<form [formGroup]="employeeFormGroup" (ngSubmit)="onSave()" #form="ngForm" class="row form m-5 p-4">
+<form [formGroup]="employeeFormGroup" (ngSubmit)="onSubmit()" #form="ngForm" class="row form m-5 p-4">
     <div class="col-md-12 font pb-4 pt-3">
       <div class="row">
         <div class="col-md-6 pl-5">
@@ -31,7 +31,8 @@
               </div>
               <input class="form-control color-input" type="text" id="text-input" formControlName="name" [class.is-invalid]="employeeFormGroup.get('name').invalid && isSubmit" required>
             </div>
-            <p *ngIf="employeeFormGroup.get('name').invalid && isSubmit" class="warning text-danger">Tên nhân viên là bắt buộc</p>
+            <!-- <p *ngIf="employeeFormGroup.get('name').invalid && isSubmit" class="warning text-danger">Tên nhân viên là bắt buộc</p> -->
+            <p class="warning text-danger">{{formErrors?.name}}</p>
           </div>
         </div>
         <div class="col-md-6 group2 pl-5">
@@ -43,7 +44,8 @@
               </div>
               <input class="form-control color-input" type="email" id="email-input" formControlName="email" [class.is-invalid]="employeeFormGroup.get('email')?.errors && employeeFormGroup.get('email').errors?.email && isSubmit" email pattern>
             </div>
-            <p *ngIf="employeeFormGroup.get('email')?.errors && employeeFormGroup.get('email').errors?.email && isSubmit" class="warning text-danger">Email sai định dạng</p>
+            <!-- <p *ngIf="employeeFormGroup.get('email')?.errors && employeeFormGroup.get('email').errors?.email && isSubmit" class="warning text-danger">Email sai định dạng</p> -->
+            <p class="warning text-danger">{{formErrors?.email}}</p>
           </div>
           <div class="form-group row">
             <label for="text-input" class="col-md-12 col-form-label label-generate">Dân tộc:</label>
