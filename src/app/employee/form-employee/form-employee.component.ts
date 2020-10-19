@@ -3,9 +3,9 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { TypeForm } from 'src/app/constant/type-form';
-import { Employees, status} from 'src/app/model/data';
+import { Employees, status } from 'src/app/model/data';
 import { MyserviceService } from 'src/app/service/myservice.service';
-import {Location} from '@angular/common';
+import { Location } from '@angular/common';
 import { emailValidator } from 'src/app/model/validator';
 @Component({
   selector: 'app-form-employee',
@@ -19,21 +19,22 @@ export class FormEmployeeComponent implements OnInit {
   typeForm = TypeForm;
   sub: Subscription;
   status = status;
-  imgDefault =  './assets/images.png';
+  imgDefault = './assets/images.png';
   isSubmit: boolean;
   employees: Employees[];
   id: string;
   // tslint:disable-next-line: no-output-on-prefix
   @Output() onChanges = new EventEmitter<number>();
   constructor(private formBuilder: FormBuilder, private myserviceService: MyserviceService,
-              private route: ActivatedRoute, private router: Router, private location: Location) {
-              }
+    private route: ActivatedRoute, private router: Router, private location: Location) {
+  }
   ngOnInit(): void {
     this.createForm();
+    // problem: Không cần biến này
     this.id = this.route.snapshot.params.id;
   }
 
-  createForm(): void{
+  createForm(): void {
     this.employeeFormGroup = this.formBuilder.group({
       active: [this.model.active],
       avatar: [this.model.avatar],
@@ -48,7 +49,7 @@ export class FormEmployeeComponent implements OnInit {
 
   onSave(): void {
     this.isSubmit = true;
-    if (!this.employeeFormGroup.invalid){
+    if (!this.employeeFormGroup.invalid) {
       this.myserviceService.onAdd(this.employeeFormGroup.value);
       this.router.navigateByUrl(`/employee/list`);
     }
@@ -56,14 +57,14 @@ export class FormEmployeeComponent implements OnInit {
 
   onUpdate(employ: Employees): void {
     this.isSubmit = true;
-    if (employ.name){
+    if (employ.name) { // problem: Thiếu trường hợp validate email
       this.myserviceService.onUpdate(employ, +this.id);
       this.router.navigateByUrl(`/employee/list`);
     }
   }
 
   onReset(): void {
-      this.goBack();
+    this.goBack();
   }
 
   onSelectFile(event): void {
@@ -76,7 +77,7 @@ export class FormEmployeeComponent implements OnInit {
     }
   }
 
-  goBack(): void{
+  goBack(): void {
     this.location.back();
   }
 }
