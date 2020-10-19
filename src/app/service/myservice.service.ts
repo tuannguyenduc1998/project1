@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { Employees } from '../model/data';
+import { Employees, EmployeeWorks } from '../model/data';
 // Injectable dùng để trích xuất dữ liệu ra
 @Injectable({
   providedIn: 'root'
@@ -17,7 +17,34 @@ export class MyserviceService {
       email: 'tuannguyenduc151198@gmail.com',
       nation: 'Kinh',
       status: 'Độc thân',
-      comment: 'không có gì'
+      comment: 'không có gì',
+      works: [
+        {
+          item: {
+            id: '1',
+            nameWork: 'Công việc I',
+            descriptionWork: '',
+          },
+          child: [
+            {
+              item: {
+                id: '2',
+                nameWork: 'Công việc I.1',
+                descriptionWork: '',
+              },
+              child: []
+            },
+            {
+              item: {
+                id: '3',
+                nameWork: 'Công việc I.2',
+                descriptionWork: '',
+              },
+              child: []
+            },
+          ]
+        }
+      ]
     },
     {
       id: 2,
@@ -28,7 +55,16 @@ export class MyserviceService {
       email: 'quyendang@gmail.com',
       nation: 'Kinh',
       status: 'Độc thân',
-      comment: 'không có gì'
+      comment: 'không có gì',
+      works: []
+    }
+  ];
+
+  employeeWorks: EmployeeWorks[] = [
+    {
+      id: 1,
+      nameWork: 'Quản lý',
+      descriptionWork: 'Quản lý những nhân viên cấp dưới',
     }
   ];
   // Subject: khi vào nó sẽ không biết gì cả BehaviorSubject: thì ngược lại
@@ -36,6 +72,10 @@ export class MyserviceService {
   // tslint:disable-next-line:typedef
   onLoad() {
     return this.employees;
+  }
+
+  onLoadWork(): EmployeeWorks[] {
+    return this.employeeWorks;
   }
 
   GetEmployee(id: string) {
@@ -74,6 +114,7 @@ export class MyserviceService {
       status: employee.status,
       comment: employee.comment,
       active: employee.active,
+      works: []
     });
   }
 }

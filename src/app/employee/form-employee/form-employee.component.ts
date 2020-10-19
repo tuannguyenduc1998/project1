@@ -1,9 +1,9 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { TypeForm } from 'src/app/constant/type-form';
-import { Employees, status } from 'src/app/model/data';
+import { Employees, EmployeeWorks, status, Work, WorkItem } from 'src/app/model/data';
 import { MyserviceService } from 'src/app/service/myservice.service';
 import { Location } from '@angular/common';
 import { emailValidator } from 'src/app/model/validator';
@@ -16,6 +16,7 @@ export class FormEmployeeComponent implements OnInit {
   @Input() model: Employees = new Employees();
   @Input() type: string;
   employeeFormGroup: FormGroup;
+  items: FormArray;
   typeForm = TypeForm;
   sub: Subscription;
   status = status;
@@ -23,6 +24,10 @@ export class FormEmployeeComponent implements OnInit {
   isSubmit: boolean;
   employees: Employees[];
   id: string;
+  employeeWorks: EmployeeWorks[];
+  employeeWorkFormGroup: FormGroup;
+  editField: string;
+  orderForm: FormGroup;
   // tslint:disable-next-line: no-output-on-prefix
   @Output() onChanges = new EventEmitter<number>();
   // Validate form
@@ -34,17 +39,41 @@ export class FormEmployeeComponent implements OnInit {
   validationMessages = {
     required: 'Trường này là bắt buộc nhập',
     email: 'Email không đúng định dạng',
-    formatLogin: 'Định dạng tên đăng nhập chưa đúng'
   };
+
+  get formArrayItems(): FormArray {
+    return this.employeeFormGroup.get('works') as FormArray;
+  }
+
+  formArrayChild(form: FormGroup): FormArray {
+    return form && form.get('workChild') as FormArray;
+  }
   constructor(private formBuilder: FormBuilder, private myserviceService: MyserviceService,
     private route: ActivatedRoute, private router: Router, private location: Location) {
   }
   ngOnInit(): void {
+    this.employeeWorks = this.myserviceService.onLoadWork();
     this.createForm();
   }
 
+  createWork(workItem: WorkItem): FormGroup {
+    return this.formBuilder.group({
+      id: workItem.item.id,
+      nameWork: workItem.item.nameWork,
+      descriptionWork: workItem.item.descriptionWork,
+      workChild: this.formBuilder.array(
+        workItem.child.map(el => this.createWork(el))
+      )
+    });
+  }
+
+  // addWork(): void {
+  //   ( this.employeeFormGroup.get('works') as FormArray ).push(this.createWork());
+  // }
+
   createForm(): void {
     this.employeeFormGroup = this.formBuilder.group({
+      id: [this.model.id],
       active: [this.model.active],
       avatar: [this.model.avatar],
       namecode: [this.model.namecode],
@@ -52,7 +81,10 @@ export class FormEmployeeComponent implements OnInit {
       nation: [this.model.nation],
       status: [this.model.status],
       email: [this.model.email, Validators.email],
-      comment: [this.model.comment]
+      comment: [this.model.comment],
+      works: this.formBuilder.array(
+        (this.model.works || []).map(el => this.createWork(el))
+        )
     });
   }
 
@@ -111,6 +143,15 @@ export class FormEmployeeComponent implements OnInit {
       }
     }
     return errorMessages;
+  }
+
+  changeValue(id: number, property: string, event: any): void {
+    this.editField = event.target.textContent;
+  }
+
+  updateList(id: number, property: string, event: any): void {
+    const editField = event.target.textContent;
+    this.employeeWorks[id][property] = editField;
   }
 
 }

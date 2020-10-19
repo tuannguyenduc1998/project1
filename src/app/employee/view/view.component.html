@@ -1,5 +1,7 @@
 <div class="font mt-4 d-flex justify-content-between align-items-center boxshaw mx-4 p-3">
-  <h2 for="tieude" class="color-label d-flex justify-content-start text-uppercase">thông tin nhân viên</h2>
-  <button class="color-btn1 btn-backrooll text-uppercase" type="click" (click)='form.goBack()'>Quay lại</button>
+  <div class="d-flex justify-content-start text-uppercase">
+    <i class="fa fa-arrow-left mt-3 backrooll" aria-hidden="true" (click)='form.goBack()'></i>
+  <h2 for="tieude" class="color-label ">thông tin nhân viên</h2>
+  </div>
 </div>
 <app-form-employee #form *ngIf="employee" [model]="employee" [type]="type"><app-form-employee>

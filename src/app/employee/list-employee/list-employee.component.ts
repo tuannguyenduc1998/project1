@@ -1,9 +1,10 @@
 import { Component, OnInit} from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { BehaviorSubject} from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 import { TypeForm } from 'src/app/constant/type-form';
-import { Employees } from 'src/app/model/data';
+import { Employees, EmployeeWorks } from 'src/app/model/data';
 import { MyserviceService } from 'src/app/service/myservice.service';
 
 @Component({
@@ -14,11 +15,12 @@ import { MyserviceService } from 'src/app/service/myservice.service';
 export class ListEmployeeComponent implements OnInit{
   employees: Employees[];
   model = new Employees();
+  modelWork = new EmployeeWorks();
   typeForm = TypeForm;
   searchTerm$ = new BehaviorSubject('');
   fieldsetDisabled = false;
 
-  constructor(private myserviceService: MyserviceService, private router: Router
+  constructor(private myserviceService: MyserviceService, private router: Router, private formBuilder: FormBuilder
     ) {
         this.searchTerm$.pipe(debounceTime(200)).subscribe(_ => {
           this.onsearch();

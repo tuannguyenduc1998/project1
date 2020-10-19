@@ -1,16 +1,18 @@
 <fieldset [disabled]="type === typeForm.view">
-<form [formGroup]="employeeFormGroup" (ngSubmit)="onSubmit()" #form="ngForm" class="row form m-5 p-4">
+  <form [formGroup]="employeeFormGroup" (ngSubmit)="onSubmit()" #form="ngForm" class="row form m-5 p-4">
     <div class="col-md-12 font pb-4 pt-3">
       <div class="row">
         <div class="col-md-6 pl-5">
           <div class="text-center">
-            <img [src]="model.avatar ? model.avatar : imgDefault" class="img" (click)="upload.click()"><br />
-            <input #upload class="upload" type='file' (change)="onSelectFile($event)" name="avatar">
+            <!-- <img [src]="model.avatar ? model.avatar : imgDefault" class="img" (click)="upload.click()"><br />
+            <input #upload class="upload" type='file' (change)="onSelectFile($event)" name="avatar"
+              formControlName="avatar"> -->
           </div>
           <div class="form-group row">
             <div class="form-check label-generate">
-              <input type="checkbox" class="form-check-input " name="active" checked>&nbsp;
-              <label class="form-check-label ml-4" for="activeId">Hoạt động</label>
+              <input #check type="checkbox" class="form-check-input " name="active" formControlName="active"
+                checked>&nbsp;
+              <label class="form-check-label ml-4" for="activeId" (click)="check.click()">Hoạt động</label>
             </div>
           </div>
           <div class="form-group row">
@@ -18,18 +20,19 @@
             <div class="col-md-12 input-group">
               <div class="input-group-prepend">
                 <span class="input-group-text"> <i class="fa fa-qrcode"></i></span>
-             </div>
-              <input class="form-control" type="text" id="text-input" formControlName="namecode"
-                >
+              </div>
+              <input class="form-control" type="text" id="text-input" formControlName="namecode">
             </div>
           </div>
           <div class="form-group row">
-            <label for="text-input" class="col-md-12 col-form-label label-generate">Tên nhân viên:<a class="astist">*</a></label>
+            <label for="text-input" class="col-md-12 col-form-label label-generate">Tên nhân viên:<a
+                class="astist">*</a></label>
             <div class="col-md-12 input-group">
               <div class="input-group-prepend">
                 <span class="input-group-text"> <i class="fa fa-user"></i> </span>
               </div>
-              <input class="form-control color-input" type="text" id="text-input" formControlName="name" [class.is-invalid]="employeeFormGroup.get('name').invalid && isSubmit" required>
+              <input class="form-control color-input" type="text" id="text-input" formControlName="name"
+                [class.is-invalid]="employeeFormGroup.get('name').invalid && isSubmit" required>
             </div>
             <!-- <p *ngIf="employeeFormGroup.get('name').invalid && isSubmit" class="warning text-danger">Tên nhân viên là bắt buộc</p> -->
             <p class="warning text-danger">{{formErrors?.name}}</p>
@@ -42,7 +45,9 @@
               <div class="input-group-prepend">
                 <span class="input-group-text"> <i class="fa fa-envelope" aria-hidden="true"></i> </span>
               </div>
-              <input class="form-control color-input" type="email" id="email-input" formControlName="email" [class.is-invalid]="employeeFormGroup.get('email')?.errors && employeeFormGroup.get('email').errors?.email && isSubmit" email pattern>
+              <input class="form-control color-input" type="email" id="email-input" formControlName="email"
+                [class.is-invalid]="employeeFormGroup.get('email')?.errors && employeeFormGroup.get('email').errors?.email && isSubmit"
+                email pattern>
             </div>
             <!-- <p *ngIf="employeeFormGroup.get('email')?.errors && employeeFormGroup.get('email').errors?.email && isSubmit" class="warning text-danger">Email sai định dạng</p> -->
             <p class="warning text-danger">{{formErrors?.email}}</p>
@@ -53,7 +58,7 @@
               <div class="input-group-prepend">
                 <span class="input-group-text"> <i class="fa fa-flag" aria-hidden="true"></i></span>
               </div>
-              <input class="form-control color-input" type="text" id="text-input" formControlName="nation"  >
+              <input class="form-control color-input" type="text" id="text-input" formControlName="nation">
             </div>
           </div>
           <div class="form-group row">
@@ -62,7 +67,7 @@
               <div class="input-group-prepend">
                 <span class="input-group-text"> <i class="fa fa-user-plus" aria-hidden="true"></i></span>
               </div>
-              <select class="form-control color-input"  formControlName="status" id="level"  required>
+              <select class="form-control color-input" formControlName="status" id="level" required>
                 <option *ngFor="let lvl of status" [value]="lvl">{{ lvl }}</option>
               </select>
             </div>
@@ -73,13 +78,68 @@
               <div class="input-group-prepend">
                 <span class="input-group-text"> <i class="fa fa-comment" aria-hidden="true"></i></span>
               </div>
-              <textarea class="form-control color-input" type="tel" id="textarea-input"  formControlName="comment"></textarea>
+              <textarea class="form-control color-input" type="tel" id="textarea-input"
+                formControlName="comment"></textarea>
             </div>
           </div>
         </div>
       </div>
     </div>
-</form>
+    <div class="row form m-5 p-4">
+      <div class="col-md-12 font d-flex justify-content-start mt-5">
+        <h2 for="tieude" class="color-label">DANH SÁCH CÔNG VIỆC</h2>
+      </div>
+      <div class="row col-md-12 mt-5">
+        <table class="table ">
+          <thead>
+            <th class="tht">STT</th>
+            <th>Tên công việc</th>
+            <th>Mô tả công việc</th>
+            <th class="tht">Thao tác</th>
+          </thead>
+          <tbody>
+            <ng-container formArrayName="works" *ngFor="let employeeWork of formArrayItems.controls; let i = index" >
+              <ng-container [formGroupName]="i">
+                <tr>
+                  <td class="tht">{{employeeWork.value.id}}</td>
+                  <td>
+                    <input type="text" formControlName="nameWork">
+                  </td>
+                  <td>
+                    <input type="text" formControlName="descriptionWork">
+                  </td>
+                  <td><i class="fa fa-plus-square icon" aria-hidden="true"></i>
+                    <i class="fa fa-plus-circle icon" aria-hidden="true"></i>
+                    <i class="fa fa-trash icon icon-delete" aria-hidden="true"></i>
+                  </td>
+                </tr>
+                <ng-container *ngIf="formArrayChild(employeeWork) && formArrayChild(employeeWork).controls.length">
+                  <ng-container *ngFor="let itemChild of formArrayChild(employeeWork).controls; let j = index" [formGroupName]="j">
+                    <ng-container [formGroupName]="j">
+                      <tr>
+                        <td class="tht">{{itemChild.value.id}}</td>
+                        <td>
+                          <input type="text" formControlName="nameWork">
+                        </td>
+                        <td>
+                          <input type="text" formControlName="descriptionWork">
+                        </td>
+                        <td><i class="fa fa-plus-square icon" aria-hidden="true"></i>
+                          <i class="fa fa-plus-circle icon" aria-hidden="true"></i>
+                          <i class="fa fa-trash icon icon-delete" aria-hidden="true"></i>
+                        </td>
+                      </tr>
+                    </ng-container>
+                  </ng-container>
+                </ng-container>
+              </ng-container>
+            </ng-container>
+
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </form>
 </fieldset>
 <!-- <p>Form value</p>
 <pre>{{employeeFormGroup.value| json}}</pre>

@@ -48,3 +48,30 @@ textarea:focus {
     border: none;
     box-shadow: none;
 }
+
+.icon{
+  cursor: pointer;
+  margin-left: 20%;
+}
+
+table, th , td  {
+  border: 1px solid #f1f1f1;
+  border-collapse: collapse;
+  font-size: 15px;
+}
+
+table {
+  border: 1px solid #f1f1f1;
+  background-color: white;
+  font-size: 15px;
+}
+
+th{
+  background-color:  rgb(59, 143, 112);
+  font-size: 15px;
+  color: white;
+}
+
+.tht{
+  text-align: center;
+}
