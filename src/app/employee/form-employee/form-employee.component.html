@@ -4,9 +4,9 @@
       <div class="row">
         <div class="col-md-6 pl-5">
           <div class="text-center">
-            <!-- <img [src]="model.avatar ? model.avatar : imgDefault" class="img" (click)="upload.click()"><br />
+            <img [src]="model.avatar ? model.avatar : imgDefault" class="img" (click)="upload.click()"><br />
             <input #upload class="upload" type='file' (change)="onSelectFile($event)" name="avatar"
-              formControlName="avatar"> -->
+              formControlName="avatar">
           </div>
           <div class="form-group row">
             <div class="form-check label-generate">
@@ -85,7 +85,6 @@
         </div>
       </div>
     </div>
-    <div class="row form m-5 p-4">
       <div class="col-md-12 font d-flex justify-content-start mt-5">
         <h2 for="tieude" class="color-label">DANH SÁCH CÔNG VIỆC</h2>
       </div>
@@ -98,7 +97,8 @@
             <th class="tht">Thao tác</th>
           </thead>
           <tbody>
-            <ng-container formArrayName="works" *ngFor="let employeeWork of formArrayItems.controls; let i = index" >
+
+            <!-- <ng-container formArrayName="works" *ngFor="let employeeWork of formArrayItems.controls; let i = index" >
               <ng-container [formGroupName]="i">
                 <tr>
                   <td class="tht">{{employeeWork.value.id}}</td>
@@ -114,7 +114,7 @@
                   </td>
                 </tr>
                 <ng-container *ngIf="formArrayChild(employeeWork) && formArrayChild(employeeWork).controls.length">
-                  <ng-container *ngFor="let itemChild of formArrayChild(employeeWork).controls; let j = index" [formGroupName]="j">
+                  <ng-container formArrayName="workChild" *ngFor="let itemChild of formArrayChild(employeeWork).controls; let j = index">
                     <ng-container [formGroupName]="j">
                       <tr>
                         <td class="tht">{{itemChild.value.id}}</td>
@@ -133,12 +133,69 @@
                   </ng-container>
                 </ng-container>
               </ng-container>
+            </ng-container> -->
+
+            <!-- <ng-container >
+              <ng-container *ngTemplateOutlet="recursiveListTmpl; context:{ list: formArrayItems?.controls, name: 'works' }"></ng-container>
             </ng-container>
+
+            <ng-template #recursiveListTmpl let-list="list" let-name="name">
+              <ng-container [formArrayName]="name" *ngFor="let employeeWork of list; let i = index">
+                <ng-container [formGroupName]="i">
+                <tr>
+                  <td class="tht">{{employeeWork.value.id}}</td>
+                  <td>
+                    <input type="text" formControlName="nameWork">
+                  </td>
+                  <td>
+                    <input type="text" formControlName="descriptionWork">
+                  </td>
+                  <td><i class="fa fa-plus-square icon" aria-hidden="true"></i>
+                    <i class="fa fa-plus-circle icon" aria-hidden="true"></i>
+                    <i class="fa fa-trash icon icon-delete" aria-hidden="true"></i>
+                  </td>
+                </tr>
+                <ng-container *ngIf="formArrayChild(employeeWork)?.controls.length > 0">
+                  <ng-container *ngTemplateOutlet="recursiveListTmpl; context:{ list: formArrayChild(employeeWork)?.controls ,name: 'workChild' }">
+                  </ng-container>
+                </ng-container>
+              </ng-container>
+              </ng-container>
+            </ng-template> -->
+
+            <ng-template #recursiveList let-controls="controls" let-prefix="prefix">
+              <ng-container *ngFor="let item of controls; let i = index">
+                  <ng-container class="tree-item" [formGroup]="employeeFormGroup.get(prefix + i)">
+                    <tr>
+                      <td class="tht">{{item.value.id}}</td>
+                      <td>
+                        <input type="text" formControlName="nameWork">
+                      </td>
+                      <td>
+                        <input type="text" formControlName="descriptionWork">
+                      </td>
+                      <td><i class="fa fa-plus-square icon" aria-hidden="true" ></i>
+                        <i class="fa fa-plus-circle icon" aria-hidden="true"></i>
+                        <i class="fa fa-trash icon icon-delete" aria-hidden="true"></i>
+                      </td>
+                    </tr>
+                  </ng-container>
+                  <ng-container class="sub-tree" *ngIf="formArrayChild(item)?.controls?.length">
+                      <ng-container
+                          *ngTemplateOutlet="recursiveList; context:{ controls: formArrayChild(item)?.controls, prefix: prefix + i + '.workChild.'  }">
+                      </ng-container>
+                  </ng-container>
+              </ng-container>
+          </ng-template>
+          <ng-container
+              *ngTemplateOutlet="recursiveList; context:{ controls: formArrayItems?.controls, prefix: 'works.' }">
+          </ng-container>
+
+
 
           </tbody>
         </table>
       </div>
-    </div>
   </form>
 </fieldset>
 <!-- <p>Form value</p>
