@@ -1,0 +1,40 @@
+<form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+  <div class="row d-flex justify-content-end">
+    <div class="col-md-9">
+      <img src="./assets/bg-login.jpg" alt="">
+    </div>
+    <div class="col-md-3">
+      <div class="row">
+        <div class="form-container">
+          <h1>BYS AQUACULTFUTURE</h1>
+          <div class="form-group row">
+            <div class="col-md-12 input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text"> <i class="fa fa-user-o" aria-hidden="true"></i></span>
+              </div>
+              <input class="form-control" type="text" formControlName="username"
+                [class.is-invalid]="formErrors?.username">
+            </div>
+            <p class="warning text-danger">{{formErrors?.username}}</p>
+          </div>
+          <div class="form-group row">
+            <div class="col-md-12 input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text"> <i class="fa fa-key" aria-hidden="true"></i></span>
+              </div>
+              <input class="form-control" type="password" formControlName="password"
+                [class.is-invalid]="formErrors?.password">
+            </div>
+            <p class="warning text-danger">{{formErrors?.password}}</p>
+          </div>
+          <div class="form-group row">
+            <div class="col-md-12 input-group">
+              <button class="form-control color-btn font" type="submit"><i class="fa fa-sign-in mr-1"
+                  aria-hidden="true"></i>Đăng nhập</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

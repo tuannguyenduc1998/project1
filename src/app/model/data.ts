@@ -32,3 +32,8 @@ export class EmployeeWorks {
   public nameWork: string;
   public descriptionWork: string;
 }
+
+export class UserLogin{
+  public username: string;
+  public password: string;
+}

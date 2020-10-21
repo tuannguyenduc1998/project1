@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { Employees, EmployeeWorks } from '../model/data';
+import { Employees, EmployeeWorks, UserLogin } from '../model/data';
 // Injectable dùng để trích xuất dữ liệu ra
 @Injectable({
   providedIn: 'root'
@@ -21,14 +21,14 @@ export class MyserviceService {
       works: [
         {
           item: {
-            id: '1',
+            id: 'I',
             nameWork: 'Công việc I',
             descriptionWork: '',
           },
           child: [
             {
               item: {
-                id: '2',
+                id: 'I.1',
                 nameWork: 'Công việc I.1',
                 descriptionWork: '',
               },
@@ -36,7 +36,7 @@ export class MyserviceService {
             },
             {
               item: {
-                id: '3',
+                id: 'I.2',
                 nameWork: 'Công việc I.2',
                 descriptionWork: '',
               },
@@ -65,6 +65,13 @@ export class MyserviceService {
       id: 1,
       nameWork: 'Quản lý',
       descriptionWork: 'Quản lý những nhân viên cấp dưới',
+    }
+  ];
+
+  userLogin: UserLogin[] = [
+    {
+      username: 'tuannguyen1998',
+      password: 'khongcopass',
     }
   ];
   // Subject: khi vào nó sẽ không biết gì cả BehaviorSubject: thì ngược lại

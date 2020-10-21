@@ -32,10 +32,10 @@
                 <span class="input-group-text"> <i class="fa fa-user"></i> </span>
               </div>
               <input class="form-control color-input" type="text" id="text-input" formControlName="name"
-                [class.is-invalid]="employeeFormGroup.get('name').invalid && isSubmit" required>
+                [class.is-invalid]="employeeFormGroup.get('name').errors && isSubmit" required>
             </div>
             <!-- <p *ngIf="employeeFormGroup.get('name').invalid && isSubmit" class="warning text-danger">Tên nhân viên là bắt buộc</p> -->
-            <p class="warning text-danger">{{formErrors?.name}}</p>
+            <p *ngIf="employeeFormGroup.get('name').invalid" class="warning text-danger">{{formErrors?.name}}</p>
           </div>
         </div>
         <div class="col-md-6 group2 pl-5">
@@ -50,7 +50,7 @@
                 email pattern>
             </div>
             <!-- <p *ngIf="employeeFormGroup.get('email')?.errors && employeeFormGroup.get('email').errors?.email && isSubmit" class="warning text-danger">Email sai định dạng</p> -->
-            <p class="warning text-danger">{{formErrors?.email}}</p>
+            <p *ngIf="employeeFormGroup.get('email')?.errors" class="warning text-danger">{{formErrors?.email}}</p>
           </div>
           <div class="form-group row">
             <label for="text-input" class="col-md-12 col-form-label label-generate">Dân tộc:</label>
@@ -167,16 +167,18 @@
               <ng-container *ngFor="let item of controls; let i = index">
                   <ng-container class="tree-item" [formGroup]="employeeFormGroup.get(prefix + i)">
                     <tr>
-                      <td class="tht">{{item.value.id}}</td>
+                      <td>
+                      <input class="tht" type="text" formControlName="id">
+                    </td>
                       <td>
                         <input type="text" formControlName="nameWork">
                       </td>
                       <td>
                         <input type="text" formControlName="descriptionWork">
                       </td>
-                      <td><i class="fa fa-plus-square icon" aria-hidden="true" ></i>
-                        <i class="fa fa-plus-circle icon" aria-hidden="true"></i>
-                        <i class="fa fa-trash icon icon-delete" aria-hidden="true"></i>
+                      <td><i class="fa fa-plus-square icon" aria-hidden="true" (click)="addWorkParent(controls)"></i>
+                        <i class="fa fa-plus-circle icon" aria-hidden="true" (click)="addWorkChild(item)"></i>
+                        <i class="fa fa-trash icon icon-delete" aria-hidden="true" (click)="delete(i,controls)"></i>
                       </td>
                     </tr>
                   </ng-container>

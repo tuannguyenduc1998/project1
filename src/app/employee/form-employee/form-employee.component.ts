@@ -58,18 +58,26 @@ export class FormEmployeeComponent implements OnInit {
 
   createWork(workItem: WorkItem): FormGroup {
     return this.formBuilder.group({
-      id: workItem.item.id,
-      nameWork: workItem.item.nameWork,
-      descriptionWork: workItem.item.descriptionWork,
+      id: workItem.item && workItem.item.id,
+      nameWork: workItem.item && workItem.item.nameWork,
+      descriptionWork: workItem.item && workItem.item.descriptionWork,
       workChild: this.formBuilder.array(
-        workItem.child.map(el => this.createWork(el))
+        (workItem.child || []).map(el => this.createWork(el))
       )
     });
   }
 
-  // addWork(): void {
-  //   ( this.employeeFormGroup.get('works') as FormArray ).push(this.createWork());
-  // }
+  addWorkChild(item: FormGroup): void {
+    this.formArrayChild(item).push( this.createWork(new WorkItem()));
+  }
+
+  addWorkParent(controls: FormArray): void{
+    controls.push(this.createWork(new WorkItem()));
+  }
+
+  delete(index: number, controls: any): void {
+    controls.splice(index, 1);
+  }
 
   createForm(): void {
     this.employeeFormGroup = this.formBuilder.group({
@@ -106,6 +114,7 @@ export class FormEmployeeComponent implements OnInit {
       reader.readAsDataURL(event.target.files[0]);
       reader.onload = (eventEl: any) => {
         this.model.avatar = eventEl.target.result;
+        this.employeeFormGroup.get('avatar').patchValue(this.model.avatar);
       };
     }
   }
