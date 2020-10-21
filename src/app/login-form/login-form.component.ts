@@ -14,6 +14,7 @@ export class LoginFormComponent implements OnInit {
     userForm: FormGroup;
     isSubmit: boolean;
     @Input() userLogin: UserLogin = new UserLogin();
+    user: UserLogin[];
     invalidMessages: string[] = [];
     formErrors = {
     username: '',
@@ -36,13 +37,43 @@ export class LoginFormComponent implements OnInit {
     });
   }
   ngOnInit(): void {
+    this.user = this.myserviceService.onLoadUser();
     this.createForm();
+    this.userForm.get('username').valueChanges.subscribe(
+      mode => {
+        if (mode === '')
+        {
+          this.userForm.get('username').setValidators([Validators.required]);
+        }
+        else {
+          this.userForm.get('username').updateValueAndValidity();
+        }
+      }
+    );
+    this.userForm.get('password').valueChanges.subscribe(
+      pwd => {
+        if (pwd === '')
+        {
+          this.userForm.get('password').setValidators([Validators.required]);
+        }
+        else {
+          this.userForm.get('password').updateValueAndValidity();
+        }
+      }
+    );
   }
 
   onSubmit(): void{
     this.isSubmit = true;
     if (this.validateForm()) {
-      this.router.navigateByUrl(`/employee/list`);
+      if (this.user.find(x => x.username === this.userForm.get('username').value)
+         && this.user.find(x => x.password === this.userForm.get('password').value))
+      {
+        this.router.navigateByUrl(`/employee/list`);
+      }
+      else {
+        alert('Tài khoản hoặc mật khẩu không đúng!');
+      }
     }
   }
 

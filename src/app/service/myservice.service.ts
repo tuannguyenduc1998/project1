@@ -81,6 +81,10 @@ export class MyserviceService {
     return this.employees;
   }
 
+  onLoadUser(): UserLogin[] {
+    return this.userLogin;
+  }
+
   onLoadWork(): EmployeeWorks[] {
     return this.employeeWorks;
   }
