@@ -1,12 +1,21 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { BehaviorSubject } from 'rxjs';
 import { Employees, EmployeeWorks, UserLogin } from '../model/data';
 // Injectable dùng để trích xuất dữ liệu ra
 @Injectable({
   providedIn: 'root'
 })
 export class MyserviceService {
+  // Subject: khi vào nó sẽ không biết gì cả BehaviorSubject: thì ngược lại
+  constructor(private router: Router) { }
+
+  get LoginStatus(): boolean {
+    return JSON.parse(localStorage.getItem('LoginStatus') ||
+    this.loggedInStatus.toString());
+  }
   currentEmployee = new Employees();
+  private userSubject: BehaviorSubject<UserLogin>;
   employees: Employees[] = [
     {
       id: 1,
@@ -74,8 +83,8 @@ export class MyserviceService {
       password: 'khongcopass',
     }
   ];
-  // Subject: khi vào nó sẽ không biết gì cả BehaviorSubject: thì ngược lại
-  constructor(private router: Router) { }
+
+  private loggedInStatus = JSON.parse(localStorage.getItem('loggedIn') || ('false'));
   // tslint:disable-next-line:typedef
   onLoad() {
     return this.employees;
@@ -127,6 +136,11 @@ export class MyserviceService {
       active: employee.active,
       works: []
     });
+  }
+
+  setLoginStatus(value): void {
+    this.loggedInStatus = value;
+    localStorage.setItem('LoginStatus', 'true');
   }
 }
 

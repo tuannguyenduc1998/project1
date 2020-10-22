@@ -13,6 +13,7 @@ export class LoginFormComponent implements OnInit {
 
     userForm: FormGroup;
     isSubmit: boolean;
+    isCheckLogin: false;
     @Input() userLogin: UserLogin = new UserLogin();
     user: UserLogin[];
     invalidMessages: string[] = [];
@@ -22,7 +23,7 @@ export class LoginFormComponent implements OnInit {
     };
   validationMessages = {
     required: 'Trường này là bắt buộc nhập',
-    minLenght: 'Mật khẩu phải ít nhất 8 kí tự',
+    minlength: 'Mật khẩu phải ít nhất 8 kí tự',
   };
 
 
@@ -39,25 +40,11 @@ export class LoginFormComponent implements OnInit {
   ngOnInit(): void {
     this.user = this.myserviceService.onLoadUser();
     this.createForm();
-    this.userForm.get('username').valueChanges.subscribe(
-      mode => {
-        if (mode === '')
+    this.userForm.valueChanges.subscribe(
+      _ => {
+        if (this.isSubmit)
         {
-          this.userForm.get('username').setValidators([Validators.required]);
-        }
-        else {
-          this.userForm.get('username').updateValueAndValidity();
-        }
-      }
-    );
-    this.userForm.get('password').valueChanges.subscribe(
-      pwd => {
-        if (pwd === '')
-        {
-          this.userForm.get('password').setValidators([Validators.required]);
-        }
-        else {
-          this.userForm.get('password').updateValueAndValidity();
+          this.validateForm();
         }
       }
     );
@@ -66,9 +53,19 @@ export class LoginFormComponent implements OnInit {
   onSubmit(): void{
     this.isSubmit = true;
     if (this.validateForm()) {
-      if (this.user.find(x => x.username === this.userForm.get('username').value)
-         && this.user.find(x => x.password === this.userForm.get('password').value))
+
+      // this.myserviceService.login(this.userForm.controls.username.value, this.userForm.controls.password.value)
+      // .subscribe(
+      // matched => {
+      //   if (matched) {
+      //     this.router.navigateByUrl(`/employee/list`);
+      //   } else {
+      //     alert('Tài khoản hoặc mật khẩu không đúng!');
+      //   }
+      // });
+      if (this.user.find(x => x.username === this.userForm.get('username').value && x.password === this.userForm.get('password').value))
       {
+        this.myserviceService.setLoginStatus(true);
         this.router.navigateByUrl(`/employee/list`);
       }
       else {

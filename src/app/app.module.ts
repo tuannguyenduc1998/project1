@@ -7,6 +7,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { MyserviceService } from './service/myservice.service';
 import { ReactiveFormsModule } from '@angular/forms';
 import { LoginFormComponent } from './login-form/login-form.component';
+import { AuthGuardService } from './service/auth-guard.service';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,7 @@ import { LoginFormComponent } from './login-form/login-form.component';
     NgbModule,
     ReactiveFormsModule
   ],
-  providers: [MyserviceService],
+  providers: [MyserviceService, AuthGuardService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

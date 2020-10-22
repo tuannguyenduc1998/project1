@@ -49,11 +49,19 @@ export class FormEmployeeComponent implements OnInit {
     return form && form.get('workChild') as FormArray;
   }
   constructor(private formBuilder: FormBuilder, private myserviceService: MyserviceService,
-    private route: ActivatedRoute, private router: Router, private location: Location) {
+              private route: ActivatedRoute, private router: Router, private location: Location) {
   }
   ngOnInit(): void {
     this.employeeWorks = this.myserviceService.onLoadWork();
     this.createForm();
+    this.employeeFormGroup.valueChanges.subscribe(
+      _ => {
+        if (this.isSubmit)
+        {
+          this.validateForm();
+        }
+      }
+    );
   }
 
   createWork(workItem: WorkItem): FormGroup {
