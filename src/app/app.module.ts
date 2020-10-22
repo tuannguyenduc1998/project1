@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { LOCALE_ID, NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -8,11 +8,16 @@ import { MyserviceService } from './service/myservice.service';
 import { ReactiveFormsModule } from '@angular/forms';
 import { LoginFormComponent } from './login-form/login-form.component';
 import { AuthGuardService } from './service/auth-guard.service';
+import { DataPipe } from './pipes/data.pipe';
+import localeGB from '@angular/common/locales/vi';
+import { registerLocaleData } from '@angular/common';
+registerLocaleData(localeGB);
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginFormComponent
+    LoginFormComponent,
+    DataPipe
   ],
   imports: [
     BrowserModule,
@@ -20,7 +25,7 @@ import { AuthGuardService } from './service/auth-guard.service';
     NgbModule,
     ReactiveFormsModule
   ],
-  providers: [MyserviceService, AuthGuardService],
+  providers: [MyserviceService, AuthGuardService, {provide: LOCALE_ID, useValue: 'vi'}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

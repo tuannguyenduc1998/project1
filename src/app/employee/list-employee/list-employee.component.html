@@ -1,4 +1,7 @@
 <form class="row form m-5">
+  <div class="col-md-12 font d-flex justify-content-end mb-1">
+  <button class="color-btn1" type="submit" (click)="onLogOut()">Đăng xuất</button>
+</div>
 <div class="col-md-12 font mb-5 d-flex justify-content-between align-items-center boxshaw">
   <h2 for="tieude" class="color-label">QUẢN LÝ NHÂN VIÊN</h2>
   <button [routerLink]="['/employee/create']" class="color-btn1" type="submit">THÊM NHÂN VIÊN</button>
@@ -17,6 +20,7 @@
     <th>Mã nhân viên</th>
     <th>Tên nhân viên</th>
     <th>Email</th>
+    <th>Ngày sinh</th>
     <th class="tht">Thao tác</th>
   </thead>
   <tbody>
@@ -25,6 +29,7 @@
       <td>{{employee.namecode}}</td>
       <td>{{employee.name}}</td>
       <td>{{employee.email}}</td>
+      <td>{{employee.birthday | date: 'd/M/y' : 'vi' }}</td>
       <td><i [routerLink]="['/employee/view',employee.id]" class="fa fa-eye icon icon-eye" aria-hidden="true" ></i>
           <i [routerLink]="['/employee/edit',employee.id]" class="fa fa-edit icon icon-edit" aria-hidden="true"></i>
           <i class="fa fa-trash icon icon-delete" aria-hidden="true" (click)="onDelete(employee.id)"></i>

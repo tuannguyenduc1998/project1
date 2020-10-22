@@ -15,7 +15,7 @@ const routes: Routes = [
     pathMatch: 'full'
   },
   {
-    path: 'login-form',
+    path: 'login',
     component: LoginFormComponent
   }
 ];

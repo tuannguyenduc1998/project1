@@ -27,6 +27,7 @@ export class MyserviceService {
       nation: 'Kinh',
       status: 'Độc thân',
       comment: 'không có gì',
+      birthday: new Date(1998, 11, 15),
       works: [
         {
           item: {
@@ -65,6 +66,7 @@ export class MyserviceService {
       nation: 'Kinh',
       status: 'Độc thân',
       comment: 'không có gì',
+      birthday: new Date(1995, 12, 31),
       works: []
     }
   ];
@@ -84,7 +86,8 @@ export class MyserviceService {
     }
   ];
 
-  private loggedInStatus = JSON.parse(localStorage.getItem('loggedIn') || ('false'));
+  private loggedInStatus = JSON.parse(localStorage.getItem('LoginStatus') || ('false'));
+
   // tslint:disable-next-line:typedef
   onLoad() {
     return this.employees;
@@ -134,6 +137,7 @@ export class MyserviceService {
       status: employee.status,
       comment: employee.comment,
       active: employee.active,
+      birthday: employee.birthday,
       works: []
     });
   }
