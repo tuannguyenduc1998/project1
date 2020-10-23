@@ -8,7 +8,7 @@ export class Employees {
   public nation: string;
   public status: string;
   public comment: string;
-  public birthday: Date;
+  public birthday: number;
   public works: WorkItem[];
 }
 

@@ -12,6 +12,7 @@ import { DataPipe } from './pipes/data.pipe';
 import localeGB from '@angular/common/locales/vi';
 import { registerLocaleData } from '@angular/common';
 registerLocaleData(localeGB);
+import {HttpClientModule} from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ registerLocaleData(localeGB);
     BrowserModule,
     AppRoutingModule,
     NgbModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    HttpClientModule
   ],
   providers: [MyserviceService, AuthGuardService, {provide: LOCALE_ID, useValue: 'vi'}],
   bootstrap: [AppComponent]

@@ -1,5 +1,5 @@
 <fieldset [disabled]="type === typeForm.view">
-  <form [formGroup]="employeeFormGroup" (ngSubmit)="onSubmit()" #form="ngForm" class="row form m-5 p-4">
+  <form [formGroup]="employeeFormGroup" class="row form m-5 p-4">
     <div class="col-md-12 font pb-4 pt-3">
       <div class="row">
         <div class="col-md-6 pl-5">
@@ -39,6 +39,17 @@
           </div>
         </div>
         <div class="col-md-6 group2 pl-5">
+          <div class="form-group row">
+            <label for="email-input" class="col-md-12 col-form-label label-generate">Ngày sinh:</label>
+            <div class="col-md-12 input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text"> <i class="fa fa-calendar" aria-hidden="true"></i> </span>
+              </div>
+              <input class="form-control color-input" type="date" id="email-input" formControlName="birthday">
+            </div>
+            <!-- <p *ngIf="employeeFormGroup.get('email')?.errors && employeeFormGroup.get('email').errors?.email && isSubmit" class="warning text-danger">Email sai định dạng</p> -->
+            <p class="warning text-danger">{{formErrors?.email}}</p>
+          </div>
           <div class="form-group row">
             <label for="email-input" class="col-md-12 col-form-label label-generate">Email:</label>
             <div class="col-md-12 input-group">

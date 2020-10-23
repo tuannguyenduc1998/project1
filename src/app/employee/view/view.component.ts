@@ -20,15 +20,16 @@ export class ViewComponent implements OnInit {
   loadData$ = new BehaviorSubject('');
   @ViewChild('form') form: FormEmployeeComponent;
   constructor(private route: ActivatedRoute, private myserviceService: MyserviceService) {
-    this.loadData$.pipe(debounceTime(0)).subscribe(_ => {
-      this.employee = this.myserviceService.employees.find(x => x.id === +this.id);
-   });
   }
 
   ngOnInit(): void {
-    this.id = this.route.snapshot.params.id;
-    this.employee = this.myserviceService.employees.find(x => x.id === +this.id);
+    this.getEmplyeeRoute();
     this.type = this.typeForm.view;
+  }
+
+  getEmplyeeRoute(): void {
+    const id = +this.route.snapshot.paramMap.get('id');
+    this.myserviceService.getEmployeeById(id).subscribe(employee => this.employee = employee);
   }
 
 }

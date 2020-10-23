@@ -9,6 +9,7 @@ import { ListEmployeeComponent } from './list-employee/list-employee.component';
 import { CreateComponent } from './create/create.component';
 import { ViewComponent } from './view/view.component';
 import { EditComponent } from './edit/edit.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [EmployeeComponent, FormEmployeeComponent, ListEmployeeComponent, CreateComponent, ViewComponent, EditComponent],
@@ -16,7 +17,8 @@ import { EditComponent } from './edit/edit.component';
     CommonModule,
     EmployeeRoutingModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    HttpClientModule
   ],
 })
 export class EmployeeModule { }

@@ -23,7 +23,7 @@ export class FormEmployeeComponent implements OnInit {
   imgDefault = './assets/images.png';
   isSubmit: boolean;
   employees: Employees[];
-  id: string;
+  id: number;
   employeeWorks: EmployeeWorks[];
   employeeWorkFormGroup: FormGroup;
   editField: string;
@@ -52,8 +52,11 @@ export class FormEmployeeComponent implements OnInit {
               private route: ActivatedRoute, private router: Router, private location: Location) {
   }
   ngOnInit(): void {
-    this.employeeWorks = this.myserviceService.onLoadWork();
     this.createForm();
+    this.myserviceService.getEmployees()
+      .subscribe((data: any): void => {
+        this.employees = data;
+      });
     this.employeeFormGroup.valueChanges.subscribe(
       _ => {
         if (this.isSubmit)
@@ -98,17 +101,40 @@ export class FormEmployeeComponent implements OnInit {
       status: [this.model.status],
       email: [this.model.email, Validators.email],
       comment: [this.model.comment],
+      birthday: [this.model.birthday],
       works: this.formBuilder.array(
         (this.model.works || []).map(el => this.createWork(el))
         )
     });
   }
 
+  onAdd(): void {
+    this.isSubmit = true;
+    if (this.validateForm()) {
+      const id = Math.max(...this.employees.map(item => item.id), 0);
+      const newEmployee: Employees = new Employees();
+      newEmployee.id = id + 1;
+      newEmployee.namecode = this.employeeFormGroup.value.namecode;
+      newEmployee.name = this.employeeFormGroup.value.name;
+      newEmployee.active = this.employeeFormGroup.value.active;
+      newEmployee.avatar = this.employeeFormGroup.value.avatar;
+      newEmployee.birthday = this.employeeFormGroup.value.birthday;
+      newEmployee.email = this.employeeFormGroup.value.email;
+      newEmployee.nation = this.employeeFormGroup.value.nation;
+      newEmployee.status = this.employeeFormGroup.value.status;
+      newEmployee.comment = this.employeeFormGroup.value.comment;
+      this.myserviceService.add(newEmployee)
+      .subscribe(insertedEmployee => {
+        this.employees.push(insertedEmployee);
+        this.router.navigateByUrl(`/employee/list`);
+      });
+    }
+  }
+
   onSubmit(): void {
     this.isSubmit = true;
     if (this.validateForm()) {
-      this.myserviceService.createOrUpdate(this.employeeFormGroup.value);
-      this.router.navigateByUrl(`/employee/list`);
+      this.myserviceService.update(this.employeeFormGroup.value).subscribe(() => this.router.navigateByUrl(`/employee/list`));
     }
   }
 

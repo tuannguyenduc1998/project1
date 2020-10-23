@@ -20,15 +20,16 @@ export class EditComponent implements OnInit {
   loadData$ = new BehaviorSubject('');
   @ViewChild('form') form: FormEmployeeComponent;
   constructor(private route: ActivatedRoute, private myserviceService: MyserviceService) {
-    this.loadData$.pipe(debounceTime(0)).subscribe(_ => {
-      this.employee =  this.myserviceService.GetEmployee(this.id);
-   });
    }
 
   ngOnInit(): void {
-    this.id = this.route.snapshot.params.id;
-    this.employee =  this.myserviceService.GetEmployee(this.id);
-    this.type = this.typeForm.edit;
+     this.getEmplyeeRoute();
+     this.type = this.typeForm.edit;
+  }
+
+  getEmplyeeRoute(): void {
+    const id = +this.route.snapshot.paramMap.get('id');
+    this.myserviceService.getEmployeeById(id).subscribe(employee => this.employee = employee);
   }
 
 }

@@ -9,7 +9,7 @@
 <div class="col-md-12 font d-flex justify-content-between">
   <h2 for="tieude" class="color-label">DANH SÁCH NHÂN VIÊN</h2>
   <div class="font">
-    <input #search class="input-search" type="text" name="search" placeholder="Tìm theo tên nhân viên" ngModel #name="ngModel" (keyup)="searchTerm$.next($event.target.value)" [value]="searchTerm$.value">
+    <input #search class="input-search" type="text" name="search" placeholder="Tìm theo tên nhân viên" ngModel #name="ngModel" (keyup)="onSearch(search.value)">
     <i class="fa fa-search imgs" aria-hidden="true" (click)="search.click()"></i>
   </div>
 </div>
@@ -24,12 +24,12 @@
     <th class="tht">Thao tác</th>
   </thead>
   <tbody>
-    <tr *ngFor="let employee of employees">
+    <tr *ngFor="let employee of employees$ | async">
       <td class="tht">{{employee.id}}</td>
       <td>{{employee.namecode}}</td>
       <td>{{employee.name}}</td>
       <td>{{employee.email}}</td>
-      <td>{{employee.birthday | date: 'd/M/y' : 'vi' }}</td>
+      <td>{{employee.birthday | date:'d/M/y'}}</td>
       <td><i [routerLink]="['/employee/view',employee.id]" class="fa fa-eye icon icon-eye" aria-hidden="true" ></i>
           <i [routerLink]="['/employee/edit',employee.id]" class="fa fa-edit icon icon-edit" aria-hidden="true"></i>
           <i class="fa fa-trash icon icon-delete" aria-hidden="true" (click)="onDelete(employee.id)"></i>
