@@ -15,7 +15,7 @@ export class LoginFormComponent implements OnInit {
     isSubmit: boolean;
     isCheckLogin: false;
     @Input() userLogin: UserLogin = new UserLogin();
-    user: UserLogin[];
+    users: UserLogin[];
     invalidMessages: string[] = [];
     formErrors = {
     username: '',
@@ -38,7 +38,7 @@ export class LoginFormComponent implements OnInit {
     });
   }
   ngOnInit(): void {
-    this.user = this.myserviceService.onLoadUser();
+    this.getUsers();
     this.createForm();
     this.userForm.valueChanges.subscribe(
       _ => {
@@ -48,6 +48,13 @@ export class LoginFormComponent implements OnInit {
         }
       }
     );
+  }
+
+  getUsers(): void {
+    this.myserviceService.getUsers()
+      .subscribe((data: any): void => {
+        this.users = data;
+      });
   }
 
   onSubmit(): void{
@@ -63,7 +70,7 @@ export class LoginFormComponent implements OnInit {
       //     alert('Tài khoản hoặc mật khẩu không đúng!');
       //   }
       // });
-      if (this.user.find(x => x.username === this.userForm.get('username').value && x.password === this.userForm.get('password').value))
+      if (this.users.find(x => x.username === this.userForm.get('username').value && x.password === this.userForm.get('password').value))
       {
         this.myserviceService.setLoginStatus(true);
         this.router.navigateByUrl(`/employee/list`);
