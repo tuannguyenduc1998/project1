@@ -48,7 +48,7 @@
       </li>
       <ng-container *ngIf="pagination.pages && pagination.pages.length">
         <li class="page-item">
-          <a class="page-number">{{pagination.currentPage}}</a>
+          <button class="page-number">{{pagination.currentPage}}</button>
           <!-- <a href="javascript:void(0);" class="page-link" [class.is-current]="pagination.currentPage === page" (click)="setPage(page)">{{ page }}</a> -->
         </li>
       </ng-container>

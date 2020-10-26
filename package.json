@@ -26,9 +26,11 @@
     "angular-font-awesome": "^3.1.2",
     "bootstrap": "^4.5.0",
     "bootstrap-icons": "^1.0.0",
+    "crypto-js": "^4.0.0",
     "font-awesome": "^4.7.0",
     "intl": "^1.2.5",
     "json-server": "^0.16.2",
+    "ng-zorro-antd": "^10.0.2",
     "ng2-search-filter": "^0.5.1",
     "ngx-pagination": "^5.0.0",
     "rxjs": "~6.6.0",
@@ -54,5 +56,8 @@
     "ts-node": "~8.3.0",
     "tslint": "~6.1.0",
     "typescript": "~4.0.2"
+  },
+  "browser": {
+    "crypto": false
   }
 }

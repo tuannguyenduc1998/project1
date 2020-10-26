@@ -13,19 +13,25 @@ import localeGB from '@angular/common/locales/vi';
 import { registerLocaleData } from '@angular/common';
 registerLocaleData(localeGB);
 import {HttpClientModule} from '@angular/common/http';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { SharedComponent } from './shared/shared.component';
+import { SharedModule } from './shared/shared.module';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginFormComponent,
-    DataPipe
+    DataPipe,
+    DashboardComponent,
+    SharedComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     NgbModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    SharedModule
   ],
   providers: [MyserviceService, AuthGuardService, {provide: LOCALE_ID, useValue: 'vi'}],
   bootstrap: [AppComponent]

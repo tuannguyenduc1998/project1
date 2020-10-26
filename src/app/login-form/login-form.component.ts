@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { UserLogin } from '../model/data';
 import { MyserviceService } from '../service/myservice.service';
+import * as CryptoJS from 'crypto-js';
 
 @Component({
   selector: 'app-login-form',
@@ -23,7 +24,7 @@ export class LoginFormComponent implements OnInit {
     };
   validationMessages = {
     required: 'Trường này là bắt buộc nhập',
-    minlength: 'Mật khẩu phải ít nhất 8 kí tự',
+    minlength: 'Mật khẩu phải ít nhất 6 kí tự',
   };
 
 
@@ -33,12 +34,12 @@ export class LoginFormComponent implements OnInit {
 
   createForm(): void {
     this.userForm = this.formBuilder.group({
-      username: [this.userLogin.username, Validators.required],
-      password: [this.userLogin.password, [Validators.required, Validators.minLength(8)]],
+      username: [this.userLogin.userName, Validators.required],
+      password: [this.userLogin.password, [Validators.required, Validators.minLength(6)]],
     });
   }
   ngOnInit(): void {
-    this.getUsers();
+    //this.getUsers();
     this.createForm();
     this.userForm.valueChanges.subscribe(
       _ => {
@@ -57,6 +58,13 @@ export class LoginFormComponent implements OnInit {
       });
   }
 
+  getUser(): void {
+    this.myserviceService.getUserApis(this.userForm.value)
+      .subscribe((data: any): void => {
+        this.users = data;
+      });
+  }
+
   onSubmit(): void{
     this.isSubmit = true;
     if (this.validateForm()) {
@@ -70,14 +78,23 @@ export class LoginFormComponent implements OnInit {
       //     alert('Tài khoản hoặc mật khẩu không đúng!');
       //   }
       // });
-      if (this.users.find(x => x.username === this.userForm.get('username').value && x.password === this.userForm.get('password').value))
-      {
+      // tslint:disable-next-line: max-line-length
+      // if (this.users.find(x => x.username === this.userForm.get('username').value && x.password === this.userForm.get('password').value))
+      // {
+      //   this.myserviceService.setLoginStatus(true);
+      //   this.router.navigateByUrl(`/employee/list`);
+      // }
+      // else {
+      //   alert('Tài khoản hoặc mật khẩu không đúng!');
+      // }
+      this.userLogin.password = this.enStr(this.userForm.get('password').value);
+      this.userLogin.userName = this.userForm.get('username').value;
+      this.myserviceService.getUserApis(this.userLogin)
+      .subscribe((data: any): void => {
         this.myserviceService.setLoginStatus(true);
         this.router.navigateByUrl(`/employee/list`);
-      }
-      else {
-        alert('Tài khoản hoặc mật khẩu không đúng!');
-      }
+        console.log(data);
+      });
     }
   }
 
@@ -111,4 +128,15 @@ export class LoginFormComponent implements OnInit {
     }
     return errorMessages;
   }
+
+  enStr(pass){
+    // tslint:disable-next-line: max-line-length
+    const parsedSalt = CryptoJS.enc.Base64.parse('uGa5buIox4+fX4ViZ7p3TyR4cx5evpoBqFsE8dueBqheYs6faRQ1VxCr0oQ1hqXQGyjc8rKA5kWXjHMxAByt0Q==');
+    const result = CryptoJS.PBKDF2( pass, parsedSalt, {
+      keySize: 64 / 4,
+      iterations: 1000,
+      hasher: CryptoJS.algo.SHA512
+    } );
+    return CryptoJS.enc.Base64.stringify( result );
+}
 }

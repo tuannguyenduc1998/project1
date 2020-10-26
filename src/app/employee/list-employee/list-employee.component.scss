@@ -43,9 +43,13 @@ input:focus {
   font-size: 15px;
 }
 
-.color-btn1,
-.page-number,
-.page-number:active{
+.color-btn1{
+  background-color: rgb(59, 143, 112);
+  color: white;
+  border: none;
+}
+
+.page-number{
   background-color: rgb(59, 143, 112);
   color: white;
   border: none;

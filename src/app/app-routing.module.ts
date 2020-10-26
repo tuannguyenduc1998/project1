@@ -1,7 +1,9 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { DashboardComponent } from './dashboard/dashboard.component';
 import { LoginFormComponent } from './login-form/login-form.component';
 import { AuthGuardService } from './service/auth-guard.service';
+import { SharedComponent } from './shared/shared.component';
 
 const routes: Routes = [
   {
@@ -11,8 +13,12 @@ const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: 'employee',
+    redirectTo: 'header',
     pathMatch: 'full'
+  },
+  {
+    path: 'header',
+    component: DashboardComponent
   },
   {
     path: 'login',

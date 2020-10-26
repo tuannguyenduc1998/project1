@@ -82,15 +82,15 @@ export class MyserviceService {
     }
   ];
 
-  userLogin: UserLogin[] = [
-    {
-      username: 'tuannguyen1998',
-      password: 'khongcopass',
-    }
-  ];
+  // userLogin: UserLogin[] = [
+  //   {
+  //     username: 'tuannguyen1998',
+  //     password: 'khongcopass',
+  //   }
+  // ];
 
   private employeeUrl = 'http://localhost:3000/employees';
-  private userUrl = ' http://localhost:3000/userLogin';
+  private userUrl = 'http://hawadevapi.bys.vn/api/login';
   private loggedInStatus = JSON.parse(localStorage.getItem('LoginStatus') || ('false'));
 
   // tslint:disable-next-line:typedef
@@ -155,12 +155,15 @@ export class MyserviceService {
   //   return this.employees;
   // }
 
-  onLoadUser(): UserLogin[] {
-    return this.userLogin;
-  }
-
+  // onLoadUser(): UserLogin[] {
+  //   return this.userLogin;
+  // }
   getUsers(){
-    return this.http.get(this.userUrl);
+    return this.http.get('http://localhost:3000/userlogin');
+ }
+
+  getUserApis(user: UserLogin){
+    return this.http.post(this.userUrl, user);
  }
 
   // onLoadWork(): EmployeeWorks[] {

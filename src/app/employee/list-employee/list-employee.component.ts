@@ -21,9 +21,7 @@ export class ListEmployeeComponent implements OnInit {
   employees$: Observable<Employees[]>;
   searchSubject$ = new Subject<string>();
   fieldsetDisabled = false;
-  // Pagination object
   pagination: any = {};
-  // Paged items
   pagedEmployees: any[];
 
   constructor(

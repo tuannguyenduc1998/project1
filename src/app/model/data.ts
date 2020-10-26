@@ -35,6 +35,9 @@ export class EmployeeWorks {
 }
 
 export class UserLogin{
-  public username: string;
+  public userName: string;
   public password: string;
+  public deviceType: string;
+  public token: any;
 }
+
