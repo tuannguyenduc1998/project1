@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { of } from 'rxjs/internal/observable/of';
 import { catchError, tap } from 'rxjs/operators';
-import { Employees, EmployeeWorks, UserLogin } from '../model/data';
+import { Employees, EmployeeWorks, UserLogin } from 'src/app/model/data';
 // Injectable dùng để trích xuất dữ liệu ra
 @Injectable({
   providedIn: 'root'
@@ -13,7 +13,7 @@ export class MyserviceService {
   // Subject: khi vào nó sẽ không biết gì cả BehaviorSubject: thì ngược lại
   constructor(private router: Router, private http: HttpClient) { }
 
-  get LoginStatus(): boolean {
+  get LoginStatus(): boolean{
     return JSON.parse(localStorage.getItem('LoginStatus') ||
     this.loggedInStatus.toString());
   }

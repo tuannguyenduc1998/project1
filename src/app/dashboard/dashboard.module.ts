@@ -3,19 +3,22 @@ import { CommonModule } from '@angular/common';
 import { NzMenuModule } from 'ng-zorro-antd/menu';
 import { DashboardRoutingModule } from './dashboard-routing.module';
 import { SharedModule } from '../shared/shared.module';
-import { SharedComponent } from '../shared/shared.component';
-import { UserComponent } from './user/user.component';
-import { UserCreateComponent } from './user/user-create/user-create.component';
 import { UserViewComponent } from './user/user-view/user-view.component';
 import { UserEditComponent } from './user/user-edit/user-edit.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+import { BrowserModule } from '@angular/platform-browser';
+import { UserComponent } from './user/user.component';
+import { UserFormComponent } from './user/user-form/user-form.component';
 
 
 @NgModule({
-  declarations: [UserComponent, UserCreateComponent, UserViewComponent, UserEditComponent],
+  declarations: [UserViewComponent, UserEditComponent, UserComponent, UserFormComponent],
   imports: [
-    CommonModule,
     DashboardRoutingModule,
-    SharedModule
+    SharedModule,
+    ReactiveFormsModule,
+    HttpClientModule,
   ]
 })
 export class DashboardModule { }

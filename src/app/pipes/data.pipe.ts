@@ -1,7 +1,6 @@
 import { formatDate } from '@angular/common';
 import { Pipe, PipeTransform } from '@angular/core';
-import { MyserviceService } from '../service/myservice.service';
-
+import { MyserviceService } from '../shared/components/service/myservice.service';
 @Pipe({
   name: 'data'
 })

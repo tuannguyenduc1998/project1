@@ -4,9 +4,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { TypeForm } from 'src/app/constant/type-form';
 import { Employees, EmployeeWorks, status, Work, WorkItem } from 'src/app/model/data';
-import { MyserviceService } from 'src/app/service/myservice.service';
 import { Location } from '@angular/common';
 import { emailValidator } from 'src/app/model/validator';
+import { MyserviceService } from 'src/app/shared/components/service/myservice.service';
 @Component({
   selector: 'app-form-employee',
   templateUrl: './form-employee.component.html',

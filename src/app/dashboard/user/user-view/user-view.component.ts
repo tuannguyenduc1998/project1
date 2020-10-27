@@ -1,4 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
+import { TypeForm } from 'src/app/constant/type-form';
+import { User } from 'src/app/model/user.model';
+import { UserFormComponent } from '../user-form/user-form.component';
 
 @Component({
   selector: 'app-user-view',
@@ -6,10 +10,18 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./user-view.component.scss']
 })
 export class UserViewComponent implements OnInit {
-
-  constructor() { }
+  @ViewChild('form') form: UserFormComponent;
+  user: User;
+  @Input() type: string;
+  typeForm = TypeForm;
+  constructor(private router: Router) { }
 
   ngOnInit(): void {
+    this.type = this.typeForm.view;
+  }
+
+  onSubmit(): void{
+    this.router.navigate(['/dashboard/edit']);
   }
 
 }

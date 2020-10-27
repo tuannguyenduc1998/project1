@@ -1,0 +1,89 @@
+<div class="row col-md-9">
+  <form [formGroup]="userForm" class="row form m-5 p-4">
+    <h2 for="tieude" class="text-uppercase">Xem thông tin cá nhân/hộ gia đình</h2>
+    <div class="col-md-12 font pb-4 pt-3">
+      <div class="row">
+        <div class="col-md-6 pl-5">
+          <div class="form-group row">
+            <label for="text-input" class="col-md-12 col-form-label label-generate">Mã tài khoản:</label>
+            <div class="col-md-12">
+              <input class="form-control" type="text" id="text-input" formControlName="namecode">
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="text-input" class="col-md-12 col-form-label label-generate">Loại chủ rừng:</label>
+            <div class="col-md-12">
+              <input class="form-control" type="text" id="text-input" formControlName="namecode">
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="email-input" class="col-md-12 col-form-label label-generate">Tên cá nhân/Hộ gia đình:</label>
+            <div class="col-md-12">
+              <input class="form-control color-input" type="text" id="email-input" formControlName="birthday">
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="email-input" class="col-md-12 col-form-label label-generate">Số điện thoại di động:</label>
+            <div class="col-md-12">
+              <input class="form-control color-input" type="text" id="email-input" formControlName="birthday">
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="email-input" class="col-md-12 col-form-label label-generate">CMND/Thẻ căn cước:</label>
+            <div class="col-md-12">
+              <input class="form-control color-input" type="text" id="email-input" formControlName="birthday">
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="email-input" class="col-md-12 col-form-label label-generate">Ngày cấp:</label>
+            <div class="col-md-12">
+              <input class="form-control color-input" type="date" id="email-input" formControlName="birthday">
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 group2 pl-5">
+          <div class="form-group row">
+            <label for="level" class="col-md-12 col-form-label label-generate">Tỉnh/Thành phố:</label>
+            <div class="col-md-12">
+              <select class="form-control color-input" formControlName="status" id="level" required>
+                <option ></option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="level" class="col-md-12 col-form-label label-generate">Quận/Huyện:</label>
+            <div class="col-md-12">
+              <select class="form-control color-input" formControlName="status" id="level" required>
+                <option ></option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="level" class="col-md-12 col-form-label label-generate">Phường/Xã:</label>
+            <div class="col-md-12">
+              <select class="form-control color-input" formControlName="status" id="level" required>
+                <option ></option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="level" class="col-md-12 col-form-label label-generate">Thôn/Bản:</label>
+            <div class="col-md-12">
+              <select class="form-control color-input" formControlName="status" id="level" required>
+                <option></option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="level" class="col-md-12 col-form-label label-generate">Số nhà/Tên đường:</label>
+            <div class="col-md-12">
+              <select class="form-control color-input" formControlName="status" id="level" required>
+                <option ></option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</form>
+</div>

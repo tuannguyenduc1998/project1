@@ -2,8 +2,10 @@ import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { UserLogin } from '../model/data';
-import { MyserviceService } from '../service/myservice.service';
 import * as CryptoJS from 'crypto-js';
+import { MyserviceService } from '../shared/components/service/myservice.service';
+import { User, UserLoginData } from '../model/user.model';
+import { UserService } from '../shared/components/service/user.service';
 
 @Component({
   selector: 'app-login-form',
@@ -17,6 +19,7 @@ export class LoginFormComponent implements OnInit {
     isCheckLogin: false;
     @Input() userLogin: UserLogin = new UserLogin();
     users: UserLogin[];
+    currentUser: UserLoginData;
     invalidMessages: string[] = [];
     formErrors = {
     username: '',
@@ -28,7 +31,7 @@ export class LoginFormComponent implements OnInit {
   };
 
 
-    constructor(private formBuilder: FormBuilder, private myserviceService: MyserviceService, private router: Router) {
+    constructor(private formBuilder: FormBuilder, private myserviceService: MyserviceService, private router: Router, private userService: UserService) {
 
   }
 
@@ -89,12 +92,13 @@ export class LoginFormComponent implements OnInit {
       // }
       this.userLogin.password = this.enStr(this.userForm.get('password').value);
       this.userLogin.userName = this.userForm.get('username').value;
-      this.myserviceService.getUserApis(this.userLogin)
-      .subscribe((data: any): void => {
+      this.myserviceService.getUserApis(this.userLogin).subscribe(res => {
+        this.currentUser = res['data'];
         this.myserviceService.setLoginStatus(true);
-        this.router.navigateByUrl(`/employee/list`);
-        console.log(data);
-      });
+        this.userService.getUserItems(this.currentUser);
+        console.log(this.currentUser);
+        this.router.navigateByUrl(`/dashboard`);
+      })
     }
   }
 

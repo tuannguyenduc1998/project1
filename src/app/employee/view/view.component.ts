@@ -4,7 +4,7 @@ import { BehaviorSubject } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 import { TypeForm } from 'src/app/constant/type-form';
 import { Employees } from 'src/app/model/data';
-import { MyserviceService } from 'src/app/service/myservice.service';
+import { MyserviceService } from 'src/app/shared/components/service/myservice.service';
 import { FormEmployeeComponent } from '../form-employee/form-employee.component';
 
 @Component({
