@@ -11,6 +11,6 @@ import { ReactiveFormsModule } from '@angular/forms';
 @NgModule({
   declarations: [],
   imports: [CommonModule , ReactiveFormsModule, NzMenuModule, NzDropDownModule, NzTabsModule, ComponentModule],
-  exports: [HeaderComponent, NzMenuModule, NzDropDownModule, NzTabsModule, ComponentModule],
+  exports: [HeaderComponent, NzMenuModule, NzDropDownModule, NzTabsModule, ComponentModule,CommonModule, ReactiveFormsModule],
 })
 export class SharedModule {}

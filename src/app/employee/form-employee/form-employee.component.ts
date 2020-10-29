@@ -6,7 +6,7 @@ import { TypeForm } from 'src/app/constant/type-form';
 import { Employees, EmployeeWorks, status, Work, WorkItem } from 'src/app/model/data';
 import { Location } from '@angular/common';
 import { emailValidator } from 'src/app/model/validator';
-import { MyserviceService } from 'src/app/shared/components/service/myservice.service';
+import { MyserviceService } from 'src/app/shared/service/myservice.service';
 @Component({
   selector: 'app-form-employee',
   templateUrl: './form-employee.component.html',

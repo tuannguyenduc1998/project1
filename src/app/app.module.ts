@@ -31,8 +31,7 @@ import { MyserviceService } from './shared/service/myservice.service';
     HttpClientModule,
     AppRoutingModule,
     NgbModule,
-    SharedModule,
-    ReactiveFormsModule
+    SharedModule
   ],
   providers: [MyserviceService, AuthGuardService],
   bootstrap: [AppComponent]

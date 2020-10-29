@@ -13,27 +13,29 @@ export class UserFormComponent implements OnInit {
 
   @Input() model: User = new User();
   userForm: FormGroup;
+  userModel: User = new User();
   typeForm = TypeForm;
   @Input() type: string;
   constructor(private formBuilder: FormBuilder, private userService: UserService) { }
 
   ngOnInit(): void {
-    this.createForm();
     this.userService.getUserItems()
-      .subscribe((data: any) => {
-        this.model = data;
+      .subscribe( (users) => {
+        this.userModel = users.data;
+        console.log(this.userModel);
+        this.createForm();
       });
   }
 
   createForm(): void {
     this.userForm = this.formBuilder.group({
-      coCode: [this.model.coCode],
-      fullName: [this.model.fullName],
-      cellphoneNumber: [this.model.cellphoneNumber],
-      identityCard: [this.model.identityCard],
-      identityCardIssuedDate: [this.model.identityCardIssuedDate],
-      village: [this.model.village],
-      street: [this.model.street]
+      code: [this.userModel.coCode],
+      // fullName: [this.userModel.fullName],
+      // cellphoneNumber: [this.userModel.cellphoneNumber],
+      // identityCard: [this.userModel.identityCard],
+      // identityCardIssuedDate: [this.userModel.identityCardIssuedDate],
+      // village: [this.userModel.village],
+      // street: [this.userModel.street]
     });
   }
 

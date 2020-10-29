@@ -1,13 +1,13 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { UserLogin } from 'src/app/model/data';
-import { UserLoginData } from 'src/app/model/user.model';
+import { User, UserLoginData } from 'src/app/model/user.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
-  private userUrls = 'http://hawadevapi.bys.vn/api/user/';
+  private userUrls = 'http://hawadevapi.bys.vn/api/user';
   private loggedInStatus = JSON.parse(localStorage.getItem('LoginStatus'));
   user: UserLoginData;
   constructor(private http: HttpClient) { }
@@ -16,10 +16,10 @@ export class UserService {
     this.user = this.loggedInStatus;
     const httpOptions = {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' , Authorization:
-      'Bareer ' + this.user.jwtToken})
+      `Bearer ${this.user.jwtToken}`})
     };
-    const url = `${this.userUrls}/getdetail?userId=${this.user.userId}`;
-    return this.http.get(url);
+    const url = `${this.userUrls}/getdetail`;
+    return this.http.get<any>(url, httpOptions);
   }
 
   setLoginStatus(value): void {
