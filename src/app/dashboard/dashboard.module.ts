@@ -7,7 +7,6 @@ import { UserViewComponent } from './user/user-view/user-view.component';
 import { UserEditComponent } from './user/user-edit/user-edit.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { BrowserModule } from '@angular/platform-browser';
 import { UserComponent } from './user/user.component';
 import { UserFormComponent } from './user/user-form/user-form.component';
 

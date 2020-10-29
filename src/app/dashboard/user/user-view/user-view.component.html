@@ -1,9 +1,12 @@
 <app-header></app-header>
-<app-menu></app-menu>
-<div class="font mt-4 d-flex justify-content-between align-items-center boxshaw mx-4 p-3">
-  <div class="d-flex justify-content-start text-uppercase">
+<div class="row col-md-12">
+<div class="col-md-3">
+  <app-menu></app-menu>
+</div>
+<div class="col-md-9">
+  <div class="text-uppercase d-flex justify-content-end">
     <button class="color-btn1  mr-2 " type="click">Chỉnh sửa</button>
   </div>
+  <app-user-form #form [model]="user" [type]="type"></app-user-form>
 </div>
-<app-user-form #form [model]="user" [type]="type"></app-user-form>
-  <router-outlet></router-outlet>
+</div>
