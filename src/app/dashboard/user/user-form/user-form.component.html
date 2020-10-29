@@ -1,7 +1,6 @@
 <fieldset [disabled]="type === typeForm.edit">
-  <form [formGroup]="userForm" class="row form m-5 p-4" *ngIf="userForm">
-    <h2 for="tieude" class="text-uppercase">Xem thông tin cá nhân/hộ gia đình</h2>
-    <div class="col-md-12 font pb-4 pt-3">
+  <form [formGroup]="userForm" class="row" *ngIf="userForm">
+    <div class="col-md-12 font">
       <div class="row">
         <div class="col-md-6 pl-5">
           <div class="form-group row">
@@ -56,7 +55,7 @@
             <label for="level" class="col-md-12 col-form-label label-generate">Quận/Huyện:</label>
             <div class="col-md-12">
               <select class="form-control color-input" formControlName="district" id="level" required>
-                <option *ngFor="let lvl of this.child" [value]="lvl.code">{{ lvl.name }}</option>
+                <option *ngFor="let lvl of this.masterDataAddressChildDistrict" [value]="lvl.code">{{ lvl.name }}</option>
               </select>
             </div>
           </div>

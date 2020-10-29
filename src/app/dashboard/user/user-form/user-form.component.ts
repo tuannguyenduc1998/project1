@@ -40,9 +40,10 @@ export class UserFormComponent implements OnInit {
             this.masterDataService.getMasterDataAddress().subscribe((masterDataAddress) => {
                this.masterDataAddress = masterDataAddress.data;
                this.masterDataAddressChildProvince = this.masterDataAddress[0].childs;
-               this.masterDataAddressChildDistrict = this.masterDataAddressChildProvince.find(x => x.code === this.userModel.province.code);
-               this.masterDataAddressChildDistrict = this.masterDataAddressChildProvince[0].childs;
-               this.masterDataAddressChildWard = this.masterDataAddressChildDistrict[0].childs;
+               // tslint:disable-next-line:max-line-length
+               this.masterDataAddressChildDistrict = this.masterDataAddressChildProvince.filter(x => x.code === this.userModel.province.code)[0].childs;
+               // tslint:disable-next-line: max-line-length
+               this.masterDataAddressChildWard = this.masterDataAddressChildDistrict.filter(x => x.code === this.userModel.district.code)[0].childs;
             });
           });
         }
