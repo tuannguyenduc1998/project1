@@ -21,7 +21,7 @@ export class UserViewComponent implements OnInit {
   }
 
   onSubmit(): void{
-    this.router.navigate(['/dashboard/edit']);
+    this.router.navigate(['/dashboard/user/edit']);
   }
 
 }

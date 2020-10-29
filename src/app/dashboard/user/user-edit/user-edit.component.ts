@@ -16,6 +16,7 @@ export class UserEditComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+    this.type = this.typeForm.edit;
   }
 
 }

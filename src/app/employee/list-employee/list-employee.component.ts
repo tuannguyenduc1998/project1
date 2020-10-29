@@ -5,7 +5,7 @@ import { BehaviorSubject, Observable, of, Subject } from 'rxjs';
 import { TypeForm } from 'src/app/constant/type-form';
 import { Employees, EmployeeWorks } from 'src/app/model/data';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { MyserviceService } from 'src/app/shared/components/service/myservice.service';
+import { MyserviceService } from 'src/app/shared/service/myservice.service';
 
 @Component({
   selector: 'app-list-employee',

@@ -5,7 +5,7 @@
 </div>
 <div class="col-md-9">
   <div class="text-uppercase d-flex justify-content-end">
-    <button class="color-btn1  mr-2 " type="click">Chỉnh sửa</button>
+    <button class="color-btn1 mt-4" type="click" (click)="onSubmit()">Chỉnh sửa</button>
   </div>
   <app-user-form #form [model]="user" [type]="type"></app-user-form>
 </div>
