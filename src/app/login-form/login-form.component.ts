@@ -3,9 +3,9 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { UserLogin } from '../model/data';
 import * as CryptoJS from 'crypto-js';
-import { MyserviceService } from '../shared/components/service/myservice.service';
 import { User, UserLoginData } from '../model/user.model';
-import { UserService } from '../shared/components/service/user.service';
+import { MyserviceService } from '../shared/service/myservice.service';
+import { UserService } from '../shared/service/user.service';
 
 @Component({
   selector: 'app-login-form',
@@ -31,7 +31,8 @@ export class LoginFormComponent implements OnInit {
   };
 
 
-    constructor(private formBuilder: FormBuilder, private myserviceService: MyserviceService, private router: Router, private userService: UserService) {
+    constructor(private formBuilder: FormBuilder,
+                private myserviceService: MyserviceService, private router: Router, private userService: UserService) {
 
   }
 
@@ -94,11 +95,10 @@ export class LoginFormComponent implements OnInit {
       this.userLogin.userName = this.userForm.get('username').value;
       this.myserviceService.getUserApis(this.userLogin).subscribe(res => {
         this.currentUser = res['data'];
-        this.myserviceService.setLoginStatus(true);
-        this.userService.getUserItems(this.currentUser);
+        this.userService.setLoginStatus(this.currentUser);
         console.log(this.currentUser);
         this.router.navigateByUrl(`/dashboard`);
-      })
+      });
     }
   }
 

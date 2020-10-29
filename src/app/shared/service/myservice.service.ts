@@ -13,9 +13,8 @@ export class MyserviceService {
   // Subject: khi vào nó sẽ không biết gì cả BehaviorSubject: thì ngược lại
   constructor(private router: Router, private http: HttpClient) { }
 
-  get LoginStatus(): boolean{
-    return JSON.parse(localStorage.getItem('LoginStatus') ||
-    this.loggedInStatus.toString());
+  get LoginStatus(){
+    return JSON.parse(localStorage.getItem('LoginStatus'));
   }
   currentEmployee = new Employees();
   private userSubject: BehaviorSubject<UserLogin>;
@@ -91,7 +90,7 @@ export class MyserviceService {
 
   private employeeUrl = 'http://localhost:3000/employees';
   private userUrl = 'http://hawadevapi.bys.vn/api/login';
-  private loggedInStatus = JSON.parse(localStorage.getItem('LoginStatus') || ('false'));
+  private loggedInStatus = JSON.parse(localStorage.getItem('LoginStatus'));
 
   // tslint:disable-next-line:typedef
   getEmployees(){
@@ -149,7 +148,7 @@ export class MyserviceService {
 
   setLoginStatus(value): void {
     this.loggedInStatus = value;
-    localStorage.setItem('LoginStatus', 'true');
+    localStorage.setItem('LoginStatus', JSON.stringify(value));
   }
   // onLoad() {
   //   return this.employees;

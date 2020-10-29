@@ -13,10 +13,10 @@ registerLocaleData(localeGB);
 import {HttpClientModule} from '@angular/common/http';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { SharedModule } from './shared/shared.module';
-import { MyserviceService } from './shared/components/service/myservice.service';
-import { AuthGuardService } from './shared/components/service/auth-guard.service';
 import { ComponentModule } from './shared/components/component.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AuthGuardService } from './shared/service/auth-guard.service';
+import { MyserviceService } from './shared/service/myservice.service';
 
 @NgModule({
   declarations: [

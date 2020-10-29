@@ -11,7 +11,7 @@ import { UserFormComponent } from '../user-form/user-form.component';
 })
 export class UserViewComponent implements OnInit {
   @ViewChild('form') form: UserFormComponent;
-  user: User;
+  user: User = new User();
   @Input() type: string;
   typeForm = TypeForm;
   constructor(private router: Router) { }

@@ -10,8 +10,7 @@ export class AuthGuardService {
 
   constructor(private authService: MyserviceService, private router: Router) {}
 
-  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot):
-  boolean | Observable<boolean> | Promise<boolean> {
+  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot){
     if (!this.authService.LoginStatus) {
       this.router.navigate(['/login']);
     }

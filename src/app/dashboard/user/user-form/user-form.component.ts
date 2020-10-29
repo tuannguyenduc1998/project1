@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { TypeForm } from 'src/app/constant/type-form';
 import { User } from 'src/app/model/user.model';
-import { UserService } from 'src/app/shared/components/service/user.service';
+import { UserService } from 'src/app/shared/service/user.service';
 
 @Component({
   selector: 'app-user-form',
@@ -19,6 +19,10 @@ export class UserFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.createForm();
+    this.userService.getUserItems()
+      .subscribe((data: any) => {
+        this.model = data;
+      });
   }
 
   createForm(): void {
