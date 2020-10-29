@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { TypeForm } from 'src/app/constant/type-form';
-import { MasterData, MasterDataChild } from 'src/app/model/masterData.model';
+import { MasterData, MasterDataAddress, MasterDataAddressChildDistrict, MasterDataAddressChildProvince, MasterDataAddressChildWard, MasterDataChild } from 'src/app/model/masterData.model';
 import { User } from 'src/app/model/user.model';
 import { MasterdataService } from 'src/app/shared/service/masterdata.service';
 import { UserService } from 'src/app/shared/service/user.service';
@@ -19,6 +19,12 @@ export class UserFormComponent implements OnInit {
   masterDataUserType: MasterData = new MasterData();
   masterDataChild: MasterDataChild[];
   typeForm = TypeForm;
+  child;
+  forestOwnerTypeDefault: MasterDataChild = new MasterDataChild();
+  masterDataAddress: MasterDataAddress = new MasterDataAddress();
+  masterDataAddressChildProvince: MasterDataAddressChildProvince[];
+  masterDataAddressChildDistrict: MasterDataAddressChildDistrict[];
+  masterDataAddressChildWard: MasterDataAddressChildWard[];
   @Input() type: string;
   constructor(private formBuilder: FormBuilder, private userService: UserService, private masterDataService: MasterdataService) { }
 
@@ -30,7 +36,14 @@ export class UserFormComponent implements OnInit {
         if (this.userModel.userType === 'HouseHold'){
           this.masterDataService.getMasterData().subscribe( (masterData) => {
             this.masterDataUserType = masterData.data;
-            this.masterDataChild = this.masterDataUserType.childs;
+            this.masterDataChild = this.masterDataUserType[0].childs;
+            this.masterDataService.getMasterDataAddress().subscribe((masterDataAddress) => {
+               this.masterDataAddress = masterDataAddress.data;
+               this.masterDataAddressChildProvince = this.masterDataAddress[0].childs;
+               this.masterDataAddressChildDistrict = this.masterDataAddressChildProvince.find(x => x.code === this.userModel.province.code);
+               this.masterDataAddressChildDistrict = this.masterDataAddressChildProvince[0].childs;
+               this.masterDataAddressChildWard = this.masterDataAddressChildDistrict[0].childs;
+            });
           });
         }
         this.createForm();
@@ -46,15 +59,11 @@ export class UserFormComponent implements OnInit {
       identityCardIssuedDate: [this.userModel.identityCardIssuedDate],
       village: [this.userModel.village],
       street: [this.userModel.street],
-      district: [''],
-      commune: [''],
-      province: [''],
-      forestOwnerType: [this.Child]
+      district: [this.userModel.district.code],
+      commune: [this.userModel.commune.code],
+      province: [this.userModel.province.code],
+      forestOwnerType: [this.userModel.forestOwnerType.code]
     });
-  }
-
-  get Child(){
-    return this.masterDataChild.filter(x => x.displayText);
   }
 
 }
