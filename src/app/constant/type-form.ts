@@ -3,3 +3,7 @@ export enum TypeForm {
   edit = 'edit',
   create = 'create'
 }
+
+export enum TypeForestOwn{
+  household = 'HouseHold'
+}

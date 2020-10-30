@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { UserEditComponent } from './user-edit/user-edit.component';
 import { UserViewComponent } from './user-view/user-view.component';
 import { UserComponent } from './user.component';
 
@@ -19,7 +20,7 @@ const routes: Routes = [
       },
       {
         path: 'edit',
-        component: UserViewComponent
+        component: UserEditComponent
       }
     ]
   }

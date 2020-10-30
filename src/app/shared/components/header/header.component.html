@@ -2,10 +2,20 @@
   <div class="col-md-6 d-flex justify-content-start">
   <i class="fa fa-bars mt-4" aria-hidden="true"></i>
   <img src="assets/logo.jpg" alt="" class="icon-header">
-  <h2 for="tieude" class="color-label mt-3 text-uppercase">Hệ thống giải trình và truy xuất gỗ</h2>
+  <h2 class="text-uppercase mt-3 title-1">Hawa Dss</h2>
+  <h2 for="tieude" class="color-label mt-2 ml-2 text-uppercase">Hệ thống giải trình và truy xuất gỗ<br><h4 class="small-title"> Hawa due diligence stystem</h4></h2>
 </div>
 <div class="col-md-6 d-flex justify-content-end mb-3">
-  <i class="fa fa-bell-o icon-header-r" aria-hidden="true"></i>
-  <i class="fa fa-user-circle ml-3 icon-header-r" aria-hidden="true"></i>
+  <i class="fa fa-bell-o icon-header-r mt-4" aria-hidden="true"></i>
+  <ul nz-menu class="header">
+    <li nz-submenu nzTitle="{{fullname}}" nzIcon="user">
+      <ul>
+        <li nz-menu-group>
+          <ul>
+            <li nz-menu-item (click)="onLogOut()">Đăng xuất</li>
+          </ul>
+        </li>
+      </ul>
+    </ul>
 </div>
 </div>

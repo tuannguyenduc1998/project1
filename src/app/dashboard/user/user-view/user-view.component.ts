@@ -13,7 +13,10 @@ export class UserViewComponent implements OnInit {
   @ViewChild('form') form: UserFormComponent;
   user: User = new User();
   @Input() type: string;
+  @Input() fullname: string;
   typeForm = TypeForm;
+  nameTitle = 'Chỉnh sửa';
+  changeTitle = 'Lưu';
   constructor(private router: Router) { }
 
   ngOnInit(): void {

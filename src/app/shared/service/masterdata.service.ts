@@ -11,7 +11,6 @@ export class MasterdataService {
   constructor(private http: HttpClient) { }
 
   private masterDataUrl = 'http://hawaddsapi.bys.vn/api/data';
-  private masterDataUrls = 'http://hawaddsapi.bys.vn/api/data/masterdata?groupsName=HouseholdForestOwnerType';
   private loggedInStatus = JSON.parse(localStorage.getItem('LoginStatus'));
   user: UserLoginData;
 

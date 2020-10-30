@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { UserLoginData } from 'src/app/model/user.model';
+import { UserService } from '../../service/user.service';
 
 @Component({
   selector: 'app-header',
@@ -7,9 +10,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HeaderComponent implements OnInit {
 
-  constructor() { }
-
+  constructor(private router: Router, private service: UserService) { }
+  user: UserLoginData;
+  fullname: string;
   ngOnInit(): void {
+    this.user = this.service.LoginStatus;
+    this.fullname = this.user.fullName;
+  }
+
+  onLogOut(): void {
+    this.router.navigate(['/login']);
+    localStorage.removeItem('LoginStatus');
   }
 
 }

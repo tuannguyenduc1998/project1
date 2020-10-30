@@ -1,87 +1,90 @@
-<fieldset [disabled]="type === typeForm.edit">
-  <form [formGroup]="userForm" class="row" *ngIf="userForm">
+<fieldset [disabled]="type === typeForm.view">
+  <form [formGroup]="userForm" class="row pt-5" *ngIf="userForm">
     <div class="col-md-12 font">
       <div class="row">
         <div class="col-md-6 pl-5">
           <div class="form-group row">
-            <label for="text-input" class="col-md-12 col-form-label label-generate">Mã tài khoản:</label>
             <div class="col-md-12">
-              <input class="form-control" type="text" id="text-input" formControlName="coCode">
+              <label for="text-input" class="col-md-4 col-form-label label-generate">Mã tài khoản:</label>
+              <input class="form-control col-md-8" type="text" id="text-input" formControlName="coCode">
             </div>
           </div>
-          <div class="form-group row">
-            <label for="text-input" class="col-md-12 col-form-label label-generate">Loại chủ rừng:</label>
+          <div class="form-group row pt-4">
             <div class="col-md-12">
-              <select class="form-control color-input" formControlName="forestOwnerType" id="level" required>
+              <label for="text-input" class="col-md-4 col-form-label label-generate">Loại chủ rừng:</label>
+              <select class="form-control color-input col-md-8" formControlName="forestOwnerType" id="level" required>
                 <option *ngFor="let lvl of this.masterDataChild" [value]="lvl.code">{{ lvl.displayText }}</option>
               </select>
             </div>
           </div>
-          <div class="form-group row">
-            <label for="email-input" class="col-md-12 col-form-label label-generate">Tên cá nhân/Hộ gia đình:</label>
+          <div class="form-group row pt-4">
             <div class="col-md-12">
-              <input class="form-control color-input" type="text" id="email-input" formControlName="fullName">
+              <label for="email-input" class="col-md-4 col-form-label label-generate">Tên cá nhân/Hộ gia đình:</label>
+              <input class="form-control color-input col-md-8" type="text" id="email-input" formControlName="fullName">
             </div>
           </div>
-          <div class="form-group row">
-            <label for="email-input" class="col-md-12 col-form-label label-generate">Số điện thoại di động:</label>
+          <div class="form-group row pt-4">
             <div class="col-md-12">
-              <input class="form-control color-input" type="text" id="email-input" formControlName="cellphoneNumber">
+              <label for="email-input" class="col-md-4 col-form-label label-generate">Số điện thoại di động:</label>
+              <input class="form-control color-input col-md-8" type="text" id="email-input"
+                formControlName="cellphoneNumber">
             </div>
           </div>
-          <div class="form-group row">
-            <label for="email-input" class="col-md-12 col-form-label label-generate">CMND/Thẻ căn cước:</label>
+          <div class="form-group row pt-4">
             <div class="col-md-12">
-              <input class="form-control color-input" type="text" id="email-input" formControlName="identityCard">
+              <label for="email-input" class="col-md-4 col-form-label label-generate">CMND/Thẻ căn cước:</label>
+              <input class="form-control color-input col-md-8" type="text" id="email-input"
+                formControlName="identityCard">
             </div>
           </div>
-          <div class="form-group row">
-            <label for="email-input" class="col-md-12 col-form-label label-generate">Ngày cấp:</label>
+          <div class="form-group row pt-4">
             <div class="col-md-12">
-              <input class="form-control color-input" type="date" id="email-input" formControlName="identityCardIssuedDate">
+              <label for="email-input" class="col-md-4 col-form-label label-generate">Ngày cấp:</label>
+              <nz-date-picker class="form-control color-input col-md-8" nzFormat="dd/MM/yyyy" formControlName="identityCardIssuedDate"></nz-date-picker>
             </div>
           </div>
         </div>
         <div class="col-md-6 group2 pl-5">
           <div class="form-group row">
-            <label for="level" class="col-md-12 col-form-label label-generate">Tỉnh/Thành phố:</label>
             <div class="col-md-12">
-              <select class="form-control color-input" formControlName="province" id="level" required>
-                <option *ngFor="let lvl of this.masterDataAddressChildProvince" [value]="lvl.code">{{ lvl.name }}</option>
+              <label for="level" class="col-md-4 col-form-label label-generate">Tỉnh/Thành phố:</label>
+              <select class="form-control color-input col-md-8" formControlName="province" id="level" required (change)="onSelectDistrict($event.target.value)">
+                <option *ngFor="let lvl of this.masterDataAddressChildProvince" [value]="lvl.code">{{ lvl.name }}
+                </option>
               </select>
             </div>
           </div>
-          <div class="form-group row">
-            <label for="level" class="col-md-12 col-form-label label-generate">Quận/Huyện:</label>
+          <div class="form-group row pt-4">
             <div class="col-md-12">
-              <select class="form-control color-input" formControlName="district" id="level" required>
-                <option *ngFor="let lvl of this.masterDataAddressChildDistrict" [value]="lvl.code">{{ lvl.name }}</option>
+              <label for="level" class="col-md-4 col-form-label label-generate">Quận/Huyện:</label>
+              <select class="form-control color-input col-md-8" formControlName="district" id="level" required (change)="onSelectWard($event.target.value)">
+                <option *ngFor="let lvl of this.masterDataAddressChildDistrict" [value]="lvl.code">{{ lvl.name }}
+                </option>
               </select>
             </div>
           </div>
-          <div class="form-group row">
-            <label for="level" class="col-md-12 col-form-label label-generate">Phường/Xã:</label>
+          <div class="form-group row pt-4">
             <div class="col-md-12">
-              <select class="form-control color-input" formControlName="commune" id="level" required>
+              <label for="level" class="col-md-4 col-form-label label-generate">Phường/Xã:</label>
+              <select class="form-control color-input col-md-8" formControlName="commune" id="level" required>
                 <option *ngFor="let lvl of this.masterDataAddressChildWard" [value]="lvl.code">{{ lvl.name }}</option>
               </select>
             </div>
           </div>
-          <div class="form-group row">
-            <label for="email-input" class="col-md-12 col-form-label label-generate">Thôn/Bản:</label>
+          <div class="form-group row pt-4">
             <div class="col-md-12">
-              <input class="form-control color-input" type="text" id="email-input" formControlName="village">
+              <label for="email-input" class="col-md-4 col-form-label label-generate">Thôn/Bản:</label>
+              <input class="form-control color-input col-md-8" type="text" formControlName="village">
             </div>
           </div>
-          <div class="form-group row">
-            <label for="email-input" class="col-md-12 col-form-label label-generate">Số nhà/Tên đường:</label>
+          <div class="form-group row pt-4">
             <div class="col-md-12">
-              <input class="form-control color-input" type="text" id="email-input" formControlName="street">
+              <label for="email-input" class="col-md-4 col-form-label label-generate">Số nhà/Tên đường:</label>
+              <input class="form-control color-input col-md-8" type="text" formControlName="street">
             </div>
           </div>
         </div>
       </div>
     </div>
-</form>
+  </form>
 </fieldset>
-

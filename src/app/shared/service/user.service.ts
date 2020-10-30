@@ -12,7 +12,7 @@ export class UserService {
   user: UserLoginData;
   constructor(private http: HttpClient) { }
 
-  getUserItems(){
+  getUserDetails(){
     this.user = this.loggedInStatus;
     const httpOptions = {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' , Authorization:

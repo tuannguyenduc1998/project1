@@ -12,7 +12,7 @@ export class DataPipe implements PipeTransform {
         if (!value) { return ''; }
         if (!format) { format = 'shortDate'; }
 
-        return formatDate(value, format, 'vi-VN');
+        return formatDate(value, format, 'en-US');
     }
 
 }

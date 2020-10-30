@@ -8,9 +8,12 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HeaderComponent } from './components/header/header.component';
 import { ComponentModule } from './components/component.module';
 import { ReactiveFormsModule } from '@angular/forms';
+import { ExamDirective } from './directices/exam.directive';
+import { KzMaskDirective } from './directices/kz-mask.directive';
 @NgModule({
-  declarations: [],
+  declarations: [ExamDirective],
   imports: [CommonModule , ReactiveFormsModule, NzMenuModule, NzDropDownModule, NzTabsModule, ComponentModule],
-  exports: [HeaderComponent, NzMenuModule, NzDropDownModule, NzTabsModule, ComponentModule,CommonModule, ReactiveFormsModule],
+  exports: [HeaderComponent, NzMenuModule, NzDropDownModule,
+            NzTabsModule, ComponentModule, CommonModule, ReactiveFormsModule, ExamDirective]
 })
 export class SharedModule {}
