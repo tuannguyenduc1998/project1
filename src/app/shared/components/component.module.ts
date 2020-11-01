@@ -4,6 +4,7 @@ import { MenuComponent } from './menu/menu.component';
 import { HeaderComponent } from './header/header.component';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzMenuModule } from 'ng-zorro-antd/menu';
+import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
 
 
 @NgModule({
@@ -11,7 +12,8 @@ import { NzMenuModule } from 'ng-zorro-antd/menu';
   imports: [
     CommonModule,
     NzIconModule,
-    NzMenuModule
+    NzMenuModule,
+    NzDropDownModule
 
   ],
   exports: [

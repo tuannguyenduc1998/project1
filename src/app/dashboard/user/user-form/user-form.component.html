@@ -1,8 +1,8 @@
-<fieldset [disabled]="type === typeForm.view">
-  <form [formGroup]="userForm" class="row pt-5" *ngIf="userForm">
+<fieldset [disabled]="type === typeForm.view" class="form p-4 mb-3">
+  <form [formGroup]="userForm" class="row" *ngIf="userForm">
     <div class="col-md-12 font">
       <div class="row">
-        <div class="col-md-6 pl-5">
+        <div class="col-md-6">
           <div class="form-group row">
             <div class="col-md-12">
               <label for="text-input" class="col-md-4 col-form-label label-generate">Mã tài khoản:</label>
