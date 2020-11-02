@@ -1,0 +1,194 @@
+<app-header></app-header>
+<div class="row col-md-12 px-0 mx-0">
+  <div class="col-md-2">
+    <app-menu></app-menu>
+  </div>
+  <div class="col-md-10 pt-4 pb-3 b-color mx-0">
+    <div class="row font">
+      <div class="col-md-9 text-uppercase ml-5 pt-4">
+        <h4 for="tieude" class="d-flex justify-content-start">Quản lý hồ sơ khai thác</h4>
+        <h6 class="font-eng">(Profile management)</h6>
+      </div>
+    </div>
+    <form [formGroup]="profileForm" class="row form m-5" *ngIf="profileForm">
+      <div class="col-md-12 font">
+        <div class="row font pt-4">
+          <div class="col-md-8 text-uppercase">
+            <h4 for="tieude" class="d-flex justify-content-start">Khai báo hồ sơ đăng ký khai thác</h4>
+            <h6 class="font-eng">(Declare Forest harvest registration profile)</h6>
+          </div>
+          <div class="col-md-4 text-uppercase d-flex justify-content-end">
+            <button class="color-btn1  mr-2 " type="click">LƯU
+              <h6 class="color-btn1">(Save)</h6>
+            </button>
+            <button [routerLink]="['/dashboard/user/view']" class="color-btn2" type="reset">HỦY
+              <h6 class="color-btn2">(Cancel)</h6></button>
+          </div>
+        </div>
+        <hr>
+        <div class="row">
+          <div class="col-md-12">
+            <h4>THÔNG TIN HỒ SƠ (PROFILE INFORMATION)</h4>
+          </div>
+          <div class="col-md-6 pt-4">
+            <div class="form-group row">
+              <div class="col-md-12">
+                <label for="text-input" class="col-md-4 col-form-label label-generate">Ngày chứng từ:
+                  <h6 class="font-eng">(Profile date)</h6>
+                </label>
+                <nz-date-picker class="form-control color-input col-md-8" nzFormat="dd/MM/yyyy"
+                  formControlName="profileDate"></nz-date-picker>
+              </div>
+            </div>
+            <div class="form-group row pt-4">
+              <!-- <div class="col-md-12">
+                <label for="email-input" class="col-md-4 col-form-label label-generate">Mã hồ sơ:
+                  <h6 class="font-eng">(Profile ID)</h6>
+                </label>
+                <input class="form-control color-input col-md-8" type="text" id="email-input" formControlName="">
+              </div> -->
+            </div>
+            <div class="form-group row pt-4">
+              <div class="col-md-12">
+                <label for="email-input" class="col-md-4 col-form-label label-generate">Tên hồ sơ:
+                  <h6 class="font-eng">(Profile name)</h6>
+                </label>
+                <input class="form-control color-input col-md-8" type="text" id="email-input" formControlName="profileName">
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group row pt-4">
+              <div class="col-md-12">
+                <label for="email-input" class="col-md-4 col-form-label label-generate">Người lập hồ sơ:
+                  <h6 class="font-eng">(Created by)</h6>
+                </label>
+                <input class="form-control color-input col-md-8" type="text" id="email-input"
+                  formControlName="fullname">
+              </div>
+            </div>
+            <div class="form-group row pt-4">
+              <div class="col-md-12">
+                <label for="email-input" class="col-md-4 col-form-label label-generate">Mã số bộ hồ sơ rừng:
+                  <h6 class="font-eng">(Forest profile ID)</h6>
+                </label>
+                <input class="form-control color-input col-md-8" type="text" formControlName="profileCode">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12 pt-4">
+            <h4>THÔNG TIN ĐĂNG KÝ KHAI THÁC (HARVEST REGISTRATION INFORMATION)</h4>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group row pt-4">
+              <div class="col-md-12">
+                <label for="email-input" class="col-md-4 col-form-label label-generate">Đơn vị khai thác là:
+                  <h6 class="font-eng">(The forest harvester is)</h6>
+                </label>
+                <div class="color-input col-md-8 px-0">
+                  <label nz-radio [nzDisabled]="disabled">Là chính tôi (Self harvest)</label>
+                  <br />
+                  <label nz-radio [nzDisabled]="disabled">1 đơn vị khác (Harvested by Other)</label>
+                </div>
+              </div>
+            </div>
+            <!-- <div class="form-group row">
+              <div class="col-md-12">
+                <label for="text-input" class="col-md-4 col-form-label label-generate">Thời gian khai thác từ
+                  ngày:
+                <h6 class="font-eng">(Forest harvesting from date)</h6></label>
+                <nz-date-picker class="form-control color-input col-md-8" nzFormat="dd/MM/yyyy" formControlName="">
+                </nz-date-picker>
+              </div>
+            </div> -->
+            <div class="form-group row pt-4">
+              <div class="col-md-12">
+                <label for="email-input" class="col-md-4 col-form-label label-generate">Hình thức khai thác:
+                  <h6 class="font-eng">(Harvest methods)</h6>
+                </label>
+                <div class="color-input col-md-8 px-0">
+                  <label nz-radio [nzDisabled]="!disabled">Khai thác trắng (Clear cut harvest)</label>
+                  <br />
+                  <label nz-radio [nzDisabled]="!disabled">Tỉa thưa (Trim)</label>
+                </div>
+              </div>
+            </div>
+            <div class="form-group row pt-4">
+              <div class="col-md-12">
+                <label for="email-input" class="col-md-4 col-form-label label-generate">Loại rừng:
+                  <h6 class="font-eng">(Forest type)</h6>
+                </label>
+                <div class="color-input col-md-8 px-0">
+                  <label nz-radio [nzDisabled]="!disabled">Rừng sản xuất (Production forests)</label>
+                  <br />
+                  <label nz-radio [nzDisabled]="!disabled">Rừng đặc dụng (Special-use forests)</label>
+                  <br />
+                  <label nz-radio [nzDisabled]="!disabled">Rừng phòng hộ (Protection forests)</label>
+                  <br />
+                  <label nz-radio [nzDisabled]="!disabled">Cây phân tán (Scattered trees)</label>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- <div class="col-md-6 group2 pl-5">
+            <div class="form-group row mt-5">
+              <div class="col-md-12">
+                <label for="text-input" class="col-md-4 col-form-label label-generate">Đến ngày:
+                  <h6 class="font-eng">(Forest harvesting to date)</h6>
+                </label>
+                <nz-date-picker class="form-control color-input col-md-8" nzFormat="dd/MM/yyyy" formControlName="">
+                </nz-date-picker>
+              </div>
+            </div>
+          </div> -->
+        </div>
+        <div class="row">
+          <label for="text-input" class="col-md-12 col-form-label label-generate">Địa điểm, loài cây và diện tích khai
+            thác:
+            <h6 class="font-eng">(Harvest location, species and area)</h6></label>
+          <div class="col-md-12 d-flex justify-content-end">
+            <label for="text-input" class="col-md-11 col-form-label label-generate note">| Vui lòng chọn "Thêm lô" để thêm địa điểm bạn sẽ khai thác vào bảng bên dưới (Please choose "Add plot" to add new harvest location into below table)
+            </label>
+            <button class="col-md-1 color-btn1" type="click" (click)="showModal()">Thêm mới lô</button>
+          </div>
+          <div class="col-md-12 p-3">
+            <nz-table #basicTable [nzData]="">
+              <thead>
+                <tr>
+                  <th>Tỉnh/Thành phố</th>
+                  <th>Quận/Huyện</th>
+                  <th>Phường/Xã</th>
+                  <th>Tiểu khu</th>
+                  <th>Khoảnh</th>
+                  <th>Lô</th>
+                  <th>D.tích khai thác</th>
+                  <th>D.tích còn lại</th>
+                  <th>Loài cây</th>
+                  <th>Năm trồng</th>
+                  <th>Khối lượng dự kiến</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+              </tbody>
+            </nz-table>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

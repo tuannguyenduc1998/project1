@@ -10,16 +10,24 @@ import { UserComponent } from './user/user.component';
 import { UserFormComponent } from './user/user-form/user-form.component';
 import { DatePipe } from '@angular/common';
 import { KzMaskDirective } from '../shared/directices/kz-mask.directive';
-
+import { ProfileRegistrationComponent } from './profile-registration/profile-registration.component';
+import { ProfileRegistrationFormComponent } from './profile-registration/profile-registration-form/profile-registration-form.component';
+import { NzRadioModule } from 'ng-zorro-antd/radio';
+import { NzTableModule } from 'ng-zorro-antd/table';
+import { NzModalModule } from 'ng-zorro-antd/modal';
 
 @NgModule({
-  declarations: [UserViewComponent, UserEditComponent, UserComponent, UserFormComponent, KzMaskDirective],
+  declarations: [UserViewComponent, UserEditComponent, UserComponent, UserFormComponent,
+     KzMaskDirective, ProfileRegistrationComponent, ProfileRegistrationFormComponent],
   imports: [
     DashboardRoutingModule,
     SharedModule,
     ReactiveFormsModule,
     HttpClientModule,
-    NzDatePickerModule
+    NzDatePickerModule,
+    NzRadioModule,
+    NzTableModule,
+    NzModalModule
   ],
   exports: [KzMaskDirective],
   providers: [DatePipe]
