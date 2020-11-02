@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ProfileForest } from 'src/app/model/profile-forest.model';
+import { ForestProfileService } from '../../service/forest-profile.service';
 
 @Component({
   selector: 'app-modal-plots',
@@ -7,9 +9,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ModalPlotsComponent implements OnInit {
 
-  constructor() { }
+  forestModel: ProfileForest = new ProfileForest();
+
+  constructor(private forestProfileService: ForestProfileService) { }
 
   ngOnInit(): void {
+    this.forestProfileService.getForests().subscribe( (result) => {
+      this.forestModel = result.data;
+    });
   }
 
 }

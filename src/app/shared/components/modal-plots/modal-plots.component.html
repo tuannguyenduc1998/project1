@@ -1,1 +1,39 @@
-<h1>TÌM CHỌN ĐỊA ĐIỂM VÀ LÔ SẼ KHAI THÁC (SEARCH, CHOOSE HARVEST LOCATION AND PLOT)</h1>
+<label>TÌM CHỌN ĐỊA ĐIỂM VÀ LÔ SẼ KHAI THÁC (SEARCH, CHOOSE HARVEST LOCATION AND PLOT)</label>
+<br>
+<label nz-checkbox>Chọn tất cả kết quả (Select all)</label>
+<br>
+<label for="">Vui lòng chọn 1 Loài cây muốn đăng ký khai thác, và chọn vào các lô tương ứng (Please select one specie want to register for harvesting, and select the related plots)</label>
+<div class="col-md-12 p-3">
+  <nz-table #basicTable [nzData]="forestModel">
+    <thead>
+      <tr>
+        <th>Tỉnh/Thành phố</th>
+        <th>Quận/Huyện</th>
+        <th>Phường/Xã</th>
+        <th>Tiểu khu</th>
+        <th>Khoảnh</th>
+        <th>Lô</th>
+        <th>D.tích khai thác</th>
+        <th>D.tích còn lại</th>
+        <th>Loài cây</th>
+        <th>Năm trồng</th>
+        <th>Khối lượng dự kiến</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let items of basicTable.data">
+        <td>{{items.province.value}}</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </nz-table>
+</div>

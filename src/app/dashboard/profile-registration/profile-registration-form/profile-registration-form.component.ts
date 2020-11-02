@@ -43,8 +43,8 @@ export class ProfileRegistrationFormComponent implements OnInit {
 
   showModal(): void {
     this.modalService.create({
-      nzTitle: 'Modal Title',
-      nzContent: ModalPlotsComponent
+      nzContent: ModalPlotsComponent,
+      nzWidth: '70%'
     });
   }
 }
