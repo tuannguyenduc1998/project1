@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, ValidatorFn } from '@angular/forms';
-import { of } from 'rxjs';
+import { NzModalRef } from 'ng-zorro-antd/modal';
 import { ForestPilot, ForestPilots, ProfileForest } from 'src/app/model/profile-forest.model';
 import { ForestProfileService } from '../../service/forest-profile.service';
 
@@ -10,7 +10,7 @@ import { ForestProfileService } from '../../service/forest-profile.service';
   styleUrls: ['./modal-plots.component.scss']
 })
 export class ModalPlotsComponent implements OnInit {
-  isChecked: false;
+  @Input() isChecked?: string;
   forestModel: ProfileForest = new ProfileForest();
   forestLists: ForestPilots[];
   pilotArray: ForestPilot[];
@@ -20,10 +20,7 @@ export class ModalPlotsComponent implements OnInit {
   form: FormGroup;
   PilotsData = [];
 
-  get PilotsFormArray() {
-    return this.form.controls.Pilots as FormArray;
-  }
-  constructor(private forestProfileService: ForestProfileService, private formBuilder: FormBuilder) {
+  constructor(private forestProfileService: ForestProfileService, private modal: NzModalRef) {
   }
 
   ngOnInit(): void {
@@ -33,43 +30,10 @@ export class ModalPlotsComponent implements OnInit {
       this.pilotArray = this.forestLists.filter( x => x.trees).reduce((accumulator, currentValue) => {
         return accumulator.concat(currentValue.trees);
       }, []);
-      this.form = this.formBuilder.group({
-        Pilots: new FormArray([], minSelectedCheckboxes(1))
-      });
-
-      // async Pilots
-      of(this.getPilots()).subscribe(Pilots => {
-        this.PilotsData = Pilots;
-        this.addCheckboxes();
-      });
     });
   }
 
-  private addCheckboxes() {
-    this.PilotsData.forEach(() => this.PilotsFormArray.push(new FormControl(false)));
-  }
-
-  getPilots() {
-    return this.pilotArray;
-  }
-
   next() {
-    const selectedPilotIds = this.form.value.Pilots
-      .map((checked, i) => checked ? this.PilotsData[i].id : null)
-      .filter(v => v !== null);
-
-    console.log(selectedPilotIds);
   }
 
-}
-function minSelectedCheckboxes(min = 1) {
-  const validator: ValidatorFn = (formArray: FormArray) => {
-    const totalSelected = formArray.controls
-      .map(control => control.value)
-      .reduce((prev, next) => next ? prev + next : prev, 0);
-
-    return totalSelected >= min ? null : { required: true };
-  };
-
-  return validator;
 }
