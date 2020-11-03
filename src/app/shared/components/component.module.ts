@@ -8,6 +8,7 @@ import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
 import { ModalPlotsComponent } from './modal-plots/modal-plots.component';
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [MenuComponent, HeaderComponent, ModalPlotsComponent],
@@ -17,7 +18,8 @@ import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
     NzMenuModule,
     NzDropDownModule,
     NzTableModule,
-    NzCheckboxModule
+    NzCheckboxModule,
+    FormsModule
   ],
   exports: [
     MenuComponent,

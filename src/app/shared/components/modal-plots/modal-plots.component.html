@@ -1,39 +1,55 @@
 <label>TÌM CHỌN ĐỊA ĐIỂM VÀ LÔ SẼ KHAI THÁC (SEARCH, CHOOSE HARVEST LOCATION AND PLOT)</label>
 <br>
-<label nz-checkbox>Chọn tất cả kết quả (Select all)</label>
+<label nz-checkbox [(ngModel)]="isChecked">Chọn tất cả kết quả (Select all)</label>
 <br>
 <label for="">Vui lòng chọn 1 Loài cây muốn đăng ký khai thác, và chọn vào các lô tương ứng (Please select one specie want to register for harvesting, and select the related plots)</label>
 <div class="col-md-12 p-3">
-  <nz-table #basicTable [nzData]="forestModel">
+  <nz-table #basicTable>
     <thead>
       <tr>
-        <th>Tỉnh/Thành phố</th>
-        <th>Quận/Huyện</th>
-        <th>Phường/Xã</th>
-        <th>Tiểu khu</th>
-        <th>Khoảnh</th>
-        <th>Lô</th>
-        <th>D.tích khai thác</th>
-        <th>D.tích còn lại</th>
-        <th>Loài cây</th>
-        <th>Năm trồng</th>
-        <th>Khối lượng dự kiến</th>
+        <th></th>
+        <th>Tỉnh/Thành phố
+          <h6 class="font-eng">(Province/City)</h6>
+        </th>
+        <th>Quận/Huyện
+          <h6 class="font-eng">(District)</h6>
+        </th>
+        <th>Phường/Xã
+          <h6 class="font-eng">(Ward/Commune)</h6>
+        </th>
+        <th>Tiểu khu
+          <h6 class="font-eng">(Compartment)</h6>
+        </th>
+        <th>Khoảnh
+          <h6 class="font-eng">(Sub-Comp.)</h6>
+        </th>
+        <th>Lô
+          <h6 class="font-eng">(Plot)</h6>
+        </th>
+        <th>Loài cây
+          <h6 class="font-eng">(Species)</h6>
+        </th>
+        <th>D.tích có thể khai thác
+          <h6 class="font-eng">(Harvest area)</h6>
+        </th>
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let items of basicTable.data">
-        <td>{{items.province.value}}</td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
+      <ng-container *ngFor="let itemLists of forestLists">
+      <tr *ngFor="let items of itemLists.trees">
+        <td><label nz-checkbox></label>
+        </td>
+        <td>{{forestModel.province.value}}</td>
+        <td>{{itemLists.district.value}}</td>
+        <td>{{itemLists.commune.value}}</td>
+        <td>{{itemLists.compt}}</td>
+        <td>{{itemLists.subCompt}}</td>
+        <td>{{itemLists.plotCode}}</td>
+        <td>{{items.treeType.name}}</td>
+        <td>{{items.area - items.detail.standingTreeArea}}&nbsp;ha</td>
       </tr>
+    </ng-container>
     </tbody>
   </nz-table>
+  <button (click)="next()" [disabled]="!form.valid">Next</button>
 </div>

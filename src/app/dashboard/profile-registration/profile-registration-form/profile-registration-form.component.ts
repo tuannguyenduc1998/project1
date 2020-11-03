@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { forkJoin } from 'rxjs';
-import { ProfileForest } from 'src/app/model/profile-forest.model';
+import { ForestPilots, ProfileForest } from 'src/app/model/profile-forest.model';
 import { UserLoginData } from 'src/app/model/user.model';
 import { ModalPlotsComponent } from 'src/app/shared/components/modal-plots/modal-plots.component';
 import { ForestProfileService } from 'src/app/shared/service/forest-profile.service';
@@ -28,6 +28,10 @@ export class ProfileRegistrationFormComponent implements OnInit {
     this.user = this.userService.LoginStatus;
     this.forestService.getForests().subscribe( (result) => {
       this.profileModel = result.data;
+      // this.a = this.profileModel.forestPlots.filter( x => x.trees).reduce((accumulator, currentValue) => {
+      //   return accumulator.concat(currentValue.trees);
+      // }, []);
+      // this.c = this.profileModel.forestPlots.filter( x => x.trees.forEach( y => y.area));
       this.createForm();
     });
   }
@@ -44,7 +48,7 @@ export class ProfileRegistrationFormComponent implements OnInit {
   showModal(): void {
     this.modalService.create({
       nzContent: ModalPlotsComponent,
-      nzWidth: '70%'
+      nzWidth: '70%',
     });
   }
 }
