@@ -1,6 +1,6 @@
 <label>TÌM CHỌN ĐỊA ĐIỂM VÀ LÔ SẼ KHAI THÁC (SEARCH, CHOOSE HARVEST LOCATION AND PLOT)</label>
 <br>
-<label nz-checkbox [(ngModel)]="isChecked">Chọn tất cả kết quả (Select all)</label>
+<div nz-checkbox [(nzChecked)]="checkedAll" (nzCheckedChange)="onAllChecked($event)">Chọn tất cả kết quả (Select all)</div>
 <br>
 <label for="">Vui lòng chọn 1 Loài cây muốn đăng ký khai thác, và chọn vào các lô tương ứng (Please select one specie want to register for harvesting, and select the related plots)</label>
 <div class="col-md-12 p-3">
@@ -37,8 +37,10 @@
     <tbody>
       <ng-container *ngFor="let itemLists of forestLists">
       <tr *ngFor="let items of itemLists.trees">
-        <td><label nz-checkbox></label>
-        </td>
+        <ng-container *ngIf="!usedId.has(items.id)">
+        <td [nzChecked]="setOfCheckedId.has(items.id)"
+            (nzCheckedChange)="onItemChecked(items.id, $event)">
+       </td>
         <td>{{forestModel.province.value}}</td>
         <td>{{itemLists.district.value}}</td>
         <td>{{itemLists.commune.value}}</td>
@@ -47,9 +49,14 @@
         <td>{{itemLists.plotCode}}</td>
         <td>{{items.treeType.name}}</td>
         <td>{{items.area - items.detail.standingTreeArea}}&nbsp;ha</td>
+      </ng-container>
       </tr>
     </ng-container>
     </tbody>
   </nz-table>
-  <button (click)="next()">Next</button>
+  <div class="row col-md-12">
+    <button nz-button nzType="default" class="color-btn1  mr-2 " type="submit" (click)="clickNextModal()" [disabled]="setOfCheckedId.size === 0">Tiếp tục</button>
+    <button nz-button nzType="primary" class="color-btn2" type="submit" (click)="destroyModal()">HỦY</button>
 </div>
+</div>
+

@@ -77,13 +77,13 @@ export class ProfileForest {
     timberMaterialsTransformationProfile: number;
     timberProductsHarvestedTimber: number;
     groups:
-      {
-        id: string;
-        name: string;
-        description: string;
-        otherDescription: string;
-        canRequest: boolean
-      }[];
+    {
+      id: string;
+      name: string;
+      description: string;
+      otherDescription: string;
+      canRequest: boolean
+    }[];
     forestOwnerType: {
       key: string;
       value: string;
@@ -115,13 +115,13 @@ export class ProfileForest {
     timberMaterialsTransformationProfile: number;
     timberProductsHarvestedTimber: number;
     groups:
-      {
-        id: string;
-        name: string;
-        description: string;
-        otherDescription: string;
-        canRequest: boolean
-      }[];
+    {
+      id: string;
+      name: string;
+      description: string;
+      otherDescription: string;
+      canRequest: boolean
+    }[];
     forestOwnerType: {
       key: string;
       value: string;
@@ -153,13 +153,13 @@ export class ProfileForest {
     timberMaterialsTransformationProfile: number;
     timberProductsHarvestedTimber: number;
     groups:
-      {
-        id: string;
-        name: string;
-        description: string;
-        otherDescription: string;
-        canRequest: boolean
-      }[];
+    {
+      id: string;
+      name: string;
+      description: string;
+      otherDescription: string;
+      canRequest: boolean
+    }[];
     forestOwnerType: {
       key: string;
       value: string;
@@ -200,30 +200,30 @@ export class ProfileForest {
       availableArea: number;
       coordinateStatus: boolean;
       trees:
-        {
+      {
+        id: string;
+        forestPlotId: string;
+        area: number;
+        plantedYear: number;
+        estimatedVolume: number;
+        createdDate: number;
+        updatedDate: number;
+        isPlantedByStateBudget: boolean;
+        treeType: {
           id: string;
-          forestPlotId: string;
-          area: number;
-          plantedYear: number;
-          estimatedVolume: number;
-          createdDate: number;
-          updatedDate: number;
-          isPlantedByStateBudget: boolean;
-          treeType: {
-            id: string;
-            name: string;
-            latinName: string;
-            shortName: string;
-            engName: string
-          };
-          detail: {
-            harvestProfileCount: number;
-            otherHarvestedArea: number;
-            harvestedArea: number;
-            standingTreeProfileCount: number;
-            standingTreeArea: number
-          }
-        }[]
+          name: string;
+          latinName: string;
+          shortName: string;
+          engName: string
+        };
+        detail: {
+          harvestProfileCount: number;
+          otherHarvestedArea: number;
+          harvestedArea: number;
+          standingTreeProfileCount: number;
+          standingTreeArea: number
+        }
+      }[]
     }[];
   forestDeclaredType: {
     key: string;
@@ -257,22 +257,22 @@ export class ProfileForest {
       typeGroup: string
     };
     supplyChainTypes:
-      {
-        key: string;
-        value: string;
-        displayText: string;
-        code: string;
-        typeGroup: string
-      }[];
+    {
+      key: string;
+      value: string;
+      displayText: string;
+      code: string;
+      typeGroup: string
+    }[];
     businessTypes:
-      {
-        id: string;
-        name: string;
-        description: string;
-        parentId: string;
-        sortOrder: number;
-        registFor: string
-      }[];
+    {
+      id: string;
+      name: string;
+      description: string;
+      parentId: string;
+      sortOrder: number;
+      registFor: string
+    }[];
     commune: {
       key: string;
       value: string;
@@ -335,9 +335,9 @@ export class ProfileForest {
     permanentAddressStreet: string;
     diffrentAddressReason: string;
     images:
-      string[];
+    string[];
     houseRegistrationImages:
-      string[];
+    string[];
     forestOwnerType: {
       key: string;
       value: string;
@@ -346,24 +346,24 @@ export class ProfileForest {
       typeGroup: string
     };
     groups:
-      {
-        id: string;
-        name: string;
-        description: string;
-        otherDescription: string;
-        canRequest: boolean
-      }[];
+    {
+      id: string;
+      name: string;
+      description: string;
+      otherDescription: string;
+      canRequest: boolean
+    }[];
     forestProfileCount: number;
     accountEmail: string;
     fullNameUser: string;
     waitingApproveGroups:
-      {
-        id: string;
-        name: string;
-        description: string;
-        otherDescription: string;
-        canRequest: boolean
-      }[]
+    {
+      id: string;
+      name: string;
+      description: string;
+      otherDescription: string;
+      canRequest: boolean
+    }[]
   };
   province: {
     key: string;
@@ -379,7 +379,7 @@ export class ProfileForest {
     mapNumber: string;
     note: string;
     images:
-      string[]
+    string[]
   };
   prevId: string;
   isLandOwner: boolean;
@@ -397,68 +397,68 @@ export class ProfileForest {
         typeGroup: string
       };
       images:
+      {
+        id: string;
+        orgFileName: string;
+        orgFileExtension: string;
+        fileUrl: string;
+        container: string
+      }[];
+      forestLandOwnerRights:
+      {
+        id: string;
+        landTunureType: {
+          key: string;
+          value: string;
+          displayText: string;
+          code: string;
+          typeGroup: string
+        };
+        documentType: {
+          key: string;
+          value: string;
+          displayText: string;
+          code: string;
+          typeGroup: string
+        };
+        documentOther: string;
+        documentNo: string;
+        issuedDate: number;
+        issuedBy: string;
+        expiredDate: number;
+        documents:
         {
           id: string;
           orgFileName: string;
           orgFileExtension: string;
           fileUrl: string;
           container: string
-        }[];
-      forestLandOwnerRights:
-        {
-          id: string;
-          landTunureType: {
-            key: string;
-            value: string;
-            displayText: string;
-            code: string;
-            typeGroup: string
-          };
-          documentType: {
-            key: string;
-            value: string;
-            displayText: string;
-            code: string;
-            typeGroup: string
-          };
-          documentOther: string;
-          documentNo: string;
-          issuedDate: number;
-          issuedBy: string;
-          expiredDate: number;
-          documents:
-            {
-              id: string;
-              orgFileName: string;
-              orgFileExtension: string;
-              fileUrl: string;
-              container: string
-            }[]
-        }[];
-      forestLandOwnerAgreements:
-        {
-          id: string;
-          agreementType: {
-            key: string;
-            value: string;
-            displayText: string;
-            code: string;
-            typeGroup: string
-          };
-          agreementOther: string;
-          agreementSignedDate: number;
-          agreementTime: string;
-          canSellHarvestForest: boolean;
-          sellHarvestTerm: string;
-          documents:
-            {
-              id: string;
-              orgFileName: string;
-              orgFileExtension: string;
-              fileUrl: string;
-              container: string
-            }[]
         }[]
+      }[];
+      forestLandOwnerAgreements:
+      {
+        id: string;
+        agreementType: {
+          key: string;
+          value: string;
+          displayText: string;
+          code: string;
+          typeGroup: string
+        };
+        agreementOther: string;
+        agreementSignedDate: number;
+        agreementTime: string;
+        canSellHarvestForest: boolean;
+        sellHarvestTerm: string;
+        documents:
+        {
+          id: string;
+          orgFileName: string;
+          orgFileExtension: string;
+          fileUrl: string;
+          container: string
+        }[]
+      }[]
     }[];
   forestLandOwnerRights:
     {
@@ -483,13 +483,13 @@ export class ProfileForest {
       issuedBy: string;
       expiredDate: number;
       documents:
-        {
-          id: string;
-          orgFileName: string;
-          orgFileExtension: string;
-          fileUrl: string;
-          container: string
-        }[]
+      {
+        id: string;
+        orgFileName: string;
+        orgFileExtension: string;
+        fileUrl: string;
+        container: string
+      }[]
     }[];
   privacyType: string;
   landForestInformationFile: {
@@ -501,60 +501,34 @@ export class ProfileForest {
   };
 }
 
-export class ForestPilots{
-      id: string;
-      forestId: string;
-      commune: {
-        key: string;
-        value: string;
-        displayText: string;
-        code: string;
-        typeGroup: string
-      };
-      district: {
-        key: string;
-        value: string;
-        displayText: string;
-        code: string;
-        typeGroup: string
-      };
-      village: string;
-      compt: string;
-      subCompt: string;
-      plotCode: string;
-      compartment: string;
-      subCompartment: string;
-      area: number;
-      availableArea: number;
-      coordinateStatus: boolean;
-      trees:
-        {
-          id: string;
-          forestPlotId: string;
-          area: number;
-          plantedYear: number;
-          estimatedVolume: number;
-          createdDate: number;
-          updatedDate: number;
-          isPlantedByStateBudget: boolean;
-          treeType: {
-            id: string;
-            name: string;
-            latinName: string;
-            shortName: string;
-            engName: string
-          };
-          detail: {
-            harvestProfileCount: number;
-            otherHarvestedArea: number;
-            harvestedArea: number;
-            standingTreeProfileCount: number;
-            standingTreeArea: number
-          }
-        }[];
-}
-
-export class ForestPilot{
+export class ForestPilots {
+  id: string;
+  forestId: string;
+  commune: {
+    key: string;
+    value: string;
+    displayText: string;
+    code: string;
+    typeGroup: string
+  };
+  district: {
+    key: string;
+    value: string;
+    displayText: string;
+    code: string;
+    typeGroup: string
+  };
+  village: string;
+  compt: string;
+  subCompt: string;
+  plotCode: string;
+  compartment: string;
+  subCompartment: string;
+  area: number;
+  availableArea: number;
+  coordinateStatus: boolean;
+  trees:
+    {
       id: string;
       forestPlotId: string;
       area: number;
@@ -576,5 +550,58 @@ export class ForestPilot{
         harvestedArea: number;
         standingTreeProfileCount: number;
         standingTreeArea: number
-      };
+      }
+    }[];
+}
+
+export class ForestPilot {
+  id: string;
+  forestPlotId: string;
+  area: number;
+  plantedYear: number;
+  estimatedVolume: number;
+  createdDate: number;
+  updatedDate: number;
+  isPlantedByStateBudget: boolean;
+  treeType: {
+    id: string;
+    name: string;
+    latinName: string;
+    shortName: string;
+    engName: string
+  };
+  detail: {
+    harvestProfileCount: number;
+    otherHarvestedArea: number;
+    harvestedArea: number;
+    standingTreeProfileCount: number;
+    standingTreeArea: number
+  };
+}
+
+export class ForestCreate {
+  forestId: string;
+  standingTreeTraditionId: string;
+  forestType: string;
+  profileName: string;
+  profileCreatedUserId: string;
+  harvesterId: string;
+  profileDate: number;
+  fromDate: number;
+  toDate: number;
+  harvestMethod: {
+    key: string;
+    value: string;
+    displayText: string;
+    code: string;
+    typeGroup: string
+  };
+  items:
+    {
+      id: string;
+      forestPlotTreeId: string;
+      declareHarvestId: string;
+      area: number;
+      estimatedVolume: number
+    }[];
 }
