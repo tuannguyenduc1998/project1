@@ -23,7 +23,7 @@ export class ProfileRegistrationFormComponent implements OnInit {
   profileModel: ProfileForest = new ProfileForest();
   disabled = true;
   user: UserLoginData;
-  dateNow = 1604473880;
+  dateNow = 1604496411;
   setOfCheckedId = new Set<string>();
   forestPlotList: ForestPilots[];
   forestPlotLists: ForestPilots[];
@@ -31,6 +31,7 @@ export class ProfileRegistrationFormComponent implements OnInit {
   forestCreate: ForestCreate = new ForestCreate();
   forestCreates: ForestCreate[];
   masterData: MasterData = new MasterData();
+  today = new Date();
   constructor(private formBuilder: FormBuilder, private userService: UserService,
               private forestService: ForestProfileService, private modalService: NzModalService) { }
 
@@ -69,6 +70,9 @@ export class ProfileRegistrationFormComponent implements OnInit {
         usedId: this.setOfCheckedId
       },
       nzWidth: '70%',
+      nzFooter: [
+        {label: ''}
+      ]
     });
 
     modal.afterClose.subscribe(result => {
@@ -85,6 +89,21 @@ export class ProfileRegistrationFormComponent implements OnInit {
     });
 
   }
+
+  disabledFromDate = (fromDate: Date): boolean => {
+    if (!fromDate || !this.today) {
+      return false;
+    }
+    return fromDate.getTime() < this.today.getTime();
+  }
+
+  disabledToDate = (toDate: Date): boolean => {
+    if (!toDate || !this.profileForm.getRawValue().fromDate) {
+      return false;
+    }
+    return toDate.getTime() <= this.profileForm.getRawValue().fromDate.getTime();
+  }
+
   deleteItem(id: string): void {
     this.setOfCheckedId.delete(id);
   }
@@ -106,13 +125,13 @@ export class ProfileRegistrationFormComponent implements OnInit {
   onSave(): void{
     this.forestForm = this.formBuilder.group({
       profileCode: [this.profileForm.value.profileCode],
-      profileDate: [this.profileForm.value.profileDate],
+      profileDate: [this.profileForm.value.profileDate / 1000],
       profileName: [this.profileForm.value.profileName],
       fullname: [this.profileForm.value.fullname],
       isCheckMe: ['me'],
       profileID: [this.profileForm.value.profileID],
-      fromDate: [Date.parse(this.profileForm.value.fromDate)],
-      toDate: [Date.parse(this.profileForm.value.toDate)],
+      fromDate: [Date.parse(this.profileForm.value.fromDate) / 1000],
+      toDate: [Date.parse(this.profileForm.value.toDate) / 1000],
       harvestMethod: [this.profileForm.value.harvestMethod],
       forestType: [this.profileForm.value.forestType]
     });
@@ -121,7 +140,7 @@ export class ProfileRegistrationFormComponent implements OnInit {
     this.forestCreate.profileDate = this.forestForm.value.profileDate;
     this.forestCreate.standingTreeTraditionId = null;
     this.forestCreate.profileName = this.forestForm.value.profileName;
-    this.forestCreate.profileCreatedUserId = '99784ce6-aada-4c77-8405-8f3506900970';
+    this.forestCreate.profileCreatedUserId = this.user.userId;
     this.forestCreate.fromDate = this.forestForm.value.fromDate;
     this.forestCreate.toDate = this.forestForm.value.toDate;
     this.forestCreate.harvestMethod = this.masterData[0].childs.filter( x => x.code === this.forestForm.value.harvestMethod)[0];
@@ -133,7 +152,8 @@ export class ProfileRegistrationFormComponent implements OnInit {
     console.log(this.forestCreate);
     this.forestService.create(this.forestCreate)
       .subscribe(insertedEmployee => {
-        this.forestCreates.push(insertedEmployee);
+        // this.forestCreates.push(insertedEmployee);
+        console.log(insertedEmployee);
       });
   }
 }

@@ -36,7 +36,7 @@
                 <label for="text-input" class="col-md-4 col-form-label label-generate">Ngày chứng từ:
                   <h6 class="font-eng">(Profile date)</h6>
                 </label>
-                <nz-date-picker class="form-control color-input col-md-8" nzFormat="dd/MM/yyyy"
+                <nz-date-picker nzPlaceHolder="dd/mm/yyyy" class="form-control color-input col-md-8" nzFormat="dd/MM/yyyy"
                   formControlName="profileDate"></nz-date-picker>
               </div>
             </div>
@@ -102,7 +102,7 @@
                 <label for="text-input" class="col-md-4 col-form-label label-generate">Thời gian khai thác từ
                   ngày:
                 <h6 class="font-eng">(Forest harvesting from date)</h6></label>
-                <nz-date-picker class="form-control color-input col-md-8" nzFormat="dd/MM/yyyy" formControlName="fromDate">
+                <nz-date-picker nzPlaceHolder="dd/mm/yyyy" [nzDisabledDate]="disabledFromDate" class="form-control color-input col-md-8" nzFormat="dd/MM/yyyy" formControlName="fromDate">
                 </nz-date-picker>
               </div>
             </div>
@@ -145,7 +145,7 @@
                 <label for="text-input" class="col-md-4 col-form-label label-generate">Đến ngày:
                   <h6 class="font-eng">(Forest harvesting to date)</h6>
                 </label>
-                <nz-date-picker class="form-control color-input col-md-8" nzFormat="dd/MM/yyyy" formControlName="toDate">
+                <nz-date-picker nzPlaceHolder="dd/mm/yyyy" [nzDisabledDate]="disabledToDate" class="form-control color-input col-md-8" nzFormat="dd/MM/yyyy" formControlName="toDate">
                 </nz-date-picker>
               </div>
             </div>
@@ -162,8 +162,7 @@
             </label>
             <button class="col-md-1 color-btn1" type="click" (click)="showModal()">Thêm mới lô</button>
           </div>
-          <div class="col-md-12 p-2">
-            <nz-table #basicTable [nzData]="">
+            <nz-table #basicTable class="col-md-12 p-2">
               <thead>
                 <tr>
                   <th>Tỉnh/Thành phố
@@ -215,7 +214,7 @@
                   <td><input type="text"></td>
                   <td>{{items.area - items.detail.standingTreeArea}}&nbsp;ha</td>
                   <td>{{items.treeType.name}}</td>
-                  <td>{{items.plantedYear}}</td>
+                  <td>{{(items.plantedYear * 1000) | date: 'yyyy'}}</td>
                   <td><input type="text"></td>
                   <td (click)="deleteItem(items.id)"><i class="fa fa-minus-circle" aria-hidden="true"></i></td>
                 </ng-container>
@@ -225,7 +224,6 @@
             </nz-table>
           </div>
         </div>
-      </div>
     </form>
   </div>
 </div>
