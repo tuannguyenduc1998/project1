@@ -145,7 +145,7 @@ export class ProfileRegistrationFormComponent implements OnInit {
     if (!fromDate || !this.today) {
       return false;
     }
-    return fromDate.getTime() < this.today.getTime();
+    return fromDate.getTime() <= this.today.getTime();
   }
 
   disabledToDate = (toDate: Date): boolean => {

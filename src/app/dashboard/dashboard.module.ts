@@ -16,6 +16,7 @@ import { NzRadioModule } from 'ng-zorro-antd/radio';
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { NzModalModule } from 'ng-zorro-antd/modal';
 import { NzSpinModule } from 'ng-zorro-antd/spin';
+import { NzPaginationModule } from 'ng-zorro-antd/pagination';
 
 @NgModule({
   declarations: [UserViewComponent, UserEditComponent, UserComponent, UserFormComponent,
@@ -30,6 +31,7 @@ import { NzSpinModule } from 'ng-zorro-antd/spin';
     NzTableModule,
     NzModalModule,
     NzSpinModule,
+    NzPaginationModule,
     FormsModule
   ],
   exports: [KzMaskDirective],
