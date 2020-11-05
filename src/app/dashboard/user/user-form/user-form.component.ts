@@ -2,8 +2,14 @@ import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { forkJoin } from 'rxjs';
 import { TypeForestOwn, TypeForm } from 'src/app/constant/type-form';
-import { MasterData, MasterDataAddress, MasterDataAddressChildDistrict
-         , MasterDataAddressChildProvince, MasterDataAddressChildWard, MasterDataChild } from 'src/app/model/masterData.model';
+import {
+  MasterData,
+  MasterDataAddress,
+  MasterDataAddressChildDistrict,
+  MasterDataAddressChildProvince,
+  MasterDataAddressChildWard,
+  MasterDataChild,
+} from 'src/app/model/masterData.model';
 import { User } from 'src/app/model/user.model';
 import { DatePipe } from '@angular/common';
 import { MasterdataService } from 'src/app/shared/service/masterdata.service';
@@ -12,11 +18,15 @@ import { UserService } from 'src/app/shared/service/user.service';
 @Component({
   selector: 'app-user-form',
   templateUrl: './user-form.component.html',
-  styleUrls: ['./user-form.component.scss']
+  styleUrls: ['./user-form.component.scss'],
 })
 export class UserFormComponent implements OnInit {
-  constructor(private formBuilder: FormBuilder, private userService: UserService,
-              private masterDataService: MasterdataService, private datepipe: DatePipe) { }
+  constructor(
+    private formBuilder: FormBuilder,
+    private userService: UserService,
+    private masterDataService: MasterdataService,
+    private datepipe: DatePipe
+  ) {}
 
   @Input() model: User = new User();
   userForm: FormGroup;
@@ -34,27 +44,26 @@ export class UserFormComponent implements OnInit {
   cpfFormatadoValue: string;
   @Input() type: string;
 
-  public mask = {
-    guide: true,
-    showMask: true,
-    mask: [/\d/, /\d/, /\d/,  '-', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/]
-  };
-
   ngOnInit(): void {
-    forkJoin([this.userService.getUserDetails(), this.masterDataService.getMasterData(),
-                                               this.masterDataService.getMasterDataAddress()]).subscribe( result => {
-          this.userModel = result[0].data;
-          if (this.userModel.userType === this.typeForestOwn.household){
-            this.masterDataUserType = result[1].data;
-            this.masterDataChild = this.masterDataUserType[0].childs;
-            this.masterDataAddress = result[2].data;
-            this.masterDataAddressChildProvince = this.masterDataAddress[0].childs;
-            this.masterDataAddressChildDistrict = this.masterDataAddressChildProvince
-                                                  .filter(x => x.code === this.userModel.province.code)[0].childs;
-            this.masterDataAddressChildWard = this.masterDataAddressChildDistrict
-                                                  .filter(x => x.code === this.userModel.district.code)[0].childs;
-          }
-          this.createForm();
+    forkJoin([
+      this.userService.getUserDetails(),
+      this.masterDataService.getMasterData(),
+      this.masterDataService.getMasterDataAddress(),
+    ]).subscribe((result) => {
+      this.userModel = result[0].data;
+      if (this.userModel.userType === this.typeForestOwn.household) {
+        this.masterDataUserType = result[1].data;
+        this.masterDataChild = this.masterDataUserType[0].childs;
+        this.masterDataAddress = result[2].data;
+        this.masterDataAddressChildProvince = this.masterDataAddress[0].childs;
+        this.masterDataAddressChildDistrict = this.masterDataAddressChildProvince.filter(
+          (x) => x.code === this.userModel.province.code
+        )[0].childs;
+        this.masterDataAddressChildWard = this.masterDataAddressChildDistrict.filter(
+          (x) => x.code === this.userModel.district.code
+        )[0].childs;
+      }
+      this.createForm();
     });
   }
 
@@ -70,20 +79,20 @@ export class UserFormComponent implements OnInit {
       district: [this.userModel.district.code],
       commune: [this.userModel.commune.code],
       province: [this.userModel.province.code],
-      forestOwnerType: [this.userModel.forestOwnerType.code]
+      forestOwnerType: [this.userModel.forestOwnerType.code],
     });
   }
 
-  onSelectDistrict(countryid) {
-    this.masterDataAddressChildDistrict = this.masterDataAddressChildProvince.filter( x => x.code === countryid)[0].childs;
+  onSelectDistrict(countryid): void {
+    this.masterDataAddressChildDistrict = this.masterDataAddressChildProvince.filter(
+      (x) => x.code === countryid
+    )[0].childs;
     this.masterDataAddressChildWard = this.masterDataAddressChildDistrict[0].childs;
   }
 
-  onSelectWard(countryid) {
-    this.masterDataAddressChildWard = this.masterDataAddressChildDistrict.filter( x => x.code === countryid)[0].childs;
-  }
-
-  guardaValorCPFFormatado(evento) {
-    this.userModel.identityCard = evento;
+  onSelectWard(countryid): void {
+    this.masterDataAddressChildWard = this.masterDataAddressChildDistrict.filter(
+      (x) => x.code === countryid
+    )[0].childs;
   }
 }

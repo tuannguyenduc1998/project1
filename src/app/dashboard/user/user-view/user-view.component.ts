@@ -11,9 +11,9 @@ import { UserFormComponent } from '../user-form/user-form.component';
 })
 export class UserViewComponent implements OnInit {
   @ViewChild('form') form: UserFormComponent;
-  user: User = new User();
   @Input() type: string;
   @Input() fullname: string;
+  user: User = new User();
   typeForm = TypeForm;
   nameTitle = 'Chỉnh sửa';
   changeTitle = 'Lưu';
@@ -23,7 +23,7 @@ export class UserViewComponent implements OnInit {
     this.type = this.typeForm.view;
   }
 
-  onSubmit(): void{
+  onSubmit(): void {
     this.router.navigate(['/dashboard/user/edit']);
   }
 

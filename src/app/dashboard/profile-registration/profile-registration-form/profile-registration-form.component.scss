@@ -9,9 +9,24 @@ table, th , td  {
   border-collapse: collapse;
   font-size: 13px;
 }
-.note{
-  color: red;
-}
 .font-title{
   font-weight: 900;
 }
+.font-eng-child{
+  font-size: 17px;
+}
+
+.required:after {
+  content: "*";
+  color: red;
+  font-style: italic;
+}
+
+.toDate{
+  margin-top: 70px;
+}
+
+.form-table{
+  font-size: 10px;
+}
+

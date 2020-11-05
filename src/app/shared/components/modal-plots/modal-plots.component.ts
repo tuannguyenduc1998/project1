@@ -1,13 +1,17 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormControl, FormGroup, ValidatorFn } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import { NzModalRef } from 'ng-zorro-antd/modal';
-import { ForestPilot, ForestPilots, ProfileForest } from 'src/app/model/profile-forest.model';
+import {
+  ForestPilot,
+  ForestPilots,
+  ProfileForest,
+} from 'src/app/model/profile-forest.model';
 import { ForestProfileService } from '../../service/forest-profile.service';
 
 @Component({
   selector: 'app-modal-plots',
   templateUrl: './modal-plots.component.html',
-  styleUrls: ['./modal-plots.component.scss']
+  styleUrls: ['./modal-plots.component.scss'],
 })
 export class ModalPlotsComponent implements OnInit {
   @Input() setOfCheckedId = new Set<string>();
@@ -15,30 +19,28 @@ export class ModalPlotsComponent implements OnInit {
   forestModel: ProfileForest = new ProfileForest();
   forestLists: ForestPilots[];
   pilotArray: ForestPilot[];
-  a: ForestPilot[] = [];
-  b: ForestPilot[];
-  c: any[];
   form: FormGroup;
   PilotsData = [];
   isVisible: boolean;
   checkedAll: boolean;
   province: string;
 
-  constructor(private forestProfileService: ForestProfileService, private modal: NzModalRef) {
-  }
+  constructor(
+    private forestProfileService: ForestProfileService,
+    private modal: NzModalRef
+  ) {}
 
   ngOnInit(): void {
-    this.forestProfileService.getForests().subscribe( (result) => {
+    this.forestProfileService.getForests().subscribe((result) => {
       this.forestModel = result.data;
       this.forestLists = this.forestModel.forestPlots;
       this.province = this.forestModel.province.value;
-      this.pilotArray = this.forestLists.filter( x => x.trees).reduce((accumulator, currentValue) => {
-        return accumulator.concat(currentValue.trees);
-      }, []);
+      this.pilotArray = this.forestLists
+        .filter((x) => x.trees)
+        .reduce((accumulator, currentValue) => {
+          return accumulator.concat(currentValue.trees);
+        }, []);
     });
-  }
-
-  next() {
   }
 
   onItemChecked(id: string, checked: boolean): void {
@@ -47,10 +49,10 @@ export class ModalPlotsComponent implements OnInit {
   }
 
   refreshCheckedStatus(): void {
-    this.forestLists = this.forestLists.filter(o =>
-      !this.usedId.has(o.id)
+    this.forestLists = this.forestLists.filter((o) => !this.usedId.has(o.id));
+    this.checkedAll = this.forestLists.every(({ id }) =>
+      this.setOfCheckedId.has(id)
     );
-    this.checkedAll = this.forestLists.every(({ id }) => this.setOfCheckedId.has(id));
   }
 
   updateCheckedSet(id: string, checked: boolean): void {
@@ -81,7 +83,15 @@ export class ModalPlotsComponent implements OnInit {
   }
 
   clickNextModal(): void {
-    this.modal.destroy({ list1: this.setOfCheckedId, list2: this.forestLists, province: this.province });
+    this.modal.destroy({
+      list1: this.setOfCheckedId,
+      list2: this.forestLists,
+      province: this.province,
+    });
   }
 
+  onCurrentPageDataChange($event: ForestPilots[]): void {
+    this.forestLists = $event;
+    this.refreshCheckedStatus();
+  }
 }

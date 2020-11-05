@@ -1,3 +1,4 @@
+
 <app-header></app-header>
 <div class="row col-md-12 px-0 mx-0">
   <div class="col-md-2">
@@ -5,148 +6,190 @@
   </div>
   <div class="col-md-10 pt-4 pb-3 b-color mx-0">
     <div class="row font">
-      <div class="col-md-9 text-uppercase ml-5 pt-4">
-        <h4 for="tieude" class="d-flex justify-content-start">Quản lý hồ sơ khai thác</h4>
-        <h6 class="font-eng">(Profile management)</h6>
+      <div class="col-md-9 ml-5 pt-4">
+        <h4 for="tieude" class="d-flex justify-content-start text-uppercase font-weight-bold">Quản lý hồ sơ khai thác
+        </h4>
+        <h4 class="font-italic font-weight-bold">(Profile management)</h4>
       </div>
     </div>
     <form [formGroup]="profileForm" class="row form m-5" *ngIf="profileForm">
       <div class="col-md-12 font">
         <div class="row font pt-4">
-          <div class="col-md-8 text-uppercase">
-            <h4 for="tieude" class="d-flex justify-content-start">Khai báo hồ sơ đăng ký khai thác</h4>
-            <h6 class="font-eng">(Declare Forest harvest registration profile)</h6>
+          <div class="col-md-5">
+            <h4 for="tieude" class="d-flex justify-content-start text-uppercase font-weight-bold">Khai báo hồ sơ đăng ký
+              khai thác</h4>
+            <h4 class="font-italic font-weight-bold">(Declare Forest harvest registration profile)</h4>
           </div>
-          <div class="col-md-4 text-uppercase d-flex justify-content-end">
-            <button class="color-btn1  mr-2 " type="click" (click)="onSave()">LƯU
+          <div class="col-md-7 text-uppercase d-flex justify-content-end">
+            <button nz-button class="color-btn1 mr-2" type="click" (click)="onSave()">LƯU
               <h6 class="color-btn1">(Save)</h6>
             </button>
-            <button [routerLink]="['/dashboard/user/view']" class="color-btn2" type="reset">HỦY
+            <button nz-button [routerLink]="['/dashboard/user/view']" class="color-btn2" type="reset">HỦY
               <h6 class="color-btn2">(Cancel)</h6></button>
           </div>
         </div>
         <hr>
         <div class="row">
           <div class="col-md-12">
-            <h4>THÔNG TIN HỒ SƠ (PROFILE INFORMATION)</h4>
+            <h4 class="font-weight-bold">THÔNG TIN HỒ SƠ <span class="font-italic font-eng-child">(PROFILE
+                INFORMATION)</span></h4>
           </div>
           <div class="col-md-6 pt-4">
             <div class="form-group row">
               <div class="col-md-12">
-                <label for="text-input" class="col-md-4 col-form-label label-generate">Ngày chứng từ:
-                  <h6 class="font-eng">(Profile date)</h6>
+                <label for="text-input" class="col-md-5 col-form-label label-generate py-0" required>Ngày chứng từ:<span
+                    class="required"></span>
+                  <h6 class="font-italic">(Profile date)</h6>
                 </label>
-                <nz-date-picker nzPlaceHolder="dd/mm/yyyy" class="form-control color-input col-md-8" nzFormat="dd/MM/yyyy"
-                  formControlName="profileDate"></nz-date-picker>
+                <div class="col-md-7 px-0">
+                <nz-date-picker nzPlaceHolder="dd/mm/yyyy" class="form-control color-input"
+                  nzFormat="dd/MM/yyyy" formControlName="profileDate" [nzDisabledDate]="disabledProfileDate"
+                  [class.is-invalid]="profileForm.get('profileDate').errors && isSubmit"></nz-date-picker>
+                  <p class="warning text-danger">{{formErrors?.profileDate}}</p>
+                </div>
               </div>
             </div>
             <div class="form-group row pt-4">
               <div class="col-md-12">
-                <label for="email-input" class="col-md-4 col-form-label label-generate">Mã hồ sơ:
-                  <h6 class="font-eng">(Profile ID)</h6>
+                <label for="email-input" class="col-md-5 col-form-label label-generate py-0">Mã hồ sơ:
+                  <h6 class="font-italic">(Profile ID)</h6>
                 </label>
-                <input class="form-control color-input col-md-8" type="text" id="email-input" formControlName="profileID" disabled>
+                <input class="form-control color-input col-md-7" type="text" id="email-input"
+                  formControlName="profileID" disabled>
               </div>
             </div>
             <div class="form-group row pt-4">
               <div class="col-md-12">
-                <label for="email-input" class="col-md-4 col-form-label label-generate">Tên hồ sơ:
-                  <h6 class="font-eng">(Profile name)</h6>
+                <label for="email-input" class="col-md-5 col-form-label label-generate py-0" required>Tên hồ sơ:<span
+                    class="required"></span>
+                  <h6 class="font-italic">(Profile name)</h6>
                 </label>
-                <input class="form-control color-input col-md-8" type="text" id="email-input"
-                  formControlName="profileName">
+                <div class="col-md-7 px-0">
+                <input class="form-control color-input" type="text" id="email-input"
+                  formControlName="profileName" [class.is-invalid]="profileForm.get('profileName').errors && isSubmit">
+                  <p class="warning text-danger">{{formErrors?.profileName}}</p>
+                </div>
               </div>
             </div>
           </div>
           <div class="col-md-6">
             <div class="form-group row pt-4">
               <div class="col-md-12">
-                <label for="email-input" class="col-md-4 col-form-label label-generate">Người lập hồ sơ:
-                  <h6 class="font-eng">(Created by)</h6>
+                <label for="email-input" class="col-md-5 col-form-label label-generate py-0">Người lập hồ sơ:
+                  <h6 class="font-italic">(Created by)</h6>
                 </label>
-                <input class="form-control color-input col-md-8" type="text" id="email-input"
+                <input class="form-control color-input col-md-7" type="text" id="email-input"
                   formControlName="fullname">
               </div>
             </div>
             <div class="form-group row pt-4">
               <div class="col-md-12">
-                <label for="email-input" class="col-md-4 col-form-label label-generate">Mã số bộ hồ sơ rừng:
-                  <h6 class="font-eng">(Forest profile ID)</h6>
+                <label for="email-input" class="col-md-5 col-form-label label-generate py-0">Mã số bộ hồ sơ mua bán cây
+                  đứng:
+                  <h6 class="font-italic">(Standing tree trading profile ID)</h6>
                 </label>
-                <input class="form-control color-input col-md-8" type="text" formControlName="profileCode">
+                <input class="form-control color-input col-md-7" type="text" id="email-input"
+                  formControlName="standingTreeTraditionId">
+              </div>
+            </div>
+            <div class="form-group row pt-4">
+              <div class="col-md-12">
+                <label for="email-input" class="col-md-5 col-form-label label-generate py-0">Mã số bộ hồ sơ rừng:
+                  <h6 class="font-italic">(Forest profile ID)</h6>
+                </label>
+                <input class="form-control color-input col-md-7" type="text" formControlName="profileCode">
               </div>
             </div>
           </div>
         </div>
         <div class="row">
           <div class="col-md-12 pt-4">
-            <h4>THÔNG TIN ĐĂNG KÝ KHAI THÁC (HARVEST REGISTRATION INFORMATION)</h4>
+            <h4 class="font-weight-bold">THÔNG TIN ĐĂNG KÝ KHAI THÁC <span class="font-italic font-eng-child">(HARVEST
+                REGISTRATION INFORMATION)</span></h4>
           </div>
           <div class="col-md-6">
             <div class="form-group row pt-4">
               <div class="col-md-12">
-                <label for="email-input" class="col-md-4 col-form-label label-generate">Đơn vị khai thác là:
-                  <h6 class="font-eng">(The forest harvester is)</h6>
+                <label for="email-input" class="col-md-5 col-form-label label-generate py-0">Đơn vị khai thác là:
+                  <h6 class="font-italic">(The forest harvester is)</h6>
                 </label>
-                <div class="color-input col-md-8 px-0">
+                <div class="color-input col-md-7 px-0">
                   <nz-radio-group formControlName="isCheckMe">
-                  <label nz-radio [nzDisabled]="disabled" nzValue="me">Là chính tôi (Self harvest)</label>
-                  <br />
-                  <label nz-radio [nzDisabled]="disabled">1 đơn vị khác (Harvested by Other)</label>
-                </nz-radio-group>
+                    <label nz-radio [nzDisabled]="disabled" nzValue="me">Là chính tôi (Self harvest)</label>
+                    <br />
+                    <label nz-radio [nzDisabled]="disabled">1 đơn vị khác (Harvested by Other)</label>
+                  </nz-radio-group>
                 </div>
               </div>
             </div>
             <div class="form-group row">
               <div class="col-md-12">
-                <label for="text-input" class="col-md-4 col-form-label label-generate">Thời gian khai thác từ
-                  ngày:
-                <h6 class="font-eng">(Forest harvesting from date)</h6></label>
-                <nz-date-picker nzPlaceHolder="dd/mm/yyyy" [nzDisabledDate]="disabledFromDate" class="form-control color-input col-md-8" nzFormat="dd/MM/yyyy" formControlName="fromDate">
+                <label for="text-input" class="col-md-5 col-form-label label-generate py-0" required>Thời gian khai thác
+                  từ
+                  ngày:<span class="required"></span>
+                  <h6 class="font-italic">(Forest harvesting from date)</h6>
+                </label>
+                <div class="col-md-7 px-0">
+                <nz-date-picker nzPlaceHolder="dd/mm/yyyy" [nzDisabledDate]="disabledFromDate"
+                  class="form-control color-input" nzFormat="dd/MM/yyyy" formControlName="fromDate"
+                  [class.is-invalid]="profileForm.get('fromDate').errors && isSubmit">
                 </nz-date-picker>
+                <p class="warning text-danger">{{formErrors?.fromDate}}</p>
+              </div>
               </div>
             </div>
             <div class="form-group row pt-4">
               <div class="col-md-12">
-                <label for="email-input" class="col-md-4 col-form-label label-generate">Hình thức khai thác:
-                  <h6 class="font-eng">(Harvest methods)</h6>
+                <label for="email-input" class="col-md-5 col-form-label label-generate py-0">Hình thức khai thác:
+                  <h6 class="font-italic">(Harvest methods)</h6>
                 </label>
-                <div class="color-input col-md-8 px-0">
+                <div class="color-input col-md-7 px-0">
                   <nz-radio-group formControlName="harvestMethod">
-                  <label nz-radio [nzDisabled]="!disabled" nzValue='ClearCut'>Khai thác trắng (Clear cut harvest)</label>
-                  <br />
-                  <label nz-radio [nzDisabled]="!disabled" nzValue='Trim'>Tỉa thưa (Trim)</label>
-                </nz-radio-group>
+                    <label nz-radio [nzDisabled]="!disabled" nzValue='ClearCut'>Khai thác trắng (Clear cut
+                      harvest)</label>
+                    <br />
+                    <label nz-radio [nzDisabled]="!disabled" nzValue='Trim'>Tỉa thưa (Trim)</label>
+                  </nz-radio-group>
                 </div>
               </div>
             </div>
             <div class="form-group row pt-4">
               <div class="col-md-12">
-                <label for="email-input" class="col-md-4 col-form-label label-generate">Loại rừng:
-                  <h6 class="font-eng">(Forest type)</h6>
+                <label for="email-input" class="col-md-5 col-form-label label-generate py-0">Loại rừng:
+                  <h6 class="font-italic">(Forest type)</h6>
                 </label>
-                <div class="color-input col-md-8 px-0">
+                <div class="color-input col-md-7 px-0">
                   <nz-radio-group formControlName="forestType">
-                  <label nz-radio [nzDisabled]="!disabled" nzValue='ProductionForest'>Rừng sản xuất (Production forests)</label>
-                  <br />
-                  <label nz-radio [nzDisabled]="!disabled" nzValue='SpecialUseForest'>Rừng đặc dụng (Special-use forests)</label>
-                  <br />
-                  <label nz-radio [nzDisabled]="!disabled" nzValue='ProtectionForest'>Rừng phòng hộ (Protection forests)</label>
-                  <br />
-                  <label nz-radio [nzDisabled]="!disabled" nzValue='ScantteredTree'>Cây phân tán (Scattered trees)</label>
-                </nz-radio-group>
+                    <label nz-radio [nzDisabled]="!disabled" nzValue='ProductionForest'>Rừng sản xuất (Production
+                      forests)</label>
+                    <br />
+                    <label nz-radio [nzDisabled]="!disabled" nzValue='SpecialUseForest'>Rừng đặc dụng (Special-use
+                      forests)</label>
+                    <br />
+                    <label nz-radio [nzDisabled]="!disabled" nzValue='ProtectionForest'>Rừng phòng hộ (Protection
+                      forests)</label>
+                    <br />
+                    <label nz-radio [nzDisabled]="!disabled" nzValue='ScantteredTree'>Cây phân tán (Scattered
+                      trees)</label>
+                  </nz-radio-group>
                 </div>
               </div>
             </div>
           </div>
-          <div class="col-md-6 group2 pl-5">
-            <div class="form-group row mt-5">
+          <div class="col-md-6">
+            <div class="form-group row toDate">
               <div class="col-md-12">
-                <label for="text-input" class="col-md-4 col-form-label label-generate">Đến ngày:
-                  <h6 class="font-eng">(Forest harvesting to date)</h6>
+                <label for="text-input" class="col-md-5 col-form-label label-generate py-0" required>Đến ngày:<span
+                    class="required"></span>
+                  <h6 class="font-italic">(Forest harvesting to date)</h6>
                 </label>
-                <nz-date-picker nzPlaceHolder="dd/mm/yyyy" [nzDisabledDate]="disabledToDate" class="form-control color-input col-md-8" nzFormat="dd/MM/yyyy" formControlName="toDate">
+                <div class="col-md-7 px-0">
+                <nz-date-picker nzPlaceHolder="dd/mm/yyyy" [nzDisabledDate]="disabledToDate"
+                  class="form-control color-input" nzFormat="dd/MM/yyyy" formControlName="toDate"
+                  [class.is-invalid]="profileForm.get('toDate').errors && isSubmit">
                 </nz-date-picker>
+                <p class="warning text-danger">{{formErrors?.toDate}}</p>
+              </div>
               </div>
             </div>
           </div>
@@ -154,7 +197,7 @@
         <div class="row">
           <label for="text-input" class="col-md-12 col-form-label label-generate">Địa điểm, loài cây và diện tích khai
             thác:
-            <h6 class="font-eng">(Harvest location, species and area)</h6></label>
+            <h6 class="font-italic">(Harvest location, species and area)</h6></label>
           <div class="col-md-12 d-flex justify-content-end">
             <label for="text-input" class="col-md-11 col-form-label label-generate note">| Vui lòng chọn "Thêm lô" để
               thêm địa điểm bạn sẽ khai thác vào bảng bên dưới (Please choose "Add plot" to add new harvest location
@@ -162,68 +205,72 @@
             </label>
             <button class="col-md-1 color-btn1" type="click" (click)="showModal()">Thêm mới lô</button>
           </div>
-            <nz-table #basicTable class="col-md-12 p-2">
-              <thead>
-                <tr>
-                  <th>Tỉnh/Thành phố
-                    <h6 class="font-eng">(Province/City)</h6>
-                  </th>
-                  <th>Quận/Huyện
-                    <h6 class="font-eng">(District)</h6>
-                  </th>
-                  <th>Phường/Xã
-                    <h6 class="font-eng">(Ward/Commune)</h6>
-                  </th>
-                  <th>Tiểu khu
-                    <h6 class="font-eng">(Compartment)</h6>
-                  </th>
-                  <th>Khoảnh
-                    <h6 class="font-eng">(Sub-Comp.)</h6>
-                  </th>
-                  <th>Lô
-                    <h6 class="font-eng">(Plot)</h6>
-                  </th>
-                  <th>D.tích khai thác
-                    <h6 class="font-eng">(Harvest area)</h6>
-                  </th>
-                  <th>D.tích còn lại
-                    <h6 class="font-eng">(Remained area)</h6>
-                  </th>
-                  <th>Loài cây
-                    <h6 class="font-eng">(Species)</h6>
-                  </th>
-                  <th>Năm trồng
-                    <h6 class="font-eng">(Plant year)</h6>
-                  </th>
-                  <th>Khối lượng dự kiến
-                    <h6 class="font-eng">(Estimated Harvested Volume)</h6>
-                  </th>
-                  <th></th>
-                </tr>
-              </thead>
-              <tbody>
-                <ng-container *ngFor="let itemLists of forestPlotList">
+          <nz-table #basicTable class="col-md-12 p-2" [nzData]="forestPlotList" nzShowSizeChanger>
+            <thead>
+              <tr>
+                <th class="font-weight-bold">Tỉnh/Thành phố
+                  <h6 class="font-italic">(Province/City)</h6>
+                </th>
+                <th class="font-weight-bold">Quận/Huyện
+                  <h6 class="font-italic">(District)</h6>
+                </th>
+                <th class="font-weight-bold">Phường/Xã
+                  <h6 class="font-italic">(Ward/Commune)</h6>
+                </th>
+                <th class="font-weight-bold">Tiểu khu
+                  <h6 class="font-italic">(Compartment)</h6>
+                </th>
+                <th class="font-weight-bold">Khoảnh
+                  <h6 class="font-italic">(Sub-Comp.)</h6>
+                </th>
+                <th class="font-weight-bold">Lô
+                  <h6 class="font-italic">(Plot)</h6>
+                </th>
+                <th class="font-weight-bold">D.tích khai thác
+                  <h6 class="font-italic">(Harvest area)</h6>
+                </th>
+                <th class="font-weight-bold">D.tích còn lại
+                  <h6 class="font-italic">(Remained area)</h6>
+                </th>
+                <th class="font-weight-bold">Loài cây
+                  <h6 class="font-italic">(Species)</h6>
+                </th>
+                <th class="font-weight-bold">Năm trồng
+                  <h6 class="font-italic">(Plant year)</h6>
+                </th>
+                <th class="font-weight-bold">Khối lượng dự kiến
+                  <h6 class="font-italic">(Estimated Harvested Volume)</h6>
+                </th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <ng-container *ngFor="let itemLists of basicTable.data">
                 <tr *ngFor="let items of itemLists.trees">
                   <ng-container *ngIf="setOfCheckedId.has(items.id)">
-                  <td>{{province}}</td>
-                  <td>{{itemLists.district.value}}</td>
-                  <td>{{itemLists.commune.value}}</td>
-                  <td>{{itemLists.compt}}</td>
-                  <td>{{itemLists.subCompt}}</td>
-                  <td>{{itemLists.plotCode}}</td>
-                  <td><input type="text"></td>
-                  <td>{{items.area - items.detail.standingTreeArea}}&nbsp;ha</td>
-                  <td>{{items.treeType.name}}</td>
-                  <td>{{(items.plantedYear * 1000) | date: 'yyyy'}}</td>
-                  <td><input type="text"></td>
-                  <td (click)="deleteItem(items.id)"><i class="fa fa-minus-circle" aria-hidden="true"></i></td>
-                </ng-container>
+                    <td>{{province}}</td>
+                    <td>{{itemLists.district.value}}</td>
+                    <td>{{itemLists.commune.value}}</td>
+                    <td>{{itemLists.compt}}</td>
+                    <td>{{itemLists.subCompt}}</td>
+                    <td>{{itemLists.plotCode}}</td>
+                    <td>
+                      <div>
+                        <input type="text">
+                      </div>
+                    </td>
+                    <td>{{items.area - items.detail.standingTreeArea}}</td>
+                    <td>{{items.treeType.name}}</td>
+                    <td>{{(items.plantedYear * 1000) | date: 'yyyy'}}</td>
+                    <td><input type="text"></td>
+                    <td (click)="deleteItem(items.id)"><i class="fa fa-minus-circle" aria-hidden="true"></i></td>
+                  </ng-container>
                 </tr>
               </ng-container>
-              </tbody>
-            </nz-table>
-          </div>
+            </tbody>
+          </nz-table>
         </div>
+      </div>
     </form>
   </div>
 </div>

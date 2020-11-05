@@ -3,3 +3,9 @@ table, th , td  {
   border-collapse: collapse;
   font-size: 13px;
 }
+
+button:disabled,
+button[disabled]{
+  background-color: #cccccc;
+  color: #666666;
+}

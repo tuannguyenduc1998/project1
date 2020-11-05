@@ -16,7 +16,7 @@ button {
 
 .warning {
     padding-top: 2px;
-    font-size: 90%;
+    font-size: 100%;
 }
 /* Importing Bootstrap SCSS file. */
 @import '~bootstrap/scss/bootstrap';
@@ -41,10 +41,8 @@ html {
 
 .font{
   font-family: 'Times New Roman', Times, serif;
-  font-weight: bold;
 }
 
-.font-eng{
-  font-weight: bold;
-  font-style: italic;
+.note{
+  color: red;
 }
