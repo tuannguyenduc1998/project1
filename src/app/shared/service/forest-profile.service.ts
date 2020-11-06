@@ -12,9 +12,7 @@ export class ForestProfileService {
 
   constructor(private http: HttpClient) { }
 
-  private Url = 'http://hawaddsapi.bys.vn/api/forest/4cba385e-e411-4d22-b4de-1478dbbb382c';
-  private UrlMaster = 'http://hawaddsapi.bys.vn/api/data/masterdata?groupsName=HarvestMethod';
-  private UrlForestCreate = 'http://hawadevapi.bys.vn/api/declare-harvest/create';
+  private Url = 'http://hawaddsapi.bys.vn/api/';
   private loggedInStatus = JSON.parse(localStorage.getItem('LoginStatus'));
   user: UserLoginData;
   forestCreate: ForestCreate;
@@ -24,11 +22,11 @@ export class ForestProfileService {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' , Authorization:
       `Bearer ${this.user.jwtToken}`})
     };
-    return this.http.get(this.Url, httpOptions);
+    return this.http.get(this.Url + 'forest/4cba385e-e411-4d22-b4de-1478dbbb382c', httpOptions);
   }
 
   getHarvestMethod(): Observable<any>{
-    return this.http.get(this.UrlMaster);
+    return this.http.get(this.Url + 'data/masterdata?groupsName=HarvestMethod');
   }
 
   create(forests: ForestCreate): Observable<ForestCreate> {
@@ -37,8 +35,12 @@ export class ForestProfileService {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' , Authorization:
       `Bearer ${this.user.jwtToken}`})
     };
-    return this.http.post<ForestCreate>(this.UrlForestCreate, forests, httpOptions).pipe(
+    return this.http.post<ForestCreate>(this.Url + 'declare-harvest/create', forests, httpOptions).pipe(
       tap((forests: ForestCreate) => forests)
     );
+  }
+
+  getDeclareHarvestStatus(): Observable<any>{
+    return this.http.get(this.Url + 'masterdata?groupsName=DeclareHarvestStatus');
   }
 }

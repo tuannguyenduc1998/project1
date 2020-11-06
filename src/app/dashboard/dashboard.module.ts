@@ -17,10 +17,12 @@ import { NzTableModule } from 'ng-zorro-antd/table';
 import { NzModalModule } from 'ng-zorro-antd/modal';
 import { NzSpinModule } from 'ng-zorro-antd/spin';
 import { NzPaginationModule } from 'ng-zorro-antd/pagination';
+import { ProfileRegistrationListComponent } from './profile-registration/profile-registration-list/profile-registration-list.component';
+import { NzSelectModule } from 'ng-zorro-antd/select';
 
 @NgModule({
   declarations: [UserViewComponent, UserEditComponent, UserComponent, UserFormComponent,
-     KzMaskDirective, ProfileRegistrationComponent, ProfileRegistrationFormComponent],
+     KzMaskDirective, ProfileRegistrationComponent, ProfileRegistrationFormComponent, ProfileRegistrationListComponent],
   imports: [
     DashboardRoutingModule,
     SharedModule,
@@ -32,6 +34,7 @@ import { NzPaginationModule } from 'ng-zorro-antd/pagination';
     NzModalModule,
     NzSpinModule,
     NzPaginationModule,
+    NzSelectModule,
     FormsModule
   ],
   exports: [KzMaskDirective],

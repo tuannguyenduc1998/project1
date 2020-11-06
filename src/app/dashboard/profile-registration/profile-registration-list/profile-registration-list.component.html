@@ -1,1 +1,138 @@
-<p>profile-registration-list works!</p>
+<app-header></app-header>
+<div class="row col-md-12 px-0 mx-0">
+  <div class="col-md-2">
+    <app-menu></app-menu>
+  </div>
+  <div class="col-md-10 pt-4 pb-3 b-color mx-0">
+    <div class="row font">
+      <div class="col-md-9 ml-5 pt-4">
+        <h4 for="tieude" class="d-flex justify-content-start text-uppercase font-weight-bold">Quản lý hồ sơ khai thác
+        </h4>
+        <h4 class="font-italic font-weight-bold">(Profile management)</h4>
+      </div>
+    </div>
+    <div class="row form m-5">
+      <div class="col-md-12 font pt-4">
+        <div class="col-md-7">
+          <h4 for="tieude" class="d-flex justify-content-start text-uppercase font-weight-bold">DANH SÁCH HỒ SƠ ĐĂNG KÝ KHAI THÁC
+          <span class="font-italic font-eng-child">(HARVEST REGISTRATION PROFILE LIST)</span></h4>
+          <label for=""><span class="required"></span>Mã tài khoản (Account ID): {{user.coCode}}</label>
+        </div>
+        <div class="col-md-5 text-uppercase d-flex justify-content-end">
+          <div class="font">
+            <input #search class="input-search p-1" type="text" name="search" placeholder="Tìm theo mã hồ sơ" ngModel #name="ngModel">
+            <i class="fa fa-search imgs" aria-hidden="true" (click)="search.click()"></i>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-12 col-xl-12 col-lg-12 col-sm-12 col-12 d-flex form-inline pl-5 pr-0">
+        <div class="form-group align-items-start mr-3 py-1">
+          <div class="align-items-start mr-3">
+            <p class="mb-0">Từ ngày</p>
+            <p class="font-italic mb-0">(From date)</p>
+          </div>
+          <div>
+            <nz-date-picker nzPlaceHolder="dd/mm/yyyy" class="form-control color-input"
+            nzFormat="dd/MM/yyyy" formControlName="profileDate"></nz-date-picker>
+          </div>
+        </div>
+        <div class="form-group align-items-start mr-3 py-1">
+          <div class="align-items-start mr-3">
+            <p class="mb-0">Đến ngày</p>
+            <p class="font-italic mb-0">(To date)</p>
+          </div>
+          <div>
+            <nz-date-picker nzPlaceHolder="dd/mm/yyyy" class="form-control color-input"
+            nzFormat="dd/MM/yyyy" formControlName="profileDate"></nz-date-picker>
+          </div>
+        </div>
+        <div class="form-group align-items-start mr-3 py-1">
+          <div class="align-items-start mr-3">
+            <p class="mb-0">Đến ngày</p>
+            <p class="font-italic mb-0">(To date)</p>
+          </div>
+          <div>
+            <nz-date-picker nzPlaceHolder="dd/mm/yyyy" class="form-control color-input"
+            nzFormat="dd/MM/yyyy" formControlName="profileDate"></nz-date-picker>
+          </div>
+        </div>
+        <div class="form-group align-items-start mr-3 py-1">
+          <div class="align-items-start mr-3">
+            <p class="mb-0">Trạng thái</p>
+            <p class="font-italic mb-0">(Status)</p>
+          </div>
+          <div>
+            <nz-select class="font-nz" ngModel="Tất cả" [nzOptions]="masterData"></nz-select>
+          </div>
+        </div>
+        <div class="form-group align-items-start mr-3 py-1">
+          <div class="align-items-start mr-3">
+            <p class="mb-0">Nguồn gốc</p>
+            <p class="font-italic mb-0">(Status)</p>
+          </div>
+          <div>
+            <nz-select class="font-nz" ngModel="Tất cả" [nzOptions]="masterData"></nz-select>
+          </div>
+        </div>
+        <div class="form-group align-items-start mr-3 py-1 text-uppercase">
+          <button class="font-nz" nz-button class="color-btn1 mr-2" type="click">Lọc
+            <h6 class="color-btn1 font-italic">(Filter)</h6>
+          </button>
+        </div>
+        <div class="form-group align-items-start mr-3 py-1 text-uppercase">
+          <button class="font-nz" nz-button class="color-btn1 mr-2" type="click">Xóa Lọc
+            <h6 class="color-btn1 font-italic">(Remove Filter)</h6>
+          </button>
+        </div>
+      </div>
+      <div class="col-md-12 pt-3">
+      <nz-table #basicTable nzShowSizeChanger>
+        <thead>
+          <tr>
+            <th class="font-weight-bold">STT
+              <h6 class="font-eng">(No.)</h6>
+            </th>
+            <th class="font-weight-bold">Mã hồ sơ
+              <h6 class="font-eng">(Profile ID)</h6>
+            </th>
+            <th class="font-weight-bold">Tên hồ sơ
+              <h6 class="font-eng">(Profile name)</h6>
+            </th>
+            <th class="font-weight-bold">Ngày Chứng từ
+              <h6 class="font-eng">(Profile date)</h6>
+            </th>
+            <th class="font-weight-bold">Trạng thái hồ sơ
+              <h6 class="font-eng">(Profile status)</h6>
+            </th>
+            <th class="font-weight-bold">Nguồn gốc
+              <h6 class="font-eng">(Created from)</h6>
+            </th>
+            <th class="font-weight-bold">Thao tác hồ sơ
+              <h6 class="font-eng">(Actions on profile)</h6>
+            </th>
+            <th class="font-weight-bold">Xem RTE
+              <h6 class="font-eng">(View RTE)</h6>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <ng-container>
+            <tr>
+              <ng-container>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </ng-container>
+            </tr>
+          </ng-container>
+        </tbody>
+      </nz-table>
+    </div>
+    </div>
+  </div>
+</div>

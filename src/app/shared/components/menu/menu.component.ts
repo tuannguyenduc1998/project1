@@ -19,4 +19,8 @@ export class MenuComponent implements OnInit {
   onSubmitMove(): void{
     this.router.navigateByUrl(`/dashboard/user/view`);
   }
+
+  onSubmitList(): void{
+    this.router.navigateByUrl(`/dashboard/profile-registration/profile-registration-list`);
+  }
 }
