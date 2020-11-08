@@ -41,6 +41,20 @@ export class ForestProfileService {
   }
 
   getDeclareHarvestStatus(): Observable<any>{
-    return this.http.get(this.Url + 'masterdata?groupsName=DeclareHarvestStatus');
+    this.user = this.loggedInStatus;
+    const httpOptions = {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json' , Authorization:
+      `Bearer ${this.user.jwtToken}`})
+    };
+    return this.http.get(this.Url + 'data/masterdata?groupsName=DeclareHarvestStatus', httpOptions);
+  }
+
+  getDeclareHarvest(pageIndex: number, pageSize: number): Observable<any>{
+    this.user = this.loggedInStatus;
+    const httpOptions = {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json' , Authorization:
+      `Bearer ${this.user.jwtToken}`})
+    };
+    return this.http.get(this.Url + `declare-harvest/filter/${pageIndex}/${pageSize}`, httpOptions);
   }
 }

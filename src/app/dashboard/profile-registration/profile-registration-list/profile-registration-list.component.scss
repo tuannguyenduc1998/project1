@@ -19,3 +19,27 @@ table, th , td  {
   border-collapse: collapse;
   font-size: 13px;
 }
+
+.input-search{
+  padding: 3px 3px 3px 16px;
+}
+
+.imgs{
+  cursor: pointer;
+  background-color: rgb(59, 143, 112);
+  color: #ffffff;
+  font-size: 20px;
+}
+
+input,
+input:active,
+input:focus {
+    outline: 0;
+    outline-style: none;
+    outline-width: 0;
+    border: none;
+}
+
+.boxshaw{
+  box-shadow: 3px 3px 3px 3px #d4d4d4;
+}
