@@ -99,13 +99,12 @@
 
     <div class="col-md-12 pt-3">
       <nz-table #basicTable nzShowSizeChanger
-      [nzData]="listOfRandomUser"
+      [nzData]="listOfRandomUser.items"
       [nzFrontPagination]="false"
       [nzLoading]="loading"
-      [nzTotal]="total"
-      [nzPageSize]="pageSize"
-      [nzPageIndex]="pageIndex"
-      (nzQueryParams)="onQueryParamsChange($event)">
+      [nzTotal]="listOfRandomUser.totalCount"
+      [nzPageSize]="listOfRandomUser.pageSize"
+      [nzPageIndex]="listOfRandomUser.pageIndex">
         <thead>
           <tr>
             <th class="font-weight-bold">STT
@@ -151,3 +150,6 @@
   </div>
 </div>
 </div>
+
+
+

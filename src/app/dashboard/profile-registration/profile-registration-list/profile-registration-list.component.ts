@@ -16,22 +16,18 @@ export class ProfileRegistrationListComponent implements OnInit {
   masterData: MasterData = new MasterData();
   selectedValue = '-Tất cả(All)-';
   selectedMasterData: MasterDataChild[];
-  total = 1;
-  // listOfRandomUser: DeclareHarvests[] = [];
   listOfRandomUser: DeclareHarvests = new DeclareHarvests();
   loading = true;
-  pageSize = 10;
-  pageIndex = 0;
   date = '';
-  constructor(private userService: UserService, private forestService: ForestProfileService ) { }
+  constructor(private userService: UserService, private forestService: ForestProfileService) { }
 
   ngOnInit(): void {
     this.user = this.userService.LoginStatus;
-    this.forestService.getDeclareHarvestStatus().subscribe( (result) => {
+    this.forestService.getDeclareHarvestStatus().subscribe((result) => {
       this.masterData = result.data;
       this.selectedMasterData = this.masterData[0].childs;
     });
-    this.loadDataFromServer(this.pageIndex, this.pageSize);
+    this.loadDataFromServer(this.listOfRandomUser.pageIndex, this.listOfRandomUser.pageSize);
   }
 
   loadDataFromServer(
@@ -41,15 +37,14 @@ export class ProfileRegistrationListComponent implements OnInit {
     this.loading = true;
     this.forestService.getDeclareHarvest(pageIndex, pageSize).subscribe(results => {
       this.loading = false;
-      this.listOfRandomUser = results.data;
-      this.total = this.listOfRandomUser.totalCount; // mock the total data here
+      const data = results.data;
+      this.listOfRandomUser = new DeclareHarvests();
+      this.listOfRandomUser.pageIndex = data.pageIndex + 1;
+      this.listOfRandomUser.pageSize = data.pageSize;
+      this.listOfRandomUser.totalCount = data.totalCount;
+      this.listOfRandomUser.totalPages = data.totalPages;
+      this.listOfRandomUser.items = data.items;
     });
-  }
-
-  onQueryParamsChange(params: NzTableQueryParams): void {
-    console.log(params);
-    const { pageSize, pageIndex} = params;
-    this.loadDataFromServer(pageIndex, pageSize);
   }
 
 }
