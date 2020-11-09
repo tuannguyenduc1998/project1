@@ -108,9 +108,9 @@
       (nzQueryParams)="onQueryParamsChange($event)">
         <thead>
           <tr>
-            <!-- <th class="font-weight-bold">STT
+            <th class="font-weight-bold">STT
               <h6 class="font-italic">(No.)</h6>
-            </th> -->
+            </th>
             <th class="font-weight-bold">Mã hồ sơ
               <h6 class="font-italic">(Profile ID)</h6>
             </th>
@@ -135,14 +135,14 @@
           </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let item of listOfRandomUser.items">
-                <!-- <td></td> -->
+            <tr *ngFor="let item of listOfRandomUser.items; let i = index">
+                <td class="d-flex justify-content-center">{{i+1}}</td>
                 <td>{{item.profileCode}}</td>
                 <td>{{item.profileName}}</td>
                 <td>{{item.profileDate | date: 'dd/mm/yyyy'}}</td>
                 <td>{{item.status}}</td>
                 <td></td>
-                <td><i class="fa fa-eye icon icon-eye" aria-hidden="true" ></i></td>
+                <td><i class="fa fa-eye icon icon-eye d-flex justify-content-center" aria-hidden="true" ></i></td>
                 <td></td>
             </tr>
         </tbody>
