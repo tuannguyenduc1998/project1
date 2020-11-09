@@ -22,13 +22,12 @@
         <div class="col-md-5 text-uppercase d-flex justify-content-end">
           <div class="font boxshaw">
             <input #search class="input-search" type="text" name="search" placeholder="Tìm theo mã hồ sơ" ngModel
-              #name="ngModel">
+              #name="ngModel" [(ngModel)]="filterModel.searchKey">
             <i class="fa fa-search imgs p-2" aria-hidden="true" (click)="search.click()"></i>
           </div>
         </div>
       </div>
       <div class="col-md-12 d-flex form-inline pr-0">
-        <div class="col-md-10 row">
           <div class="form-group col-md-2 align-items-start mr-3 py-1 px-0">
             <div class="align-items-start mr-3">
               <p class="mb-0">Từ ngày</p>
@@ -36,7 +35,7 @@
             </div>
             <div>
               <nz-date-picker nzPlaceHolder="dd/mm/yyyy" class="form-control color-input" nzFormat="dd/MM/yyyy"
-                [(ngModel)]="date"></nz-date-picker>
+                [(ngModel)]="filterModel.fromDate"></nz-date-picker>
             </div>
           </div>
           <div class="form-group col-md-2 align-items-start mr-3 py-1 px-0">
@@ -46,17 +45,7 @@
             </div>
             <div>
               <nz-date-picker nzPlaceHolder="dd/mm/yyyy" class="form-control color-input" nzFormat="dd/MM/yyyy"
-              [(ngModel)]="date"></nz-date-picker>
-            </div>
-          </div>
-          <div class="form-group col-md-2 align-items-start mr-3 py-1 px-0">
-            <div class="align-items-start mr-3">
-              <p class="mb-0">Đến ngày</p>
-              <p class="font-italic mb-0">(To date)</p>
-            </div>
-            <div>
-              <nz-date-picker nzPlaceHolder="dd/mm/yyyy" class="form-control color-input" nzFormat="dd/MM/yyyy"
-              [(ngModel)]="date"></nz-date-picker>
+              [(ngModel)]="filterModel.toDate" ></nz-date-picker>
             </div>
           </div>
           <div class="form-group col-md-2 align-items-start mr-3 py-1 px-0">
@@ -77,59 +66,88 @@
               <p class="font-italic mb-0">(Status)</p>
             </div>
             <div>
-              <!-- <nz-select class="font-nz" ngModel="Tất cả" [nzOptions]="masterData"></nz-select> -->
+              <nz-select [(ngModel)]="selectedValue" class="font-nz">
+                <nz-option *ngFor="let option of selectedMasterData" [nzLabel]="option.value" [nzValue]="option.value"></nz-option>
+                <nz-option nzLabel="Default Value" nzValue="Default" nzHide></nz-option>
+              </nz-select>
             </div>
           </div>
-        </div>
-        <div class="col-md-2 row px-0 mx-0">
-          <div class="row col-md-12 px-0 mx-0">
-          <div class="form-group col-md-6 align-items-start text-uppercase">
-            <button class="font-nz pr-3 pl-3" nz-button class="color-btn1" type="click">Lọc
-              <h6 class="color-btn1 font-italic">(Filter)</h6>
+        <div class="form-group align-items-start py-1">
+          <div class="d-flex justify-content-start">
+            <button nz-button class="text-uppercase h-100 w-100 button mr-2 py-1 ant-btn pr-5 pl-5" type="submit" (click)="onSubmitFilter()">
+              <span>
+                <div class="small">lọc</div>
+                <div class="font-italic small">(Filter)</div>
+              </span>
             </button>
-          </div>
-          <div class="form-group col-md-6 align-items-start text-uppercase">
-            <button class="pr-5 pl-5" nz-button class="color-btn1" type="click">Xóa Lọc
-              <h6 class="color-btn1 font-italic">(Remove Filter)</h6>
+            <button nz-button class="text-uppercase h-100 w-100 button mr-2 py-1 ant-btn" type="click">
+              <span>
+                <div class="small">Xóa Lọc</div>
+                <div class="font-italic small">(Remove Filter)</div>
+              </span>
             </button>
-          </div>
         </div>
         </div>
       </div>
-
-    <div class="col-md-12 pt-3">
+    <div class="col-md-12">
+      <hr>
       <nz-table #basicTable nzShowSizeChanger
       [nzData]="listOfRandomUser.items"
       [nzFrontPagination]="false"
       [nzLoading]="loading"
       [nzTotal]="listOfRandomUser.totalCount"
       [nzPageSize]="listOfRandomUser.pageSize"
-      [nzPageIndex]="listOfRandomUser.pageIndex">
+      [nzPageIndex]="listOfRandomUser.pageIndex"
+      (nzQueryParams)="onQueryParamsChange($event)">
         <thead>
           <tr>
-            <th class="font-weight-bold">STT
-              <h6 class="font-italic">(No.)</h6>
+            <th class="font-weight-bold th-color">
+              <span>
+                <div class="d-flex justify-content-center">STT</div>
+                <div class="font-italic small d-flex justify-content-center">(No.)</div>
+              </span>
             </th>
-            <th class="font-weight-bold">Mã hồ sơ
-              <h6 class="font-italic">(Profile ID)</h6>
+            <th class="font-weight-bold th-color">
+              <span>
+                <div>Mã hồ sơ</div>
+                <div class="font-italic small">(Profile ID)</div>
+              </span>
             </th>
-            <th class="font-weight-bold">Tên hồ sơ
-              <h6 class="font-italic">(Profile name)</h6>
+            <th class="font-weight-bold th-color">
+              <span>
+                <div>Tên hồ sơ</div>
+                <div class="font-italic small">(Profile name)</div>
+              </span>
             </th>
-            <th class="font-weight-bold">Ngày Chứng từ
-              <h6 class="font-italic">(Profile date)</h6>
+            <th class="font-weight-bold th-color">
+              <span>
+                <div>Ngày Chứng từ</div>
+                <div class="font-italic small">(Profile date)</div>
+              </span>
             </th>
-            <th class="font-weight-bold">Trạng thái hồ sơ
-              <h6 class="font-italic">(Profile status)</h6>
+            <th class="font-weight-bold th-color">
+              <span>
+                <div class="d-flex justify-content-center">Trạng thái hồ sơ</div>
+                <div class="font-italic small d-flex justify-content-center">(Profile status)</div>
+              </span>
             </th>
-            <th class="font-weight-bold">Nguồn gốc
-              <h6 class="font-italic">(Created from)</h6>
+            <th class="font-weight-bold th-color">
+              <span>
+                <div>Nguồn gốc</div>
+                <div class="font-italic small">(Created from)</div>
+              </span>
             </th>
-            <th class="font-weight-bold">Thao tác hồ sơ
-              <h6 class="font-italic">(Actions on profile)</h6>
+            <th class="font-weight-bold th-color">
+              <span>
+                <div class="d-flex justify-content-center">Thao tác hồ sơ</div>
+                <div class="font-italic small d-flex justify-content-center">(Actions on profile)</div>
+              </span>
             </th>
-            <th class="font-weight-bold">Xem RTE
-              <h6 class="font-italic">(View RTE)</h6>
+            <th class="font-weight-bold th-color">
+              <span>
+                <div>Xem RTE</div>
+                <div class="font-italic small">(View RTE)</div>
+              </span>
             </th>
           </tr>
         </thead>
@@ -139,7 +157,7 @@
                 <td>{{item.profileCode}}</td>
                 <td>{{item.profileName}}</td>
                 <td>{{item.profileDate | date: 'dd/mm/yyyy'}}</td>
-                <td>{{item.status}}</td>
+                <td class="d-flex justify-content-center">{{item.status}}</td>
                 <td></td>
                 <td><i class="fa fa-eye icon icon-eye d-flex justify-content-center" aria-hidden="true" ></i></td>
                 <td></td>

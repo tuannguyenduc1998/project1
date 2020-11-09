@@ -367,3 +367,8 @@ export class DeclareHarvests {
   extraData: {};
 }
 
+export class FilterModelProfile{
+  searchKey: string;
+  fromDate: number;
+  toDate: number;
+}

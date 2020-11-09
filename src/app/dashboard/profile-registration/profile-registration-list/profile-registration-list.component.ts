@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NzTableQueryParams } from 'ng-zorro-antd/table';
-import { DeclareHarvests } from 'src/app/model/declareHarvests.model';
+import { DeclareHarvests, FilterModelProfile } from 'src/app/model/declareHarvests.model';
 import { MasterData, MasterDataChild } from 'src/app/model/masterData.model';
 import { UserLoginData } from 'src/app/model/user.model';
 import { ForestProfileService } from 'src/app/shared/service/forest-profile.service';
@@ -18,7 +18,8 @@ export class ProfileRegistrationListComponent implements OnInit {
   selectedMasterData: MasterDataChild[];
   listOfRandomUser: DeclareHarvests = new DeclareHarvests();
   loading = true;
-  date = '';
+  date = 0;
+  filterModel = new FilterModelProfile();
   constructor(private userService: UserService, private forestService: ForestProfileService) { }
 
   ngOnInit(): void {
@@ -35,7 +36,7 @@ export class ProfileRegistrationListComponent implements OnInit {
     pageSize: number
   ): void {
     this.loading = true;
-    this.forestService.getDeclareHarvest(pageIndex, pageSize).subscribe(results => {
+    this.forestService.getDeclareHarvest(pageIndex, pageSize, this.filterModel).subscribe(results => {
       this.loading = false;
       const data = results.data;
       this.listOfRandomUser = new DeclareHarvests();
@@ -47,4 +48,13 @@ export class ProfileRegistrationListComponent implements OnInit {
     });
   }
 
+  onQueryParamsChange(params: NzTableQueryParams): void {
+    console.log(params);
+    const { pageSize, pageIndex} = params;
+    this.loadDataFromServer(pageIndex, pageSize);
+  }
+
+  onSubmitFilter(): void{
+   this.loadDataFromServer(this.listOfRandomUser.pageIndex, this.listOfRandomUser.pageSize);
+  }
 }
