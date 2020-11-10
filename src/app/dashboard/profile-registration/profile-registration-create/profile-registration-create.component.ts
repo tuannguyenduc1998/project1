@@ -2,29 +2,35 @@ import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { forkJoin } from 'rxjs';
-import { HarvestDeclare } from 'src/app/model/declare-harvests';
 import { MasterData } from 'src/app/model/masterData.model';
-import { ForestPilots } from 'src/app/model/profile-forest.model';
+import {
+  ForestCreate,
+  ForestPilots,
+  ProfileForest,
+} from 'src/app/model/profile-forest.model';
 import { UserLoginData } from 'src/app/model/user.model';
 import { ModalPlotsComponent } from 'src/app/shared/components/modal-plots/modal-plots.component';
 import { ForestProfileService } from 'src/app/shared/service/forest-profile.service';
 import { UserService } from 'src/app/shared/service/user.service';
 
 @Component({
-  selector: 'app-profile-registration-form',
-  templateUrl: './profile-registration-form.component.html',
-  styleUrls: ['./profile-registration-form.component.scss'],
+  selector: 'app-profile-registration-create',
+  templateUrl: './profile-registration-create.component.html',
+  styleUrls: ['./profile-registration-create.component.scss'],
 })
-export class ProfileRegistrationFormComponent implements OnInit {
-  harvestForm: FormGroup;
-  @Input() harvestModel: HarvestDeclare = new HarvestDeclare();
+export class ProfileRegistrationCreateComponent implements OnInit {
+  profileForm: FormGroup;
+  forestForm: FormGroup;
+  @Input() profileModel: ProfileForest = new ProfileForest();
   disabled = true;
   user: UserLoginData;
   setOfCheckedId = new Set<string>();
   forestPlotList: ForestPilots[];
   forestPlotLists: ForestPilots[];
-  masterData: MasterData = new MasterData();
   province: string;
+  forestCreate: ForestCreate = new ForestCreate();
+  forestCreates: ForestCreate[];
+  masterData: MasterData = new MasterData();
   today = new Date();
   isSubmit: boolean;
   invalidMessages: string[] = [];
@@ -51,20 +57,24 @@ export class ProfileRegistrationFormComponent implements OnInit {
       this.forestService.getHarvestMethod(),
     ]).subscribe((result) => {
       this.masterData = result[1].data;
-      this.harvestModel = result[0].data;
+      this.profileModel = result[0].data;
       this.createForm();
 
-      this.harvestForm.valueChanges.subscribe((_) => {
+      this.profileForm.valueChanges.subscribe((_) => {
         if (this.isSubmit) {
           this.validateForm();
         }
       });
     });
+    // this.a = this.profileModel.forestPlots.filter( x => x.trees).reduce((accumulator, currentValue) => {
+    //   return accumulator.concat(currentValue.trees);
+    // }, []);
+    // this.c = this.profileModel.forestPlots.filter( x => x.trees.forEach( y => y.area));
   }
 
   validateForm(): boolean {
     this.invalidMessages = this.getInvalidMessages(
-      this.harvestForm,
+      this.profileForm,
       this.formErrors
     );
     return this.invalidMessages.length === 0;
@@ -93,18 +103,18 @@ export class ProfileRegistrationFormComponent implements OnInit {
     return errorMessages;
   }
   createForm(): void {
-    this.harvestForm = this.formBuilder.group({
-      profileCode: [this.harvestModel.profileCode],
+    this.profileForm = this.formBuilder.group({
+      profileCode: [this.profileModel.profileCode],
       profileDate: [this.today, Validators.required],
-      profileName: [this.harvestModel.profileName, Validators.required],
+      profileName: [this.profileModel.profileName, Validators.required],
       fullname: [this.user.fullName],
-      standingTreeTraditionId: [this.harvestModel.standingTreeTradition.profileId],
+      standingTreeTraditionId: [''],
       isCheckMe: ['me'],
-      profileID: [this.harvestModel.standingTreeTradition.forestProfileId],
-      fromDate: [this.harvestModel.fromDate * 1000, Validators.required],
-      toDate: [this.harvestModel.toDate * 1000, Validators.required],
-      harvestMethod: [this.harvestModel.harvestMethod.code],
-      forestType: [this.harvestModel.forestType.code],
+      profileID: [''],
+      fromDate: ['', Validators.required],
+      toDate: ['', Validators.required],
+      harvestMethod: [''],
+      forestType: [''],
     });
   }
 
@@ -139,11 +149,11 @@ export class ProfileRegistrationFormComponent implements OnInit {
   }
 
   disabledToDate = (toDate: Date): boolean => {
-    if (!toDate || !this.harvestForm.getRawValue().fromDate) {
+    if (!toDate || !this.profileForm.getRawValue().fromDate) {
       return false;
     }
     return (
-      toDate.getTime() <= this.harvestForm.getRawValue().fromDate.getTime()
+      toDate.getTime() <= this.profileForm.getRawValue().fromDate.getTime()
     );
   }
 
@@ -156,5 +166,39 @@ export class ProfileRegistrationFormComponent implements OnInit {
 
   deleteItem(id: string): void {
     this.setOfCheckedId.delete(id);
+  }
+
+  onSave(): void {
+    this.isSubmit = true;
+    if (this.validateForm()) {
+      this.forestCreate.forestId = this.profileModel.forestPlots[0].forestId;
+      this.forestCreate.harvesterId = this.user.userId;
+      this.forestCreate.profileDate =
+        Date.parse(this.profileForm.value.profileDate) / 1000;
+      this.forestCreate.standingTreeTraditionId =
+        this.profileForm.value.standingTreeTraditionId === ''
+          ? null
+          : this.profileForm.value.standingTreeTraditionId;
+      this.forestCreate.profileName = this.profileForm.value.profileName;
+      this.forestCreate.profileCreatedUserId = this.user.userId;
+      this.forestCreate.fromDate =
+        Date.parse(this.profileForm.value.fromDate) / 1000;
+      this.forestCreate.toDate =
+        Date.parse(this.profileForm.value.toDate) / 1000;
+      this.forestCreate.harvestMethod = this.masterData[0].childs.filter(
+        (x) => x.code === this.profileForm.value.harvestMethod
+      )[0];
+      this.forestCreate.forestType = this.profileForm.value.forestType;
+      // this.a = this.profileModel.forestPlots.filter( x => x.trees).reduce((accumulator, currentValue) => {
+      //     return accumulator.concat(currentValue.trees);
+      //   }, []);
+      console.log(this.forestCreate);
+      this.forestService
+        .create(this.forestCreate)
+        .subscribe((insertedEmployee) => {
+          // this.forestCreates.push(insertedEmployee);
+          console.log(insertedEmployee);
+        });
+    }
   }
 }

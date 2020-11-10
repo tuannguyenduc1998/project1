@@ -13,7 +13,7 @@ export class ForestProfileService {
 
   constructor(private http: HttpClient) { }
 
-  private Url = 'http://hawaddsapi.bys.vn/api/';
+  private url = 'http://hawaddsapi.bys.vn/api/';
   private loggedInStatus = JSON.parse(localStorage.getItem('LoginStatus'));
   user: UserLoginData;
   forestCreate: ForestCreate;
@@ -25,11 +25,11 @@ export class ForestProfileService {
           `Bearer ${this.user.jwtToken}`
       })
     };
-    return this.http.get(this.Url + 'forest/4cba385e-e411-4d22-b4de-1478dbbb382c', httpOptions);
+    return this.http.get(this.url + 'forest/4cba385e-e411-4d22-b4de-1478dbbb382c', httpOptions);
   }
 
   getHarvestMethod(): Observable<any> {
-    return this.http.get(this.Url + 'data/masterdata?groupsName=HarvestMethod');
+    return this.http.get(this.url + 'data/masterdata?groupsName=HarvestMethod');
   }
 
   create(forests: ForestCreate): Observable<ForestCreate> {
@@ -40,7 +40,7 @@ export class ForestProfileService {
           `Bearer ${this.user.jwtToken}`
       })
     };
-    return this.http.post<ForestCreate>(this.Url + 'declare-harvest/create', forests, httpOptions).pipe(
+    return this.http.post<ForestCreate>(this.url + 'declare-harvest/create', forests, httpOptions).pipe(
       tap((forests: ForestCreate) => forests)
     );
   }
@@ -53,7 +53,7 @@ export class ForestProfileService {
           `Bearer ${this.user.jwtToken}`
       })
     };
-    return this.http.get(this.Url + 'data/masterdata?groupsName=DeclareHarvestStatus', httpOptions);
+    return this.http.get(this.url + 'data/masterdata?groupsName=DeclareHarvestStatus', httpOptions);
   }
 
   getDeclareHarvest(pageIndex: number, pageSize: number, filterModel?: FilterModelProfile): Observable<any> {
@@ -64,11 +64,11 @@ export class ForestProfileService {
           `Bearer ${this.user.jwtToken}`
       }),
       params: this.setParams({...filterModel})
-    }
+    };
 
 
     // tslint:disable-next-line:max-line-length
-    return this.http.get(this.Url + `declare-harvest/filter/${pageIndex - 1}/${pageSize}`, httpOptions);
+    return this.http.get(this.url + `declare-harvest/filter/${pageIndex - 1}/${pageSize}`, httpOptions);
   }
 
   setParams(data: any): HttpParams {
@@ -78,5 +78,27 @@ export class ForestProfileService {
       }
     }
     return data;
+  }
+
+  getDeclareHarvestById(id: string): Observable<any> {
+    this.user = this.loggedInStatus;
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json', Authorization:
+          `Bearer ${this.user.jwtToken}`
+      })
+    };
+    return this.http.get(this.url + `declare-harvest/${id}`, httpOptions);
+  }
+
+  getForestByForestId(forestId: string): Observable<any> {
+    this.user = this.loggedInStatus;
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json', Authorization:
+          `Bearer ${this.user.jwtToken}`
+      })
+    };
+    return this.http.get(this.url + `forest/${forestId}`, httpOptions);
   }
 }

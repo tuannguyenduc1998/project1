@@ -12,7 +12,7 @@
         <h4 class="font-italic font-weight-bold">(Profile management)</h4>
       </div>
     </div>
-    <form [formGroup]="harvestForm" class="row form m-5" *ngIf="harvestForm">
+    <form [formGroup]="profileForm" class="row form m-5" *ngIf="profileForm">
       <div class="col-md-12 font">
         <div class="row font pt-4">
           <div class="col-md-5">
@@ -21,7 +21,7 @@
             <h4 class="font-italic font-weight-bold">(Declare Forest harvest registration profile)</h4>
           </div>
           <div class="col-md-7 text-uppercase d-flex justify-content-end">
-            <button nz-button class="color-btn1 mr-2" type="click">LƯU
+            <button nz-button class="color-btn1 mr-2" type="click" (click)="onSave()">LƯU
               <h6 class="color-btn1">(Save)</h6>
             </button>
             <button nz-button [routerLink]="['/dashboard/user/view']" class="color-btn2" type="reset">HỦY
@@ -44,7 +44,7 @@
                 <div class="col-md-7 px-0">
                 <nz-date-picker nzPlaceHolder="dd/mm/yyyy" class="form-control color-input"
                   nzFormat="dd/MM/yyyy" formControlName="profileDate" [nzDisabledDate]="disabledProfileDate"
-                  [class.is-invalid]="harvestForm.get('profileDate').errors && isSubmit"></nz-date-picker>
+                  [class.is-invalid]="profileForm.get('profileDate').errors && isSubmit"></nz-date-picker>
                   <p class="warning text-danger">{{formErrors?.profileDate}}</p>
                 </div>
               </div>
@@ -55,7 +55,7 @@
                   <h6 class="font-italic">(Profile ID)</h6>
                 </label>
                 <input class="form-control color-input col-md-7" type="text" id="email-input"
-                  formControlName="profileCode" disabled>
+                  formControlName="profileID" disabled>
               </div>
             </div>
             <div class="form-group row pt-4">
@@ -66,7 +66,7 @@
                 </label>
                 <div class="col-md-7 px-0">
                 <input class="form-control color-input" type="text" id="email-input"
-                  formControlName="profileName" [class.is-invalid]="harvestForm.get('profileName').errors && isSubmit">
+                  formControlName="profileName" [class.is-invalid]="profileForm.get('profileName').errors && isSubmit">
                   <p class="warning text-danger">{{formErrors?.profileName}}</p>
                 </div>
               </div>
@@ -97,7 +97,7 @@
                 <label for="email-input" class="col-md-5 col-form-label label-generate py-0">Mã số bộ hồ sơ rừng:
                   <h6 class="font-italic">(Forest profile ID)</h6>
                 </label>
-                <input class="form-control color-input col-md-7" type="text" formControlName="profileId">
+                <input class="form-control color-input col-md-7" type="text" formControlName="profileCode">
               </div>
             </div>
           </div>
@@ -132,7 +132,7 @@
                 <div class="col-md-7 px-0">
                 <nz-date-picker nzPlaceHolder="dd/mm/yyyy" [nzDisabledDate]="disabledFromDate"
                   class="form-control color-input" nzFormat="dd/MM/yyyy" formControlName="fromDate"
-                  [class.is-invalid]="harvestForm.get('fromDate').errors && isSubmit">
+                  [class.is-invalid]="profileForm.get('fromDate').errors && isSubmit">
                 </nz-date-picker>
                 <p class="warning text-danger">{{formErrors?.fromDate}}</p>
               </div>
@@ -186,7 +186,7 @@
                 <div class="col-md-7 px-0">
                 <nz-date-picker nzPlaceHolder="dd/mm/yyyy" [nzDisabledDate]="disabledToDate"
                   class="form-control color-input" nzFormat="dd/MM/yyyy" formControlName="toDate"
-                  [class.is-invalid]="harvestForm.get('toDate').errors && isSubmit">
+                  [class.is-invalid]="profileForm.get('toDate').errors && isSubmit">
                 </nz-date-picker>
                 <p class="warning text-danger">{{formErrors?.toDate}}</p>
               </div>
@@ -205,7 +205,7 @@
             </label>
             <button class="col-md-1 color-btn1" type="click" (click)="showModal()">Thêm mới lô</button>
           </div>
-          <nz-table #basicTable class="col-md-12 p-2" [nzData]="harvestModel.items">
+          <nz-table #basicTable class="col-md-12 p-2" [nzData]="forestPlotList">
             <thead>
               <tr>
                 <th class="font-weight-bold">Tỉnh/Thành phố
@@ -245,26 +245,28 @@
               </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let items of harvestModel.items">
+              <ng-container *ngFor="let itemLists of basicTable.data">
+                <tr *ngFor="let items of itemLists.trees">
                   <ng-container *ngIf="setOfCheckedId.has(items.id)">
                     <td>{{province}}</td>
-                    <td>{{items.district.value}}</td>
-                    <td>{{items.commune.value}}</td>
-                    <td>{{items.compt}}</td>
-                    <td>{{items.subCompt}}</td>
-                    <td>{{items.plot}}</td>
+                    <td>{{itemLists.district.value}}</td>
+                    <td>{{itemLists.commune.value}}</td>
+                    <td>{{itemLists.compt}}</td>
+                    <td>{{itemLists.subCompt}}</td>
+                    <td>{{itemLists.plotCode}}</td>
                     <td>
                       <div>
                         <input type="text">
                       </div>
                     </td>
-                    <td>{{items.area}}</td>
+                    <td>{{items.area - items.detail.standingTreeArea}}</td>
                     <td>{{items.treeType.name}}</td>
-                    <td>{{(items.planYear * 1000) | date: 'yyyy'}}</td>
+                    <td>{{(items.plantedYear * 1000) | date: 'yyyy'}}</td>
                     <td><input type="text"></td>
                     <td (click)="deleteItem(items.id)"><i class="fa fa-minus-circle" aria-hidden="true"></i></td>
                   </ng-container>
                 </tr>
+              </ng-container>
             </tbody>
           </nz-table>
         </div>

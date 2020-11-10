@@ -15,9 +15,10 @@
 }
 
 table, th , td  {
-  border: 1px solid #f1f1f1;
+  border: 1px solid #ffffff;
   border-collapse: collapse;
   font-size: 13px;
+  background-color: #e5f1ee;
 }
 
 .input-search{
@@ -52,4 +53,31 @@ input:focus {
 .th-color{
   background-color: rgb(59, 143, 112);
   color: #ffffff;
+}
+
+.td-b-color1{
+  background-color: #f57328;
+  border-radius: 4rem;
+  color: white;
+  width: 12rem;
+}
+
+.td-b-color2{
+  background-color: #f5bc11;
+  border-radius: 4rem;
+  color: white;
+  width: 12rem;
+}
+
+.td-b-color3{
+  background-color: #727376;
+  border-radius: 4rem;
+  color: white;
+  width: 12rem;
+}
+
+.required:after {
+  content: "";
+  border-left: .3rem solid #0d6c42;
+  margin-right: .5rem;
 }

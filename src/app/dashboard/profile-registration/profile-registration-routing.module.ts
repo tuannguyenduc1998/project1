@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { ProfileRegistrationFormComponent } from './profile-registration-form/profile-registration-form.component';
+import { ProfileRegistrationCreateComponent } from './profile-registration-create/profile-registration-create.component';
+import { ProfileRegistrationEditComponent } from './profile-registration-edit/profile-registration-edit.component';
 import { ProfileRegistrationListComponent } from './profile-registration-list/profile-registration-list.component';
 import { ProfileRegistrationComponent } from './profile-registration.component';
 
@@ -14,12 +15,16 @@ const routes: Routes = [{
       pathMatch: 'full'
     },
     {
-      path: 'profile-registration-form',
-      component: ProfileRegistrationFormComponent
+      path: 'profile-registration-create',
+      component: ProfileRegistrationCreateComponent
     },
     {
       path: 'profile-registration-list',
       component: ProfileRegistrationListComponent
+    },
+    {
+      path: 'profile-registration-edit/:id',
+      component: ProfileRegistrationEditComponent
     }
   ]
 }];

@@ -11,7 +11,6 @@ import { UserFormComponent } from './user/user-form/user-form.component';
 import { DatePipe } from '@angular/common';
 import { KzMaskDirective } from '../shared/directices/kz-mask.directive';
 import { ProfileRegistrationComponent } from './profile-registration/profile-registration.component';
-import { ProfileRegistrationFormComponent } from './profile-registration/profile-registration-form/profile-registration-form.component';
 import { NzRadioModule } from 'ng-zorro-antd/radio';
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { NzModalModule } from 'ng-zorro-antd/modal';
@@ -19,10 +18,23 @@ import { NzSpinModule } from 'ng-zorro-antd/spin';
 import { NzPaginationModule } from 'ng-zorro-antd/pagination';
 import { ProfileRegistrationListComponent } from './profile-registration/profile-registration-list/profile-registration-list.component';
 import { NzSelectModule } from 'ng-zorro-antd/select';
+import { ProfileRegistrationEditComponent } from './profile-registration/profile-registration-edit/profile-registration-edit.component';
+import { ProfileRegistrationCreateComponent } from './profile-registration/profile-registration-create/profile-registration-create.component';
+import { ProfileRegistrationFormComponent } from './profile-registration/profile-registration-form/profile-registration-form.component';
 
 @NgModule({
-  declarations: [UserViewComponent, UserEditComponent, UserComponent, UserFormComponent,
-     KzMaskDirective, ProfileRegistrationComponent, ProfileRegistrationFormComponent, ProfileRegistrationListComponent],
+  declarations: [
+    UserViewComponent,
+    UserEditComponent,
+    UserComponent,
+    UserFormComponent,
+    KzMaskDirective,
+    ProfileRegistrationComponent,
+    ProfileRegistrationCreateComponent,
+    ProfileRegistrationListComponent,
+    ProfileRegistrationEditComponent,
+    ProfileRegistrationFormComponent
+  ],
   imports: [
     DashboardRoutingModule,
     SharedModule,
@@ -35,9 +47,9 @@ import { NzSelectModule } from 'ng-zorro-antd/select';
     NzSpinModule,
     NzPaginationModule,
     NzSelectModule,
-    FormsModule
+    FormsModule,
   ],
   exports: [KzMaskDirective],
-  providers: [DatePipe]
+  providers: [DatePipe],
 })
-export class DashboardModule { }
+export class DashboardModule {}

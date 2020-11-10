@@ -371,4 +371,6 @@ export class FilterModelProfile{
   searchKey: string;
   fromDate: number;
   toDate: number;
+  status: string;
+  createFromForest: boolean;
 }

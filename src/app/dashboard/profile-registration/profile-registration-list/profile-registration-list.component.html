@@ -16,24 +16,24 @@
         <div class="col-md-7">
           <h4 for="tieude" class="d-flex justify-content-start text-uppercase font-weight-bold">DANH SÁCH HỒ SƠ ĐĂNG KÝ
             KHAI THÁC
-            <span class="font-italic font-eng-child">(HARVEST REGISTRATION PROFILE LIST)</span></h4>
+            <span class="font-italic font-eng-child mt-1">(HARVEST REGISTRATION PROFILE LIST)</span></h4>
           <label for=""><span class="required"></span>Mã tài khoản (Account ID): {{user.coCode}}</label>
         </div>
-        <div class="col-md-5 text-uppercase d-flex justify-content-end">
+        <div class="col-md-5 text-uppercase d-flex justify-content-end px-0">
           <div class="font boxshaw">
-            <input #search class="input-search" type="text" name="search" placeholder="Tìm theo mã hồ sơ" ngModel
-              #name="ngModel" [(ngModel)]="filterModel.searchKey">
+            <input #search class="input-search" type="text" name="search" placeholder="Tìm kiếm theo mã, tên hồ sơ" ngModel
+              #name="ngModel" [(ngModel)]="filterModel.searchKey" (keyup)="onSubmitFilter()">
             <i class="fa fa-search imgs p-2" aria-hidden="true" (click)="search.click()"></i>
           </div>
         </div>
       </div>
-      <div class="col-md-12 d-flex form-inline pr-0">
+      <div class="col-md-12 d-flex form-inline pr-0 ml-3 font">
           <div class="form-group col-md-2 align-items-start mr-3 py-1 px-0">
             <div class="align-items-start mr-3">
               <p class="mb-0">Từ ngày</p>
               <p class="font-italic mb-0">(From date)</p>
             </div>
-            <div>
+            <div class="pt-2">
               <nz-date-picker nzPlaceHolder="dd/mm/yyyy" class="form-control color-input" nzFormat="dd/MM/yyyy"
                 [(ngModel)]="filterModel.fromDate"></nz-date-picker>
             </div>
@@ -43,7 +43,7 @@
               <p class="mb-0">Đến ngày</p>
               <p class="font-italic mb-0">(To date)</p>
             </div>
-            <div>
+            <div class="pt-2">
               <nz-date-picker nzPlaceHolder="dd/mm/yyyy" class="form-control color-input" nzFormat="dd/MM/yyyy"
               [(ngModel)]="filterModel.toDate" ></nz-date-picker>
             </div>
@@ -53,9 +53,9 @@
               <p class="mb-0">Trạng thái</p>
               <p class="font-italic mb-0">(Status)</p>
             </div>
-            <div>
-              <nz-select [(ngModel)]="selectedValue" class="font-nz">
-                <nz-option *ngFor="let option of selectedMasterData" [nzLabel]="option.value" [nzValue]="option.value"></nz-option>
+            <div class="pt-2">
+              <nz-select [(ngModel)]="filterModel.status" class="font-nz">
+                <nz-option *ngFor="let option of selectedMasterData" [nzLabel]="option.value" [nzValue]="option.code"></nz-option>
                 <nz-option nzLabel="Default Value" nzValue="Default" nzHide></nz-option>
               </nz-select>
             </div>
@@ -65,9 +65,9 @@
               <p class="mb-0">Nguồn gốc</p>
               <p class="font-italic mb-0">(Status)</p>
             </div>
-            <div>
-              <nz-select [(ngModel)]="selectedValue" class="font-nz">
-                <nz-option *ngFor="let option of selectedMasterData" [nzLabel]="option.value" [nzValue]="option.value"></nz-option>
+            <div class="pt-2">
+              <nz-select [(ngModel)]="filterModel.createFromForest" class="font-nz">
+                <nz-option *ngFor="let option of createFromForest" [nzLabel]="option.value" [nzValue]="option.code"></nz-option>
                 <nz-option nzLabel="Default Value" nzValue="Default" nzHide></nz-option>
               </nz-select>
             </div>
@@ -104,62 +104,68 @@
             <th class="font-weight-bold th-color">
               <span>
                 <div class="d-flex justify-content-center">STT</div>
-                <div class="font-italic small d-flex justify-content-center">(No.)</div>
+                <div class="font-italic medium d-flex justify-content-center">(No.)</div>
               </span>
             </th>
             <th class="font-weight-bold th-color">
               <span>
                 <div>Mã hồ sơ</div>
-                <div class="font-italic small">(Profile ID)</div>
+                <div class="font-italic medium">(Profile ID)</div>
               </span>
             </th>
             <th class="font-weight-bold th-color">
               <span>
                 <div>Tên hồ sơ</div>
-                <div class="font-italic small">(Profile name)</div>
+                <div class="font-italic medium">(Profile name)</div>
               </span>
             </th>
             <th class="font-weight-bold th-color">
               <span>
                 <div>Ngày Chứng từ</div>
-                <div class="font-italic small">(Profile date)</div>
+                <div class="font-italic medium">(Profile date)</div>
               </span>
             </th>
             <th class="font-weight-bold th-color">
               <span>
                 <div class="d-flex justify-content-center">Trạng thái hồ sơ</div>
-                <div class="font-italic small d-flex justify-content-center">(Profile status)</div>
+                <div class="font-italic medium d-flex justify-content-center">(Profile status)</div>
               </span>
             </th>
             <th class="font-weight-bold th-color">
               <span>
                 <div>Nguồn gốc</div>
-                <div class="font-italic small">(Created from)</div>
+                <div class="font-italic medium">(Created from)</div>
               </span>
             </th>
             <th class="font-weight-bold th-color">
               <span>
                 <div class="d-flex justify-content-center">Thao tác hồ sơ</div>
-                <div class="font-italic small d-flex justify-content-center">(Actions on profile)</div>
+                <div class="font-italic medium d-flex justify-content-center">(Actions on profile)</div>
               </span>
             </th>
             <th class="font-weight-bold th-color">
               <span>
                 <div>Xem RTE</div>
-                <div class="font-italic small">(View RTE)</div>
+                <div class="font-italic medium">(View RTE)</div>
               </span>
             </th>
           </tr>
         </thead>
         <tbody>
             <tr *ngFor="let item of listOfRandomUser.items; let i = index">
-                <td class="d-flex justify-content-center">{{i+1}}</td>
+                <td class="text-center">{{i+1}}</td>
                 <td>{{item.profileCode}}</td>
                 <td>{{item.profileName}}</td>
                 <td>{{item.profileDate | date: 'dd/mm/yyyy'}}</td>
-                <td class="d-flex justify-content-center">{{item.status}}</td>
-                <td></td>
-                <td><i class="fa fa-eye icon icon-eye d-flex justify-content-center" aria-hidden="true" ></i></td>
+                <!-- <td class="d-flex justify-content-center">{{item.status}}</td> -->
+                <td class="d-flex justify-content-center px-0 py-2">
+                  <div class="p-2" [class.td-b-color1]="item.status === this.statusCustom.new" [class.td-b-color2]="item.status === this.statusCustom.sent" [class.td-b-color3]="item.status === this.statusCustom.cancelled">
+                    <div class="d-flex justify-content-center">{{item.status}}</div>
+                    <div class="font-italic small d-flex justify-content-center">({{this.statusEnglish}})</div>
+                  </div>
+                </td>
+                <td>{{item.standingTreeTraditionId}}</td>
+                <td><i [routerLink]="['/dashboard/profile-registration/profile-registration-edit',item.id]" class="fa fa-eye icon icon-eye d-flex justify-content-center" aria-hidden="true"></i></td>
                 <td></td>
             </tr>
         </tbody>

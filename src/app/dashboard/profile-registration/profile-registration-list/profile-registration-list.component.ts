@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { NzTableQueryParams } from 'ng-zorro-antd/table';
+import { CreateFrom } from 'src/app/constant/createFrom';
+import { Status, StatusCustom } from 'src/app/constant/status';
 import { DeclareHarvests, FilterModelProfile } from 'src/app/model/declareHarvests.model';
-import { MasterData, MasterDataChild } from 'src/app/model/masterData.model';
+import { createFromForest, MasterData, MasterDataChild } from 'src/app/model/masterData.model';
 import { UserLoginData } from 'src/app/model/user.model';
 import { ForestProfileService } from 'src/app/shared/service/forest-profile.service';
 import { UserService } from 'src/app/shared/service/user.service';
@@ -20,6 +22,11 @@ export class ProfileRegistrationListComponent implements OnInit {
   loading = true;
   date = 0;
   filterModel = new FilterModelProfile();
+  status = Status;
+  statusCustom = StatusCustom;
+  createFromForest = createFromForest;
+  createFrom = CreateFrom;
+  statusEnglish: string;
   constructor(private userService: UserService, private forestService: ForestProfileService) { }
 
   ngOnInit(): void {
@@ -45,6 +52,27 @@ export class ProfileRegistrationListComponent implements OnInit {
       this.listOfRandomUser.totalCount = data.totalCount;
       this.listOfRandomUser.totalPages = data.totalPages;
       this.listOfRandomUser.items = data.items;
+      this.listOfRandomUser.items.map( x => {
+        if (x.status === this.status.new){
+          x.status = this.statusCustom.new;
+          this.statusEnglish = this.statusCustom.newEnglish;
+        }
+        else if (x.status === this.status.sent){
+          x.status = this.statusCustom.sent;
+          this.statusEnglish = this.statusCustom.sentEnglish;
+        }
+        else {
+          x.status = this.statusCustom.cancelled;
+          this.statusEnglish = this.statusCustom.cancelledEnglish;
+        }
+
+        if (x.standingTreeTraditionId === null){
+          x.standingTreeTraditionId = this.createFrom.false;
+        }
+        else {
+          x.standingTreeTraditionId = this.createFrom.true;
+        }
+      });
     });
   }
 
