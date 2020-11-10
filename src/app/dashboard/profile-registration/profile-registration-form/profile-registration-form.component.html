@@ -205,7 +205,7 @@
             </label>
             <button class="col-md-1 color-btn1" type="click" (click)="showModal()">Thêm mới lô</button>
           </div>
-          <nz-table #basicTable class="col-md-12 p-2" [nzData]="harvestModel.items">
+          <nz-table #basicTable class="col-md-12 p-2" [nzData]="harvestModel.items" nzShowSizeChanger>
             <thead>
               <tr>
                 <th class="font-weight-bold">Tỉnh/Thành phố
@@ -246,8 +246,7 @@
             </thead>
             <tbody>
                 <tr *ngFor="let items of harvestModel.items">
-                  <ng-container *ngIf="setOfCheckedId.has(items.id)">
-                    <td>{{province}}</td>
+                    <td>{{items.province.value}}</td>
                     <td>{{items.district.value}}</td>
                     <td>{{items.commune.value}}</td>
                     <td>{{items.compt}}</td>
@@ -259,11 +258,12 @@
                       </div>
                     </td>
                     <td>{{items.area}}</td>
-                    <td>{{items.treeType.name}}</td>
+                    <td *ngIf="items.treeType; else emty">{{items.treeType.name}}
+                      <ng-template #emty>{{''}}</ng-template>
+                    </td>
                     <td>{{(items.planYear * 1000) | date: 'yyyy'}}</td>
                     <td><input type="text"></td>
                     <td (click)="deleteItem(items.id)"><i class="fa fa-minus-circle" aria-hidden="true"></i></td>
-                  </ng-container>
                 </tr>
             </tbody>
           </nz-table>

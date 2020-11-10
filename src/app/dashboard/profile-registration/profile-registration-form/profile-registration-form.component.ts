@@ -51,7 +51,6 @@ export class ProfileRegistrationFormComponent implements OnInit {
       this.forestService.getHarvestMethod(),
     ]).subscribe((result) => {
       this.masterData = result[1].data;
-      this.harvestModel = result[0].data;
       this.createForm();
 
       this.harvestForm.valueChanges.subscribe((_) => {
@@ -95,12 +94,20 @@ export class ProfileRegistrationFormComponent implements OnInit {
   createForm(): void {
     this.harvestForm = this.formBuilder.group({
       profileCode: [this.harvestModel.profileCode],
-      profileDate: [this.today, Validators.required],
+      profileDate: [this.harvestModel.profileDate, Validators.required],
       profileName: [this.harvestModel.profileName, Validators.required],
       fullname: [this.user.fullName],
-      standingTreeTraditionId: [this.harvestModel.standingTreeTradition.profileId],
+      standingTreeTraditionId: [
+        this.harvestModel.standingTreeTradition === null
+          ? ''
+          : this.harvestModel.standingTreeTradition.profileId,
+      ],
       isCheckMe: ['me'],
-      profileID: [this.harvestModel.standingTreeTradition.forestProfileId],
+      profileId: [
+        this.harvestModel.forest === null
+          ? ''
+          : this.harvestModel.forest.profileCode,
+      ],
       fromDate: [this.harvestModel.fromDate * 1000, Validators.required],
       toDate: [this.harvestModel.toDate * 1000, Validators.required],
       harvestMethod: [this.harvestModel.harvestMethod.code],
@@ -114,7 +121,7 @@ export class ProfileRegistrationFormComponent implements OnInit {
       nzComponentParams: {
         usedId: this.setOfCheckedId,
       },
-      nzWidth: '70%'
+      nzWidth: '70%',
     });
 
     modal.afterClose.subscribe((result) => {
@@ -136,7 +143,7 @@ export class ProfileRegistrationFormComponent implements OnInit {
       return false;
     }
     return fromDate.getTime() <= this.today.getTime();
-  }
+  };
 
   disabledToDate = (toDate: Date): boolean => {
     if (!toDate || !this.harvestForm.getRawValue().fromDate) {
@@ -145,14 +152,14 @@ export class ProfileRegistrationFormComponent implements OnInit {
     return (
       toDate.getTime() <= this.harvestForm.getRawValue().fromDate.getTime()
     );
-  }
+  };
 
   disabledProfileDate = (profileDate: Date): boolean => {
     if (!profileDate || !this.today) {
       return false;
     }
     return profileDate.getTime() >= this.today.getTime();
-  }
+  };
 
   deleteItem(id: string): void {
     this.setOfCheckedId.delete(id);
