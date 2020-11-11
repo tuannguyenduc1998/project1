@@ -1,5 +1,6 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { stringify } from 'querystring';
 import { Observable } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { FilterModelProfile } from 'src/app/model/declareHarvests.model';
@@ -17,6 +18,9 @@ export class ForestProfileService {
   private loggedInStatus = JSON.parse(localStorage.getItem('LoginStatus'));
   user: UserLoginData;
   forestCreate: ForestCreate;
+  forestOrTreeId: string;
+  filterModel: FilterModelProfile = new FilterModelProfile();
+
   getForests(): Observable<any> {
     this.user = this.loggedInStatus;
     const httpOptions = {
@@ -75,7 +79,7 @@ export class ForestProfileService {
     for (const item in data ) {
       if (data[item] instanceof Date) {
         data[item] = Math.floor(data[item].getTime() / 1000);
-      }
+    }
     }
     return data;
   }
@@ -88,10 +92,10 @@ export class ForestProfileService {
           `Bearer ${this.user.jwtToken}`
       })
     };
-    return this.http.get(this.url + `declare-harvest/${id}`, httpOptions);
+    return this.http.get(this.url + `declare-harvest/${id}?isGroupByPlot=false`, httpOptions);
   }
 
-  getForestByForestId(forestId: string): Observable<any> {
+  getForestByForestId(forestId: string, isForest: string): Observable<any> {
     this.user = this.loggedInStatus;
     const httpOptions = {
       headers: new HttpHeaders({
@@ -99,6 +103,20 @@ export class ForestProfileService {
           `Bearer ${this.user.jwtToken}`
       })
     };
-    return this.http.get(this.url + `forest/${forestId}`, httpOptions);
+    if (isForest){
+      this.forestOrTreeId = 'forest';
+    }
+    else{
+      this.forestOrTreeId = 'standing-tree-tradition';
+    }
+    return this.http.get(this.url + `${this.forestOrTreeId}/${forestId}`, httpOptions);
+  }
+
+  onSaveFilter(fromDate: number, toDate: number, status: string, createFromForest: boolean, searchKey: string): void{
+    this.filterModel.fromDate = fromDate;
+    this.filterModel.toDate = toDate;
+    this.filterModel.status = status;
+    this.filterModel.createFromForest = createFromForest;
+    this.filterModel.searchKey = searchKey;
   }
 }

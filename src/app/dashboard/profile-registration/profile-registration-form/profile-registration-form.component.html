@@ -12,13 +12,14 @@
         <h4 class="font-italic font-weight-bold">(Profile management)</h4>
       </div>
     </div>
+    <fieldset [disabled]="typeStatus === status.sent">
     <form [formGroup]="harvestForm" class="row form m-5" *ngIf="harvestForm">
       <div class="col-md-12 font">
         <div class="row font pt-4">
           <div class="col-md-5">
-            <h4 for="tieude" class="d-flex justify-content-start text-uppercase font-weight-bold">Khai báo hồ sơ đăng ký
-              khai thác</h4>
-            <h4 class="font-italic font-weight-bold">(Declare Forest harvest registration profile)</h4>
+            <h4 for="tieude" class="d-flex justify-content-start text-uppercase font-weight-bold">
+            <i class="fa fa-arrow-left mr-2 backrooll" aria-hidden="true" (click)="goBack()"></i>THÔNG TIN HỒ SƠ ĐĂNG KÝ KHAI THÁC</h4>
+            <h4 class="font-italic font-weight-bold ml-3">(Forest harvest registration profile)</h4>
           </div>
           <div class="col-md-7 text-uppercase d-flex justify-content-end">
             <button nz-button class="color-btn1 mr-2" type="click">LƯU
@@ -144,11 +145,11 @@
                   <h6 class="font-italic">(Harvest methods)</h6>
                 </label>
                 <div class="color-input col-md-7 px-0">
-                  <nz-radio-group formControlName="harvestMethod">
-                    <label nz-radio [nzDisabled]="!disabled" nzValue='ClearCut'>Khai thác trắng (Clear cut
+                  <nz-radio-group formControlName="harvestMethod" [nzDisabled]="typeStatus === status.sent">
+                    <label nz-radio nzValue='ClearCut'>Khai thác trắng (Clear cut
                       harvest)</label>
                     <br />
-                    <label nz-radio [nzDisabled]="!disabled" nzValue='Trim'>Tỉa thưa (Trim)</label>
+                    <label nz-radio nzValue='Trim'>Tỉa thưa (Trim)</label>
                   </nz-radio-group>
                 </div>
               </div>
@@ -159,17 +160,17 @@
                   <h6 class="font-italic">(Forest type)</h6>
                 </label>
                 <div class="color-input col-md-7 px-0">
-                  <nz-radio-group formControlName="forestType">
-                    <label nz-radio [nzDisabled]="!disabled" nzValue='ProductionForest'>Rừng sản xuất (Production
+                  <nz-radio-group formControlName="forestType" [nzDisabled]="typeStatus === status.sent">
+                    <label nz-radio  nzValue='ProductionForest'>Rừng sản xuất (Production
                       forests)</label>
                     <br />
-                    <label nz-radio [nzDisabled]="!disabled" nzValue='SpecialUseForest'>Rừng đặc dụng (Special-use
+                    <label nz-radio  nzValue='SpecialUseForest'>Rừng đặc dụng (Special-use
                       forests)</label>
                     <br />
-                    <label nz-radio [nzDisabled]="!disabled" nzValue='ProtectionForest'>Rừng phòng hộ (Protection
+                    <label nz-radio  nzValue='ProtectionForest'>Rừng phòng hộ (Protection
                       forests)</label>
                     <br />
-                    <label nz-radio [nzDisabled]="!disabled" nzValue='ScantteredTree'>Cây phân tán (Scattered
+                    <label nz-radio  nzValue='ScantteredTree'>Cây phân tán (Scattered
                       trees)</label>
                   </nz-radio-group>
                 </div>
@@ -203,7 +204,7 @@
               thêm địa điểm bạn sẽ khai thác vào bảng bên dưới (Please choose "Add plot" to add new harvest location
               into below table)
             </label>
-            <button class="col-md-1 color-btn1" type="click" (click)="showModal()">Thêm mới lô</button>
+            <button [hidden]="typeStatus === status.sent" class="col-md-1 color-btn1" type="click" (click)="showModal()">Thêm mới lô</button>
           </div>
           <nz-table #basicTable class="col-md-12 p-2" [nzData]="harvestModel.items" nzShowSizeChanger>
             <thead>
@@ -241,7 +242,7 @@
                 <th class="font-weight-bold">Khối lượng dự kiến
                   <h6 class="font-italic">(Estimated Harvested Volume)</h6>
                 </th>
-                <th></th>
+                <th [hidden]="typeStatus === status.sent"></th>
               </tr>
             </thead>
             <tbody>
@@ -254,21 +255,21 @@
                     <td>{{items.plot}}</td>
                     <td>
                       <div>
-                        <input type="text">
+                        <input type="text" [value]="items.area">
                       </div>
                     </td>
-                    <td>{{items.area}}</td>
-                    <td *ngIf="items.treeType; else emty">{{items.treeType.name}}
-                      <ng-template #emty>{{''}}</ng-template>
+                    <td>{{items.remainArea}}</td>
+                    <td>{{items.treeType.name}}
                     </td>
                     <td>{{(items.planYear * 1000) | date: 'yyyy'}}</td>
-                    <td><input type="text"></td>
-                    <td (click)="deleteItem(items.id)"><i class="fa fa-minus-circle" aria-hidden="true"></i></td>
+                    <td><input type="text" [value]="items.estimatedVolume"></td>
+                    <td [hidden]="typeStatus === status.sent" (click)="deleteItem(items.id)"><i class="fa fa-minus-circle" aria-hidden="true"></i></td>
                 </tr>
             </tbody>
           </nz-table>
         </div>
       </div>
     </form>
+  </fieldset>
   </div>
 </div>

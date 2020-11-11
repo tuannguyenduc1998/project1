@@ -13,7 +13,7 @@ export class MenuComponent implements OnInit {
   }
 
   onSubmit(): void{
-    this.router.navigateByUrl(`/dashboard/profile-registration/profile-registration-form`);
+    this.router.navigateByUrl(`/dashboard/profile-registration/profile-registration-create`);
   }
 
   onSubmitMove(): void{

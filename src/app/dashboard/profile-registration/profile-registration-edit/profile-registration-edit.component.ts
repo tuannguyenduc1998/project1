@@ -27,8 +27,11 @@ export class ProfileRegistrationEditComponent implements OnInit {
     const id = this.route.snapshot.paramMap.get('id');
     this.forestProfileService.getDeclareHarvestById(id).subscribe((result) => {
       this.haverstDeclareModel = result.data;
+      const forestId = this.haverstDeclareModel.forestId
+        ? this.haverstDeclareModel.forestId
+        : this.haverstDeclareModel.standingTreeTraditionId;
       this.forestProfileService
-        .getForestByForestId(this.haverstDeclareModel.forestId)
+        .getForestByForestId(forestId, this.haverstDeclareModel.forestId)
         .subscribe((results) => {
           this.forestModel = results.data;
         });

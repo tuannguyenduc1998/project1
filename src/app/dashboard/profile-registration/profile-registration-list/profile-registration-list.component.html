@@ -80,7 +80,7 @@
                 <div class="font-italic small">(Filter)</div>
               </span>
             </button>
-            <button nz-button class="text-uppercase h-100 w-100 button mr-2 py-1 ant-btn" type="click">
+            <button nz-button class="text-uppercase h-100 w-100 button mr-2 py-1 ant-btn" type="click" (click)="onSubmitRemoveFilter()">
               <span>
                 <div class="small">Xóa Lọc</div>
                 <div class="font-italic small">(Remove Filter)</div>
@@ -92,12 +92,12 @@
     <div class="col-md-12">
       <hr>
       <nz-table #basicTable nzShowSizeChanger
-      [nzData]="listOfRandomUser.items"
+      [nzData]="declareHarvests.items"
       [nzFrontPagination]="false"
       [nzLoading]="loading"
-      [nzTotal]="listOfRandomUser.totalCount"
-      [nzPageSize]="listOfRandomUser.pageSize"
-      [nzPageIndex]="listOfRandomUser.pageIndex"
+      [nzTotal]="declareHarvests.totalCount"
+      [nzPageSize]="declareHarvests.pageSize"
+      [nzPageIndex]="declareHarvests.pageIndex"
       (nzQueryParams)="onQueryParamsChange($event)">
         <thead>
           <tr>
@@ -152,11 +152,11 @@
           </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let item of listOfRandomUser.items; let i = index">
+            <tr *ngFor="let item of declareHarvests.items; let i = index">
                 <td class="text-center">{{i+1}}</td>
                 <td>{{item.profileCode}}</td>
                 <td>{{item.profileName}}</td>
-                <td>{{item.profileDate | date: 'dd/mm/yyyy'}}</td>
+                <td>{{item.profileDate * 1000 | date: 'dd/MM/yyyy'}}</td>
                 <!-- <td class="d-flex justify-content-center">{{item.status}}</td> -->
                 <td class="d-flex justify-content-center px-0 py-2">
                   <div class="p-2" [class.td-b-color1]="item.status === this.statusCustom.new" [class.td-b-color2]="item.status === this.statusCustom.sent" [class.td-b-color3]="item.status === this.statusCustom.cancelled">
@@ -165,7 +165,7 @@
                   </div>
                 </td>
                 <td>{{item.standingTreeTraditionId}}</td>
-                <td><i [routerLink]="['/dashboard/profile-registration/profile-registration-edit',item.id]" class="fa fa-eye icon icon-eye d-flex justify-content-center" aria-hidden="true"></i></td>
+                <td><i [routerLink]="['/dashboard/profile-registration/profile-registration-edit',item.id]" class="fa fa-eye icon icon-eye d-flex justify-content-center" aria-hidden="true" (click)="nextView()"></i></td>
                 <td></td>
             </tr>
         </tbody>

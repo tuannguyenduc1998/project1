@@ -11,7 +11,7 @@ const routes: Routes = [{
   children: [
     {
       path: '',
-      redirectTo: 'profile-registration-form',
+      redirectTo: 'profile-registration-create',
       pathMatch: 'full'
     },
     {

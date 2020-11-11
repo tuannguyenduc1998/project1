@@ -17,7 +17,6 @@ import { ComponentModule } from './shared/components/component.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AuthGuardService } from './shared/service/auth-guard.service';
 import { MyserviceService } from './shared/service/myservice.service';
-
 @NgModule({
   declarations: [
     AppComponent,

@@ -368,9 +368,9 @@ export class DeclareHarvests {
 }
 
 export class FilterModelProfile{
-  searchKey: string;
-  fromDate: number;
-  toDate: number;
-  status: string;
-  createFromForest: boolean;
+  searchKey?: string;
+  fromDate?: number;
+  toDate?: number;
+  status?: string;
+  createFromForest?: boolean;
 }
