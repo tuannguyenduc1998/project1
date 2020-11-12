@@ -60,9 +60,9 @@
               <p class="font-italic mb-0">(Status)</p>
             </div>
             <div>
-              <nz-select [(ngModel)]="filterModel.status" class="font-nz">
+              <nz-select [(ngModel)]="filterModel.status" class="font-nz" nzPlaceHolder="-Tất cả(All)-">
+                <nz-option nzLabel="-Tất cả(All)-" nzValue=""></nz-option>
                 <nz-option *ngFor="let option of selectedMasterData" [nzLabel]="option.value" [nzValue]="option.code"></nz-option>
-                <nz-option nzLabel="Default Value" nzValue="Default" nzHide></nz-option>
               </nz-select>
             </div>
           </div>
@@ -72,9 +72,9 @@
               <p class="font-italic mb-0">(Status)</p>
             </div>
             <div>
-              <nz-select [(ngModel)]="filterModel.createFromForest" class="font-nz">
+              <nz-select [(ngModel)]="filterModel.createFromForest" class="font-nz" nzPlaceHolder="-Tất cả(All)-">
+                <nz-option nzLabel="-Tất cả(All)-" nzValue=""></nz-option>
                 <nz-option *ngFor="let option of createFromForest" [nzLabel]="option.value" [nzValue]="option.code"></nz-option>
-                <nz-option nzLabel="Default Value" nzValue="Default" nzHide></nz-option>
               </nz-select>
             </div>
           </div>
