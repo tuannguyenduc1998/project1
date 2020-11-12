@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NzTableQueryParams } from 'ng-zorro-antd/table';
+import { forkJoin } from 'rxjs';
 import { CreateFrom } from 'src/app/constant/createFrom';
 import { Status, StatusCustom } from 'src/app/constant/status';
 import {
@@ -12,8 +13,10 @@ import {
   MasterData,
   MasterDataChild,
 } from 'src/app/model/masterData.model';
+import { RoleModel } from 'src/app/model/roles.model';
 import { UserLoginData } from 'src/app/model/user.model';
 import { ForestProfileService } from 'src/app/shared/service/forest-profile.service';
+import { RolesService } from 'src/app/shared/service/roles.service';
 import { UserService } from 'src/app/shared/service/user.service';
 
 @Component({
@@ -27,6 +30,7 @@ export class ProfileRegistrationListComponent implements OnInit {
   selectedValue = '-Tất cả(All)-';
   selectedMasterData: MasterDataChild[];
   declareHarvests: DeclareHarvests = new DeclareHarvests();
+  roleModel: RoleModel = new RoleModel();
   loading = true;
   date = 0;
   filterModel = new FilterModelProfile();
@@ -35,17 +39,21 @@ export class ProfileRegistrationListComponent implements OnInit {
   createFromForest = createFromForest;
   createFrom = CreateFrom;
   statusEnglish: string;
+  roles: string[];
   constructor(
     private userService: UserService,
     private forestService: ForestProfileService,
-    private router: Router
+    private router: Router,
+    private roleService: RolesService
   ) {}
 
   ngOnInit(): void {
     this.user = this.userService.LoginStatus;
-    this.forestService.getDeclareHarvestStatus().subscribe((result) => {
-      this.masterData = result.data;
+    forkJoin([this.forestService.getDeclareHarvestStatus()]).subscribe( (results) => {
+      this.masterData = results[0].data;
       this.selectedMasterData = this.masterData[0].childs;
+      // this.roleModel = results[1].data;
+      // this.roles = this.roleModel.roles.filter( x => x === 'HarvestedTimberSourceViewAllProfiles');
     });
     this.loadDataFromServer(
       this.declareHarvests.pageIndex,

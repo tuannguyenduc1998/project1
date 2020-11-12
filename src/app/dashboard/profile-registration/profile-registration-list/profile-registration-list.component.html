@@ -20,11 +20,17 @@
           <label for=""><span class="required"></span>Mã tài khoản (Account ID): {{user.coCode}}</label>
         </div>
         <div class="col-md-5 text-uppercase d-flex justify-content-end px-0">
-          <div class="font boxshaw">
+          <div class="font boxshaw" nz-popover nzPopoverContent="Search by profile code, name">
             <input #search class="input-search" type="text" name="search" placeholder="Tìm kiếm theo mã, tên hồ sơ" ngModel
               #name="ngModel" [(ngModel)]="filterModel.searchKey" (keyup)="onSubmitFilter()">
             <i class="fa fa-search imgs p-2" aria-hidden="true" (click)="search.click()"></i>
           </div>
+          <button appHiddenButton nz-button class="text-uppercase color-btn1 w-90 h-100 ml-3" type="submit">
+            <div>
+              <div class="small">tạo mới hồ sơ Đăng ký khai thác</div>
+              <div class="font-italic small font-smaller">(create new harvest registration profile)</div>
+            </div>
+          </button>
         </div>
       </div>
       <div class="col-md-12 d-flex form-inline pr-0 ml-3 font">
@@ -33,7 +39,7 @@
               <p class="mb-0">Từ ngày</p>
               <p class="font-italic mb-0">(From date)</p>
             </div>
-            <div class="pt-2">
+            <div>
               <nz-date-picker nzPlaceHolder="dd/mm/yyyy" class="form-control color-input" nzFormat="dd/MM/yyyy"
                 [(ngModel)]="filterModel.fromDate"></nz-date-picker>
             </div>
@@ -43,7 +49,7 @@
               <p class="mb-0">Đến ngày</p>
               <p class="font-italic mb-0">(To date)</p>
             </div>
-            <div class="pt-2">
+            <div>
               <nz-date-picker nzPlaceHolder="dd/mm/yyyy" class="form-control color-input" nzFormat="dd/MM/yyyy"
               [(ngModel)]="filterModel.toDate" ></nz-date-picker>
             </div>
@@ -53,7 +59,7 @@
               <p class="mb-0">Trạng thái</p>
               <p class="font-italic mb-0">(Status)</p>
             </div>
-            <div class="pt-2">
+            <div>
               <nz-select [(ngModel)]="filterModel.status" class="font-nz">
                 <nz-option *ngFor="let option of selectedMasterData" [nzLabel]="option.value" [nzValue]="option.code"></nz-option>
                 <nz-option nzLabel="Default Value" nzValue="Default" nzHide></nz-option>
@@ -65,7 +71,7 @@
               <p class="mb-0">Nguồn gốc</p>
               <p class="font-italic mb-0">(Status)</p>
             </div>
-            <div class="pt-2">
+            <div>
               <nz-select [(ngModel)]="filterModel.createFromForest" class="font-nz">
                 <nz-option *ngFor="let option of createFromForest" [nzLabel]="option.value" [nzValue]="option.code"></nz-option>
                 <nz-option nzLabel="Default Value" nzValue="Default" nzHide></nz-option>
@@ -80,7 +86,7 @@
                 <div class="font-italic small">(Filter)</div>
               </span>
             </button>
-            <button nz-button class="text-uppercase h-100 w-100 button mr-2 py-1 ant-btn" type="click" (click)="onSubmitRemoveFilter()">
+            <button nz-button class="text-uppercase h-100 w-100 button mr-2 py-1 ant-btn pr-4 pl-4" type="click" (click)="onSubmitRemoveFilter()">
               <span>
                 <div class="small">Xóa Lọc</div>
                 <div class="font-italic small">(Remove Filter)</div>

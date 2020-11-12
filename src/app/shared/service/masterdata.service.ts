@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { MasterDataAddress } from 'src/app/model/masterData.model';
 import { UserLoginData } from 'src/app/model/user.model';
 
 @Injectable({
@@ -13,6 +14,7 @@ export class MasterdataService {
   private masterDataUrl = 'http://hawaddsapi.bys.vn/api/data';
   private loggedInStatus = JSON.parse(localStorage.getItem('LoginStatus'));
   user: UserLoginData;
+  public addressmasterdata$ = new BehaviorSubject<MasterDataAddress>(null);
 
   getMasterData(): Observable<any>{
     this.user = this.loggedInStatus;
@@ -25,5 +27,9 @@ export class MasterdataService {
 
   getMasterDataAddress(): Observable<any>{
     return this.http.get(this.masterDataUrl + '/addressmasterdata');
+  }
+
+  getAddressMasterData(): BehaviorSubject<MasterDataAddress>{
+    return this.addressmasterdata$;
   }
 }

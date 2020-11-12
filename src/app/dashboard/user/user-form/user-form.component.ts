@@ -47,21 +47,24 @@ export class UserFormComponent implements OnInit {
   ngOnInit(): void {
     forkJoin([
       this.userService.getUserDetails(),
-      this.masterDataService.getMasterData(),
-      this.masterDataService.getMasterDataAddress(),
+      this.masterDataService.getMasterData()
     ]).subscribe((result) => {
       this.userModel = result[0].data;
       if (this.userModel.userType === this.typeForestOwn.household) {
         this.masterDataUserType = result[1].data;
+        this.masterDataService.addressmasterdata$.subscribe( value => {
+          if (value){
+            this.masterDataAddress = value;
+            this.masterDataAddressChildProvince = this.masterDataAddress[0].childs;
+            this.masterDataAddressChildDistrict = this.masterDataAddressChildProvince.filter(
+              (x) => x.code === this.userModel.province.code
+            )[0].childs;
+            this.masterDataAddressChildWard = this.masterDataAddressChildDistrict.filter(
+              (x) => x.code === this.userModel.district.code
+            )[0].childs;
+          }
+        });
         this.masterDataChild = this.masterDataUserType[0].childs;
-        this.masterDataAddress = result[2].data;
-        this.masterDataAddressChildProvince = this.masterDataAddress[0].childs;
-        this.masterDataAddressChildDistrict = this.masterDataAddressChildProvince.filter(
-          (x) => x.code === this.userModel.province.code
-        )[0].childs;
-        this.masterDataAddressChildWard = this.masterDataAddressChildDistrict.filter(
-          (x) => x.code === this.userModel.district.code
-        )[0].childs;
       }
       this.createForm();
     });

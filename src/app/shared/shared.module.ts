@@ -10,12 +10,13 @@ import { ComponentModule } from './components/component.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ExamDirective } from './directices/exam.directive';
 import { KzMaskDirective } from './directices/kz-mask.directive';
+import { HiddenButtonDirective } from './directices/hidden-button.directive';
 
 @NgModule({
-  declarations: [ExamDirective],
+  declarations: [ExamDirective, HiddenButtonDirective],
   imports: [CommonModule , ReactiveFormsModule, NzMenuModule, NzDropDownModule, NzTabsModule, ComponentModule],
   exports: [HeaderComponent, NzMenuModule, NzDropDownModule,
-            NzTabsModule, ComponentModule, CommonModule, ReactiveFormsModule, ExamDirective],
+            NzTabsModule, ComponentModule, CommonModule, ReactiveFormsModule, ExamDirective, HiddenButtonDirective],
 
 })
 export class SharedModule {}

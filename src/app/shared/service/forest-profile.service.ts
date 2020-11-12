@@ -69,9 +69,6 @@ export class ForestProfileService {
       }),
       params: this.setParams({...filterModel})
     };
-
-
-    // tslint:disable-next-line:max-line-length
     return this.http.get(this.url + `declare-harvest/filter/${pageIndex - 1}/${pageSize}`, httpOptions);
   }
 

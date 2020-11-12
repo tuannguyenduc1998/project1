@@ -82,10 +82,25 @@ input:focus {
   margin-right: .5rem;
 }
 
-::ng-deep .anticon{
+::ng-deep .anticon.anticon-left{
   display: flex;
   align-items: center;
 }
+
+::ng-deep .anticon.anticon-right{
+  display: flex;
+  align-items: center;
+}
+
 ::ng-deep .ant-pagination-options-size-changer.ant-select{
   margin: 0;
+}
+
+button{
+  padding: 5px 0px;
+  line-height: 1;
+}
+
+::ng-deep body{
+  line-height: normal;
 }

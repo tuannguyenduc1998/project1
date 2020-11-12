@@ -21,6 +21,7 @@ import { NzSelectModule } from 'ng-zorro-antd/select';
 import { ProfileRegistrationEditComponent } from './profile-registration/profile-registration-edit/profile-registration-edit.component';
 import { ProfileRegistrationCreateComponent } from './profile-registration/profile-registration-create/profile-registration-create.component';
 import { ProfileRegistrationFormComponent } from './profile-registration/profile-registration-form/profile-registration-form.component';
+import { NzPopoverModule } from 'ng-zorro-antd/popover';
 
 @NgModule({
   declarations: [
@@ -48,6 +49,7 @@ import { ProfileRegistrationFormComponent } from './profile-registration/profile
     NzPaginationModule,
     NzSelectModule,
     FormsModule,
+    NzPopoverModule
   ],
   exports: [KzMaskDirective],
   providers: [DatePipe],
