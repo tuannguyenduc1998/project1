@@ -161,3 +161,11 @@ export class UserLoginData {
       registFor: string
     }[];
 }
+
+export class ImgeFiles {
+  id: string;
+  orgFileName: string;
+  orgFileExtension: string;
+  fileUrl: string;
+  container: string;
+}

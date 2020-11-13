@@ -10,10 +10,12 @@ import {
   MasterDataAddressChildWard,
   MasterDataChild,
 } from 'src/app/model/masterData.model';
-import { User } from 'src/app/model/user.model';
+import { ImgeFiles, User } from 'src/app/model/user.model';
 import { DatePipe } from '@angular/common';
 import { MasterdataService } from 'src/app/shared/service/masterdata.service';
 import { UserService } from 'src/app/shared/service/user.service';
+import { HttpClient } from '@angular/common/http';
+import { NzUploadFile } from 'ng-zorro-antd/upload';
 
 @Component({
   selector: 'app-user-form',
@@ -25,12 +27,14 @@ export class UserFormComponent implements OnInit {
     private formBuilder: FormBuilder,
     private userService: UserService,
     private masterDataService: MasterdataService,
-    private datepipe: DatePipe
+    private datepipe: DatePipe,
+    private http: HttpClient
   ) {}
 
   @Input() model: User = new User();
   userForm: FormGroup;
   userModel: User = new User();
+  userImgModel: ImgeFiles = new ImgeFiles();
   masterDataUserType: MasterData = new MasterData();
   masterDataChild: MasterDataChild[];
   typeForm = TypeForm;
@@ -43,6 +47,8 @@ export class UserFormComponent implements OnInit {
   masterDataAddressChildWard: MasterDataAddressChildWard[];
   cpfFormatadoValue: string;
   @Input() type: string;
+  url1: any;
+  url = 'http://hawaddsapi.bys.vn/api/file/';
 
   ngOnInit(): void {
     forkJoin([
@@ -50,6 +56,11 @@ export class UserFormComponent implements OnInit {
       this.masterDataService.getMasterData()
     ]).subscribe((result) => {
       this.userModel = result[0].data;
+      // for (const item of this.userModel.houseRegistrationImages){
+      //   if (item){
+      //     this.url = `http://hawaddsapi.bys.vn/api/file//${item}`;
+      //   }
+      // }
       if (this.userModel.userType === this.typeForestOwn.household) {
         this.masterDataUserType = result[1].data;
         this.masterDataService.addressmasterdata$.subscribe( value => {
@@ -83,6 +94,7 @@ export class UserFormComponent implements OnInit {
       commune: [this.userModel.commune.code],
       province: [this.userModel.province.code],
       forestOwnerType: [this.userModel.forestOwnerType.code],
+      houseRegistrationImages: [this.userModel.houseRegistrationImages[0]]
     });
   }
 
@@ -98,4 +110,25 @@ export class UserFormComponent implements OnInit {
       (x) => x.code === countryid
     )[0].childs;
   }
+
+  onSelectFile(event) {
+    const fileList: FileList = event.target.files;
+    if (fileList.length > 0) {
+        const file: File = fileList[0];
+        this.userService.setHouseRegistrationImages(file).subscribe((res) => {
+          this.userModel.houseRegistrationImages.push(res.id);
+          console.log(res);
+        });
+    }
+  }
+
+//   onSelectFile1(event) {
+//     for (var i = 0; i <= event.target.files.length - 1; i++) {
+//       var selectedFile = event.target.files[i];
+//       this.userModel.houseRegistrationImages.push(selectedFile);
+//   }
+// }
+removeSelectedFile(index) {
+  this.userModel.houseRegistrationImages.splice(index, 1);
+ }
 }

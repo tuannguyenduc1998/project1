@@ -43,6 +43,23 @@
               <nz-date-picker class="form-control color-input col-md-8" nzFormat="dd/MM/yyyy" formControlName="identityCardIssuedDate"></nz-date-picker>
             </div>
           </div>
+          <div class="form-group row pt-4">
+            <div class="col-md-12">
+              <label for="email-input" class="col-md-4 col-form-label label-generate">Ảnh hộ khẩu:</label>
+            <div class="col-md-8">
+              <div class="clearfix">
+                <ng-container *ngFor="let itemImg of userModel.houseRegistrationImages;let index = index">
+                <img [src]="url + itemImg" class="img" (click)="upload.click()"><button (click)="removeSelectedFile(index)">delete</button><br />
+                <input #upload class="upload" type='file' (change)="onSelectFile($event)" name="avatar" accept=".jpg, .jpeg, .png, .gif">
+                <ng-container *ngIf="userModel.houseRegistrationImages.length === 1">
+                  <img [src]="'https://media-exp1.licdn.com/dms/image/C560BAQFzq8XG2vEAlw/company-logo_200_200/0?e=2159024400&v=beta&t=wT4z6Td3Kid_5WC407ZC_mHs7R1EKFrp_CoV25iYTTU'" class="img" (click)="upload.click()"><button (click)="removeSelectedFile(index)">delete</button><br />
+                  <input #upload class="upload" type='file' (change)="onSelectFile($event)" name="avatar" accept=".jpg, .jpeg, .png, .gif">
+                </ng-container>
+              </ng-container>
+              </div>
+            </div>
+          </div>
+          </div>
         </div>
         <div class="col-md-6 group2 pl-5">
           <div class="form-group row">
