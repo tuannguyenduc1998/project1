@@ -16,6 +16,7 @@ import { MasterdataService } from 'src/app/shared/service/masterdata.service';
 import { UserService } from 'src/app/shared/service/user.service';
 import { HttpClient } from '@angular/common/http';
 import { NzUploadFile } from 'ng-zorro-antd/upload';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-user-form',
@@ -28,7 +29,8 @@ export class UserFormComponent implements OnInit {
     private userService: UserService,
     private masterDataService: MasterdataService,
     private datepipe: DatePipe,
-    private http: HttpClient
+    private http: HttpClient,
+    private router: Router
   ) {}
 
   @Input() model: User = new User();
@@ -94,7 +96,7 @@ export class UserFormComponent implements OnInit {
       commune: [this.userModel.commune.code],
       province: [this.userModel.province.code],
       forestOwnerType: [this.userModel.forestOwnerType.code],
-      houseRegistrationImages: [this.userModel.houseRegistrationImages[0]]
+      houseRegistrationImages: [this.userModel.houseRegistrationImages]
     });
   }
 
@@ -111,24 +113,25 @@ export class UserFormComponent implements OnInit {
     )[0].childs;
   }
 
-  onSelectFile(event) {
+  onSelectFile(event): void{
     const fileList: FileList = event.target.files;
     if (fileList.length > 0) {
         const file: File = fileList[0];
         this.userService.setHouseRegistrationImages(file).subscribe((res) => {
-          this.userModel.houseRegistrationImages.push(res.id);
-          console.log(res);
+          this.userModel.houseRegistrationImages.push(res.data.id);
+          this.userImgModel = res.data;
+          console.log(this.userImgModel);
         });
     }
   }
 
-//   onSelectFile1(event) {
-//     for (var i = 0; i <= event.target.files.length - 1; i++) {
-//       var selectedFile = event.target.files[i];
-//       this.userModel.houseRegistrationImages.push(selectedFile);
-//   }
-// }
-removeSelectedFile(index) {
+  removeSelectedFile(index): void {
   this.userModel.houseRegistrationImages.splice(index, 1);
+ }
+
+ onUpdate(): void{
+   this.userService.updateUser(this.userForm.value).subscribe((res) => {
+    this.router.navigateByUrl(`/dashboard/user/view`);
+   });
  }
 }

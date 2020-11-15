@@ -9,6 +9,7 @@ import { User, UserLoginData } from 'src/app/model/user.model';
 })
 export class UserService {
   private userUrls = 'http://hawaddsapi.bys.vn/api/user';
+  private url = 'http://hawaddsapi.bys.vn/api/';
   private loggedInStatus = JSON.parse(localStorage.getItem('LoginStatus'));
   user: UserLoginData;
   constructor(private http: HttpClient) { }
@@ -49,6 +50,13 @@ export class UserService {
     };
     const formData: FormData = new FormData();
     formData.append('file', file, file.name);
-    return this.http.post(`http://hawaddsapi.bys.vn/api/file`, formData, httpOptions);
+    return this.http.post(this.url + `file`, formData);
+  }
+
+  updateUser(user: User): Observable<any>{
+    const httpOptions = {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+    };
+    return this.http.put(this.url + `user/updatedetail`, user, httpOptions);
   }
 }

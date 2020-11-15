@@ -40,32 +40,39 @@
           <div class="form-group row pt-4">
             <div class="col-md-12">
               <label for="email-input" class="col-md-4 col-form-label label-generate">Ngày cấp:</label>
-              <nz-date-picker class="form-control color-input col-md-8" nzFormat="dd/MM/yyyy" formControlName="identityCardIssuedDate"></nz-date-picker>
+              <nz-date-picker class="form-control color-input col-md-8" nzFormat="dd/MM/yyyy"
+                formControlName="identityCardIssuedDate"></nz-date-picker>
             </div>
           </div>
           <div class="form-group row pt-4">
             <div class="col-md-12">
               <label for="email-input" class="col-md-4 col-form-label label-generate">Ảnh hộ khẩu:</label>
-            <div class="col-md-8">
-              <div class="clearfix">
-                <ng-container *ngFor="let itemImg of userModel.houseRegistrationImages;let index = index">
-                <img [src]="url + itemImg" class="img" (click)="upload.click()"><button (click)="removeSelectedFile(index)">delete</button><br />
-                <input #upload class="upload" type='file' (change)="onSelectFile($event)" name="avatar" accept=".jpg, .jpeg, .png, .gif">
-                <ng-container *ngIf="userModel.houseRegistrationImages.length === 1">
-                  <img [src]="'https://media-exp1.licdn.com/dms/image/C560BAQFzq8XG2vEAlw/company-logo_200_200/0?e=2159024400&v=beta&t=wT4z6Td3Kid_5WC407ZC_mHs7R1EKFrp_CoV25iYTTU'" class="img" (click)="upload.click()"><button (click)="removeSelectedFile(index)">delete</button><br />
-                  <input #upload class="upload" type='file' (change)="onSelectFile($event)" name="avatar" accept=".jpg, .jpeg, .png, .gif">
-                </ng-container>
-              </ng-container>
+              <div class="col-md-8 px-0">
+                <div class="upload-image">
+                  <input #upload class="upload" type='file' (change)="onSelectFile($event)" name="avatar"
+                    accept=".jpg, .jpeg, .png, .gif">
+                  <div class="display-img" *ngFor="let itemImg of userModel.houseRegistrationImages;let index = index">
+                    <img [src]="url + itemImg" class="img">
+                    <div class="icon-delete-image" [class.hidden]="type === typeForm.view">
+                      <i class="fa fa-times" aria-hidden="true" (click)="removeSelectedFile(index)"></i>
+                    </div>
+                  </div>
+                  <ng-container *ngIf="userModel.houseRegistrationImages.length < 2">
+                    <div [class.hidden]="type === typeForm.view" class="perspective-image" (click)="upload.click()">
+                      <i class="fa fa-file"></i>
+                    </div>
+                  </ng-container>
+                </div>
               </div>
             </div>
-          </div>
           </div>
         </div>
         <div class="col-md-6 group2 pl-5">
           <div class="form-group row">
             <div class="col-md-12">
               <label for="level" class="col-md-4 col-form-label label-generate">Tỉnh/Thành phố:</label>
-              <select class="form-control color-input col-md-8" formControlName="province" id="level" required (change)="onSelectDistrict($event.target.value)">
+              <select class="form-control color-input col-md-8" formControlName="province" id="level" required
+                (change)="onSelectDistrict($event.target.value)">
                 <option *ngFor="let lvl of this.masterDataAddressChildProvince" [value]="lvl.code">{{ lvl.name }}
                 </option>
               </select>
@@ -74,7 +81,8 @@
           <div class="form-group row pt-4">
             <div class="col-md-12">
               <label for="level" class="col-md-4 col-form-label label-generate">Quận/Huyện:</label>
-              <select class="form-control color-input col-md-8" formControlName="district" id="level" required (change)="onSelectWard($event.target.value)">
+              <select class="form-control color-input col-md-8" formControlName="district" id="level" required
+                (change)="onSelectWard($event.target.value)">
                 <option *ngFor="let lvl of this.masterDataAddressChildDistrict" [value]="lvl.code">{{ lvl.name }}
                 </option>
               </select>
