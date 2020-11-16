@@ -52,3 +52,47 @@ html {
 .note{
   color: red;
 }
+
+.upload-image {
+  display: flex;
+
+  .display-img {
+    margin: 5px;
+    width: 60px;
+    height: 60px;
+    border: 1px solid #ced4da;
+    border-radius: 8px;
+    position: relative;
+
+    .icon-delete-image {
+      position: absolute;
+      top: 0;
+      right: 0;
+      cursor: pointer;
+      padding: 0.25rem;
+      display: none;
+    }
+
+    img {
+      width: 100%;
+      height: 100%;
+      border-radius: 8px;
+    }
+
+    &:hover {
+      box-shadow: 0 0 2px 1px rgba(0, 140, 186, 0.5);
+
+      img {
+        opacity: 0.5;
+      }
+
+      .icon-delete-image {
+        display: block;
+      }
+    }
+  }
+}
+
+.shadow{
+  box-shadow: 3px 3px 3px 3px #d4d4d4;
+}

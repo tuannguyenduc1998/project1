@@ -21,14 +21,17 @@ export class ForestProfileService {
   forestOrTreeId: string;
   filterModel: FilterModelProfile = new FilterModelProfile();
 
-  getForests(): Observable<any> {
+  getHttpOptions(type: string): any{
     this.user = this.loggedInStatus;
     const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json', Authorization:
-          `Bearer ${this.user.jwtToken}`
-      })
+      headers: new HttpHeaders({ 'Content-Type': type , Authorization:
+      `Bearer ${this.user.jwtToken}`})
     };
+    return httpOptions;
+  }
+
+  getForests(): Observable<any> {
+    const httpOptions = this.getHttpOptions('application/json');
     return this.http.get(this.url + 'forest/4cba385e-e411-4d22-b4de-1478dbbb382c', httpOptions);
   }
 
@@ -50,13 +53,7 @@ export class ForestProfileService {
   }
 
   getDeclareHarvestStatus(): Observable<any> {
-    this.user = this.loggedInStatus;
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json', Authorization:
-          `Bearer ${this.user.jwtToken}`
-      })
-    };
+    const httpOptions = this.getHttpOptions('application/json');
     return this.http.get(this.url + 'data/masterdata?groupsName=DeclareHarvestStatus', httpOptions);
   }
 
@@ -82,24 +79,12 @@ export class ForestProfileService {
   }
 
   getDeclareHarvestById(id: string): Observable<any> {
-    this.user = this.loggedInStatus;
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json', Authorization:
-          `Bearer ${this.user.jwtToken}`
-      })
-    };
+    const httpOptions = this.getHttpOptions('application/json');
     return this.http.get(this.url + `declare-harvest/${id}?isGroupByPlot=false`, httpOptions);
   }
 
   getForestByForestId(forestId: string, isForest: string): Observable<any> {
-    this.user = this.loggedInStatus;
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json', Authorization:
-          `Bearer ${this.user.jwtToken}`
-      })
-    };
+    const httpOptions = this.getHttpOptions('application/json');
     if (isForest){
       this.forestOrTreeId = 'forest';
     }

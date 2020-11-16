@@ -1,26 +1,29 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { UserLogin } from 'src/app/model/data';
 import { User, UserLoginData } from 'src/app/model/user.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
-  private userUrls = 'http://hawaddsapi.bys.vn/api/user';
   private url = 'http://hawaddsapi.bys.vn/api/';
   private loggedInStatus = JSON.parse(localStorage.getItem('LoginStatus'));
   user: UserLoginData;
   constructor(private http: HttpClient) { }
 
-  getUserDetails(): Observable<any>{
+  getHttpOptions(type: string): any{
     this.user = this.loggedInStatus;
     const httpOptions = {
-      headers: new HttpHeaders({ 'Content-Type': 'application/json' , Authorization:
+      headers: new HttpHeaders({ 'Content-Type': type , Authorization:
       `Bearer ${this.user.jwtToken}`})
     };
-    const url = `${this.userUrls}/getdetail`;
+    return httpOptions;
+  }
+
+  getUserDetails(): Observable<any>{
+    const httpOptions = this.getHttpOptions('application/json');
+    const url = `${this.url}user/getdetail`;
     return this.http.get(url, httpOptions);
   }
 
@@ -34,29 +37,19 @@ export class UserService {
   }
 
   getHouseRegistrationImages(file: any): Observable<any>{
-    this.user = this.loggedInStatus;
-    const httpOptions = {
-      headers: new HttpHeaders({ 'Content-Type': 'application/json' , Authorization:
-      `Bearer ${this.user.jwtToken}`})
-    };
+    const httpOptions = this.getHttpOptions('application/json');
     return this.http.get(`http://hawaddsapi.bys.vn/api/file/${file}`, httpOptions);
   }
 
   setHouseRegistrationImages(file: File): Observable<any>{
-    this.user = this.loggedInStatus;
-    const httpOptions = {
-      headers: new HttpHeaders({ 'Content-Type': 'multipart/form-data' , Authorization:
-      `Bearer ${this.user.jwtToken}`})
-    };
+    const httpOptions = this.getHttpOptions('multipart/form-data');
     const formData: FormData = new FormData();
     formData.append('file', file, file.name);
     return this.http.post(this.url + `file`, formData);
   }
 
   updateUser(user: User): Observable<any>{
-    const httpOptions = {
-      headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-    };
+    const httpOptions = this.getHttpOptions('application/json');
     return this.http.put(this.url + `user/updatedetail`, user, httpOptions);
   }
 }

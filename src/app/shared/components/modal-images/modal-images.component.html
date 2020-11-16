@@ -1,0 +1,21 @@
+<div [style.display]="id ? 'block' : 'none'" class="modal ant-layout" id="imagemodal" aria-hidden="true">
+  <div class="row">
+    <div class="content b-color d-flex flex-column align-items-center">
+      <div class="d-flex flex-row align-items-center">
+        <div class="close-button cursor-pointer mr-5" (click)="closeImageModal()">
+          <i aria-hidden="true" class="fa fa-times-circle-o"></i>
+        </div>
+        <ng-container>
+        <i class="fa fa-angle-left icon-color mr-5 pr-5" aria-hidden="true" (click)="nextMove()"></i>
+          <img [src]="url + currentImage" id="imagepreview">
+        <i class="fa fa-angle-right icon-color ml-5 pl-5" aria-hidden="true" (click)="nextMove()"></i>
+      </ng-container>
+      </div>
+      <div class="d-flex flex-row align-items-center">
+        <ng-container *ngFor="let itemImg of imgeModel;let index = index">
+          <img [src]="url + itemImg" [class.boxshadow]="itemImg === currentImage" class="img-small p-2 mt-4" (click)="clickImg(index)">
+        </ng-container>
+      </div>
+    </div>
+  </div>
+  </div>

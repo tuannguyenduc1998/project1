@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { forkJoin } from 'rxjs';
 import { TypeForestOwn, TypeForm } from 'src/app/constant/type-form';
@@ -17,6 +17,7 @@ import { UserService } from 'src/app/shared/service/user.service';
 import { HttpClient } from '@angular/common/http';
 import { NzUploadFile } from 'ng-zorro-antd/upload';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ModalImagesComponent } from 'src/app/shared/components/modal-images/modal-images.component';
 
 @Component({
   selector: 'app-user-form',
@@ -32,7 +33,6 @@ export class UserFormComponent implements OnInit {
     private http: HttpClient,
     private router: Router
   ) {}
-
   @Input() model: User = new User();
   userForm: FormGroup;
   userModel: User = new User();
@@ -49,24 +49,31 @@ export class UserFormComponent implements OnInit {
   masterDataAddressChildWard: MasterDataAddressChildWard[];
   cpfFormatadoValue: string;
   @Input() type: string;
-  url1: any;
   url = 'http://hawaddsapi.bys.vn/api/file/';
+  address: string;
+  showModal: boolean;
+  imgeModel: string[];
+  id: string;
+  index: number;
 
   ngOnInit(): void {
     forkJoin([
       this.userService.getUserDetails(),
-      this.masterDataService.getMasterData()
+      this.masterDataService.getMasterData(),
     ]).subscribe((result) => {
       this.userModel = result[0].data;
-      // for (const item of this.userModel.houseRegistrationImages){
-      //   if (item){
-      //     this.url = `http://hawaddsapi.bys.vn/api/file//${item}`;
-      //   }
-      // }
+      this.address = this.userModel.street.concat(
+        ', ',
+        this.userModel.commune.value,
+        ', ',
+        this.userModel.district.value,
+        ', ',
+        this.userModel.province.value
+      );
       if (this.userModel.userType === this.typeForestOwn.household) {
         this.masterDataUserType = result[1].data;
-        this.masterDataService.addressmasterdata$.subscribe( value => {
-          if (value){
+        this.masterDataService.addressmasterdata$.subscribe((value) => {
+          if (value) {
             this.masterDataAddress = value;
             this.masterDataAddressChildProvince = this.masterDataAddress[0].childs;
             this.masterDataAddressChildDistrict = this.masterDataAddressChildProvince.filter(
@@ -96,7 +103,8 @@ export class UserFormComponent implements OnInit {
       commune: [this.userModel.commune.code],
       province: [this.userModel.province.code],
       forestOwnerType: [this.userModel.forestOwnerType.code],
-      houseRegistrationImages: [this.userModel.houseRegistrationImages]
+      houseRegistrationImages: [this.userModel.houseRegistrationImages],
+      address: [this.address]
     });
   }
 
@@ -113,25 +121,39 @@ export class UserFormComponent implements OnInit {
     )[0].childs;
   }
 
-  onSelectFile(event): void{
+  onSelectFile(event): void {
     const fileList: FileList = event.target.files;
     if (fileList.length > 0) {
-        const file: File = fileList[0];
-        this.userService.setHouseRegistrationImages(file).subscribe((res) => {
-          this.userModel.houseRegistrationImages.push(res.data.id);
-          this.userImgModel = res.data;
-          console.log(this.userImgModel);
-        });
+      const file: File = fileList[0];
+      this.userService.setHouseRegistrationImages(file).subscribe((res) => {
+        this.userModel.houseRegistrationImages.push(res.data.id);
+        this.userImgModel = res.data;
+        console.log(this.userModel);
+      });
     }
   }
 
   removeSelectedFile(index): void {
-  this.userModel.houseRegistrationImages.splice(index, 1);
- }
+    this.userModel.houseRegistrationImages.splice(index, 1);
+  }
 
- onUpdate(): void{
-   this.userService.updateUser(this.userForm.value).subscribe((res) => {
-    this.router.navigateByUrl(`/dashboard/user/view`);
-   });
- }
+  onUpdate(): void {
+    this.userModel.houseRegistrationImages = this.userForm.get(
+      'houseRegistrationImages'
+    ).value;
+    this.userService.updateUser(this.userModel).subscribe((res) => {
+      this.router.navigateByUrl(`/dashboard/user/view`);
+    });
+  }
+
+  showModalImage(img: string[], id: string, index: number): void{
+    this.showModal = true;
+    this.imgeModel = img;
+    this.id = id;
+    this.index = index;
+  }
+
+  closeImageModal(): void {
+    this.showModal = false;
+  }
 }

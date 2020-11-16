@@ -11,10 +11,11 @@ import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
 import { FormsModule } from '@angular/forms';
 import { NzModalModule } from 'ng-zorro-antd/modal';
 import { NzPaginationModule } from 'ng-zorro-antd/pagination';
+import { ModalImagesComponent } from './modal-images/modal-images.component';
 
 
 @NgModule({
-  declarations: [MenuComponent, HeaderComponent, ModalPlotsComponent],
+  declarations: [MenuComponent, HeaderComponent, ModalPlotsComponent, ModalImagesComponent],
   imports: [
     CommonModule,
     NzIconModule,
@@ -29,7 +30,8 @@ import { NzPaginationModule } from 'ng-zorro-antd/pagination';
   exports: [
     MenuComponent,
     HeaderComponent,
-    ModalPlotsComponent
+    ModalPlotsComponent,
+    ModalImagesComponent
   ],
   entryComponents: [ModalPlotsComponent]
 })

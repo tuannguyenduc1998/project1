@@ -5,13 +5,17 @@
         <div class="col-md-6">
           <div class="form-group row">
             <div class="col-md-12">
-              <label for="text-input" class="col-md-4 col-form-label label-generate">Mã tài khoản:</label>
+              <label for="text-input" class="col-md-4 col-form-label label-generate py-0">Mã tài khoản:
+                <h6 class="font-italic">(Account ID)</h6>
+              </label>
               <input class="form-control col-md-8" type="text" id="text-input" formControlName="coCode">
             </div>
           </div>
           <div class="form-group row pt-4">
             <div class="col-md-12">
-              <label for="text-input" class="col-md-4 col-form-label label-generate">Loại chủ rừng:</label>
+              <label for="text-input" class="col-md-4 col-form-label label-generate py-0">Loại chủ rừng:
+                <h6 class="font-italic">(Forest Owner type)</h6>
+              </label>
               <select class="form-control color-input col-md-8" formControlName="forestOwnerType" id="level" required>
                 <option *ngFor="let lvl of this.masterDataChild" [value]="lvl.code">{{ lvl.displayText }}</option>
               </select>
@@ -19,40 +23,50 @@
           </div>
           <div class="form-group row pt-4">
             <div class="col-md-12">
-              <label for="email-input" class="col-md-4 col-form-label label-generate">Tên cá nhân/Hộ gia đình:</label>
+              <label for="email-input" class="col-md-4 col-form-label label-generate py-0">Tên cá nhân/Hộ gia đình:
+                <h6 class="font-italic">(Individual/Householder name)</h6>
+              </label>
               <input class="form-control color-input col-md-8" type="text" id="email-input" formControlName="fullName">
             </div>
           </div>
           <div class="form-group row pt-4">
             <div class="col-md-12">
-              <label for="email-input" class="col-md-4 col-form-label label-generate">Số điện thoại di động:</label>
+              <label for="email-input" class="col-md-4 col-form-label label-generate py-0">Số điện thoại di động:
+                <h6 class="font-italic">(Cell phone)</h6>
+              </label>
               <input class="form-control color-input col-md-8" type="text" id="email-input"
                 formControlName="cellphoneNumber">
             </div>
           </div>
           <div class="form-group row pt-4">
             <div class="col-md-12">
-              <label for="email-input" class="col-md-4 col-form-label label-generate">CMND/Thẻ căn cước:</label>
+              <label for="email-input" class="col-md-4 col-form-label label-generate py-0">CMND/Thẻ căn cước:
+                <h6 class="font-italic">(ID card No.)</h6>
+              </label>
               <input class="form-control color-input col-md-8" type="text" id="email-input"
                 formControlName="identityCard">
             </div>
           </div>
           <div class="form-group row pt-4">
             <div class="col-md-12">
-              <label for="email-input" class="col-md-4 col-form-label label-generate">Ngày cấp:</label>
+              <label for="email-input" class="col-md-4 col-form-label label-generate py-0">Ngày cấp:
+                <h6 class="font-italic">(Issue date)</h6>
+              </label>
               <nz-date-picker class="form-control color-input col-md-8" nzFormat="dd/MM/yyyy"
                 formControlName="identityCardIssuedDate"></nz-date-picker>
             </div>
           </div>
           <div class="form-group row pt-4">
             <div class="col-md-12">
-              <label for="email-input" class="col-md-4 col-form-label label-generate">Ảnh hộ khẩu:</label>
+              <label for="email-input" class="col-md-4 col-form-label label-generate py-0">Ảnh hộ khẩu:
+                <h6 class="font-italic">(Household reg. book picture)</h6>
+              </label>
               <div class="col-md-8 px-0">
                 <div class="upload-image">
                   <input #upload class="upload" type='file' (change)="onSelectFile($event)" name="avatar"
                     accept=".jpg, .jpeg, .png, .gif">
                   <div class="display-img" *ngFor="let itemImg of userModel.houseRegistrationImages;let index = index">
-                    <img [src]="url + itemImg" class="img">
+                    <img [src]="url + itemImg" class="img" (click)="showModalImage(userModel.houseRegistrationImages, itemImg, index)">
                     <div class="icon-delete-image" [class.hidden]="type === typeForm.view">
                       <i class="fa fa-times" aria-hidden="true" (click)="removeSelectedFile(index)"></i>
                     </div>
@@ -70,7 +84,9 @@
         <div class="col-md-6 group2 pl-5">
           <div class="form-group row">
             <div class="col-md-12">
-              <label for="level" class="col-md-4 col-form-label label-generate">Tỉnh/Thành phố:</label>
+              <label for="level" class="col-md-4 col-form-label label-generate py-0">Tỉnh/Thành phố:
+                <h6 class="font-italic">(Province/City)</h6>
+              </label>
               <select class="form-control color-input col-md-8" formControlName="province" id="level" required
                 (change)="onSelectDistrict($event.target.value)">
                 <option *ngFor="let lvl of this.masterDataAddressChildProvince" [value]="lvl.code">{{ lvl.name }}
@@ -80,7 +96,9 @@
           </div>
           <div class="form-group row pt-4">
             <div class="col-md-12">
-              <label for="level" class="col-md-4 col-form-label label-generate">Quận/Huyện:</label>
+              <label for="level" class="col-md-4 col-form-label label-generate py-0">Quận/Huyện:
+                <h6 class="font-italic">(District)</h6>
+              </label>
               <select class="form-control color-input col-md-8" formControlName="district" id="level" required
                 (change)="onSelectWard($event.target.value)">
                 <option *ngFor="let lvl of this.masterDataAddressChildDistrict" [value]="lvl.code">{{ lvl.name }}
@@ -90,7 +108,9 @@
           </div>
           <div class="form-group row pt-4">
             <div class="col-md-12">
-              <label for="level" class="col-md-4 col-form-label label-generate">Phường/Xã:</label>
+              <label for="level" class="col-md-4 col-form-label label-generate py-0">Phường/Xã:
+                <h6 class="font-italic">(Ward/Commune)</h6>
+              </label>
               <select class="form-control color-input col-md-8" formControlName="commune" id="level" required>
                 <option *ngFor="let lvl of this.masterDataAddressChildWard" [value]="lvl.code">{{ lvl.name }}</option>
               </select>
@@ -98,14 +118,26 @@
           </div>
           <div class="form-group row pt-4">
             <div class="col-md-12">
-              <label for="email-input" class="col-md-4 col-form-label label-generate">Thôn/Bản:</label>
+              <label for="email-input" class="col-md-4 col-form-label label-generate py-0">Thôn/Bản:
+                <h6 class="font-italic">(Village)</h6>
+              </label>
               <input class="form-control color-input col-md-8" type="text" formControlName="village">
             </div>
           </div>
           <div class="form-group row pt-4">
             <div class="col-md-12">
-              <label for="email-input" class="col-md-4 col-form-label label-generate">Số nhà/Tên đường:</label>
+              <label for="email-input" class="col-md-4 col-form-label label-generate py-0">Số nhà/Tên đường:
+                <h6 class="font-italic">(House number/Street)</h6>
+              </label>
               <input class="form-control color-input col-md-8" type="text" formControlName="street">
+            </div>
+          </div>
+          <div class="form-group row pt-4">
+            <div class="col-md-12">
+              <label for="email-input" class="col-md-4 col-form-label label-generate py-0">Địa chỉ
+                <h6 class="font-italic">(Address)</h6>
+              </label>
+              <input class="form-control color-input col-md-8" type="text" formControlName="address">
             </div>
           </div>
         </div>
@@ -113,3 +145,4 @@
     </div>
   </form>
 </fieldset>
+<app-modal-images *ngIf="showModal" (closed)="closeImageModal()" [id]="id" [imgeModel]="imgeModel" [index]="index"></app-modal-images>
