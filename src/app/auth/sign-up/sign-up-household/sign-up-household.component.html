@@ -131,3 +131,144 @@
   </div>
 </div>
 </div>
+<!-- <div [style.display]="isActive ? 'block' : 'none'" class="modal ant-layout" id="imagemodal" aria-hidden="true">
+<section class="auth">
+  <div class="container">
+    <div class="auth-popup row">
+      <div class="content col-md-12">
+        <div class="form">
+          <h3 for="tieude" class="d-flex justify-content-center text-uppercase font-weight-bold">HOÀN TẤT ĐĂNG KÝ
+            <span class="font-italic font-eng-child mt-1">(COMPLETE A SIGN UP)</span></h3>
+          <h4 for="tieude" class="d-flex justify-content-center font-weight-bold">Cá nhân/Hộ gia đình
+            <span class="font-italic font-eng-child mt-1">(Individual/Household)</span></h4>
+          <div class="d-flex">
+            <form [formGroup]="userCreateForm" class="form-content">
+              <div class="col-md-12">
+                <div class="row ">
+                  <div class="col-md-2">
+                    <label for="text-input" class="col-form-label label-generate py-0">Loại vai trò mong muốn:
+                      <h6 class="font-italic">(Expected role(s))</h6>
+                    </label>
+                  </div>
+                  <div class="col-md-10">
+                    <div class="pl-5">
+                      <label nz-checkbox>Người dùng thông thường
+                        <span class="font-italic">(Normal User)</span>
+                      </label>
+                    </div>
+                    <div class="pl-5">
+                      <label nz-checkbox>Chủ rừng
+                        <span class="font-italic">(Forest Owner)</span>
+                      </label>
+                    </div>
+                    <div class="pl-5">
+                      <label nz-checkbox>Kinh doanh/Chế biến gỗ
+                        <span class="font-italic">(Wood Trader/Processor)</span>
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group row">
+                    <div class="col-md-12">
+                      <label for="text-input" class="col-md-5 col-form-label label-generate py-0">Tên cá nhân/Hộ gia đình:
+                        <h6 class="font-italic">(Individual/Householder name)</h6>
+                      </label>
+                      <input nz-input class="form-control col-md-7" type="text" placeholder="Text" formControlName="fullname"
+                        [class.is-invalid]="formErrors?.fullname">
+                    </div>
+                    <p class="warning text-danger">{{formErrors?.fullname}}</p>
+                  </div>
+                  <div class="form-group row pt-3">
+                    <div class="col-md-12">
+                      <label for="text-input" class="col-md-5 col-form-label label-generate py-0">Số điện thoại di động:
+                        <h6 class="font-italic">(Cell phone)</h6>
+                      </label>
+                      <input nz-input class="form-control color-input col-md-7" placeholder="Number" type="text"
+                        id="text-input" formControlName="cellPhoneNumber">
+                    </div>
+                  </div>
+                  <div class="form-group row pt-3">
+                    <div class="col-md-12">
+                      <label for="text-input" class="col-md-5 col-form-label label-generate py-0">CMND/Thẻ căn cước:
+                        <h6 class="font-italic">(ID card No.)</h6>
+                      </label>
+                      <input nz-input class="form-control color-input col-md-7" placeholder="Number" type="text"
+                        id="text-input" formControlName="identityCard">
+                    </div>
+                  </div>
+                  <div class="form-group row pt-3">
+                    <div class="col-md-12">
+                      <label for="text-input" class="col-md-5 col-form-label label-generate py-0">Ảnh CMND:
+                        <h6 class="font-italic">(ID card picture)</h6>
+                      </label>
+                      <div class="upload-image col-md-7">
+                        <input #upload class="upload" type='file' (change)="onSelectFile($event)" name="avatar"
+                          accept=".jpg, .jpeg, .png, .gif">
+                        <ng-container *ngIf="imgeModel">
+                          <div class="display-img" *ngFor="let itemImg of imgeModel;let index = index">
+                            <img [src]="url + itemImg" class="img"
+                              (click)="showModalImage(userCreateModel.images, itemImg, index)">
+                            <div class="icon-delete-image">
+                              <i class="fa fa-times" aria-hidden="true" (click)="removeSelectedFile(index)"></i>
+                            </div>
+                          </div>
+                        </ng-container>
+                        <ng-container *ngIf="imgeModel.length < 2">
+                          <div class="perspective-image" (click)="upload.click()">
+                            <i class="fa fa-file"></i>
+                          </div>
+                        </ng-container>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group row pt-3">
+                    <div class="col-md-12">
+                      <label for="text-input" class="col-form-label label-generate py-0">ĐỊA CHỈ LIÊN HỆ</label>
+                        <p class="font-italic">(CONTACT ADDRESS)</p>
+                      </div>
+                  </div>
+                  <div class="form-group row pt-3">
+                    <div class="col-md-12">
+                      <label for="text-input" class="col-md-5 col-form-label label-generate py-0">- Tỉnh/Thành phố
+                        <h6 class="font-italic">(Province/City)</h6>
+                      </label>
+                      <input nz-input class="form-control color-input col-md-7" placeholder="Number" type="text"
+                        id="text-input" formControlName="identityCard">
+                    </div>
+                  </div>
+                  <div class="form-group row pt-3">
+                    <div class="col-md-12">
+                      <label for="text-input" class="col-md-5 col-form-label label-generate py-0">- Quận/Huyện
+                        <h6 class="font-italic">(District)</h6>
+                      </label>
+                      <input nz-input class="form-control color-input col-md-7" placeholder="Number" type="text"
+                        id="text-input" formControlName="identityCard">
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group row">
+                    <div class="col-md-12 row">
+                      <label for="text-input" class="col-md-5 col-form-label label-generate py-0">Tên cá nhân/Hộ gia đình:
+                        <h6 class="font-italic">(Individual/Householder name)</h6>
+                      </label>
+                      <input nz-input class="form-control col-md-7" type="text" placeholder="Text" formControlName="fullname"
+                        [class.is-invalid]="formErrors?.fullname">
+                    </div>
+                    <p class="warning text-danger">{{formErrors?.fullname}}</p>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+</div> -->
