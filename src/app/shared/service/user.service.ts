@@ -1,8 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { User, UserLoginData } from 'src/app/model/user.model';
-
+import { User, UserLoginData } from '../model/user.model';
 @Injectable({
   providedIn: 'root'
 })
@@ -42,7 +41,6 @@ export class UserService {
   }
 
   setHouseRegistrationImages(file: File): Observable<any>{
-    const httpOptions = this.getHttpOptions('multipart/form-data');
     const formData: FormData = new FormData();
     formData.append('file', file, file.name);
     return this.http.post(this.url + `file`, formData);
@@ -51,5 +49,15 @@ export class UserService {
   updateUser(user: User): Observable<any>{
     const httpOptions = this.getHttpOptions('application/json');
     return this.http.put(this.url + `user/updatedetail`, user, httpOptions);
+  }
+
+  createUser(): Observable<any>{
+    const httpOptions = this.getHttpOptions('application/json');
+    return this.http.post(this.url + `user/create`, httpOptions);
+  }
+
+  getSignUpData(): Observable<any>{
+    const httpOptions = this.getHttpOptions('application/json');
+    return this.http.get(this.url + `data/getsignupdata`, httpOptions);
   }
 }

@@ -2,10 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { BehaviorSubject, Observable, of, Subject } from 'rxjs';
-import { TypeForm } from 'src/app/constant/type-form';
-import { Employees, EmployeeWorks } from 'src/app/model/data';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { MyserviceService } from 'src/app/shared/service/myservice.service';
+import { Employees, EmployeeWorks } from 'src/app/shared/model/data';
+import { TypeForm } from 'src/app/shared/constant/type-form';
 
 @Component({
   selector: 'app-list-employee',

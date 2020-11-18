@@ -2,14 +2,10 @@ import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { forkJoin } from 'rxjs';
-import { MasterData } from 'src/app/model/masterData.model';
-import {
-  ForestCreate,
-  ForestPilots,
-  ProfileForest,
-} from 'src/app/model/profile-forest.model';
-import { UserLoginData } from 'src/app/model/user.model';
 import { ModalPlotsComponent } from 'src/app/shared/components/modal-plots/modal-plots.component';
+import { MasterData } from 'src/app/shared/model/masterData.model';
+import { ForestCreate, ForestPilots, ProfileForest } from 'src/app/shared/model/profile-forest.model';
+import { UserLoginData } from 'src/app/shared/model/user.model';
 import { ForestProfileService } from 'src/app/shared/service/forest-profile.service';
 import { UserService } from 'src/app/shared/service/user.service';
 

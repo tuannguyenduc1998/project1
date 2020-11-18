@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { of } from 'rxjs/internal/observable/of';
 import { catchError, tap } from 'rxjs/operators';
-import { Employees, EmployeeWorks, UserLogin } from 'src/app/model/data';
+import { Employees, EmployeeWorks, UserLogin } from '../model/data';
 // Injectable dùng để trích xuất dữ liệu ra
 @Injectable({
   providedIn: 'root'

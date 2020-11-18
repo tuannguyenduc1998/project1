@@ -2,11 +2,10 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { TypeForm } from 'src/app/constant/type-form';
-import { Employees, EmployeeWorks, status, Work, WorkItem } from 'src/app/model/data';
 import { Location } from '@angular/common';
-import { emailValidator } from 'src/app/model/validator';
 import { MyserviceService } from 'src/app/shared/service/myservice.service';
+import { Employees, EmployeeWorks } from 'src/app/shared/model/data';
+import { TypeForm } from 'src/app/shared/constant/type-form';
 @Component({
   selector: 'app-form-employee',
   templateUrl: './form-employee.component.html',

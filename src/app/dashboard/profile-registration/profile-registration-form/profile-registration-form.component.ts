@@ -2,15 +2,15 @@ import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { forkJoin } from 'rxjs';
-import { Status } from 'src/app/constant/status';
-import { HarvestDeclare } from 'src/app/model/declare-harvests';
-import { MasterData } from 'src/app/model/masterData.model';
-import { ForestPilots, ProfileForest } from 'src/app/model/profile-forest.model';
-import { UserLoginData } from 'src/app/model/user.model';
 import { ModalPlotsComponent } from 'src/app/shared/components/modal-plots/modal-plots.component';
 import { ForestProfileService } from 'src/app/shared/service/forest-profile.service';
 import { UserService } from 'src/app/shared/service/user.service';
 import {Location} from '@angular/common';
+import { HarvestDeclare } from 'src/app/shared/model/declare-harvests';
+import { ForestPilots, ProfileForest } from 'src/app/shared/model/profile-forest.model';
+import { UserLoginData } from 'src/app/shared/model/user.model';
+import { MasterData } from 'src/app/shared/model/masterData.model';
+import { Status } from 'src/app/shared/constant/status';
 
 @Component({
   selector: 'app-profile-registration-form',

@@ -2,19 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NzTableQueryParams } from 'ng-zorro-antd/table';
 import { forkJoin } from 'rxjs';
-import { CreateFrom } from 'src/app/constant/createFrom';
-import { Status, StatusCustom } from 'src/app/constant/status';
-import {
-  DeclareHarvests,
-  FilterModelProfile,
-} from 'src/app/model/declareHarvests.model';
-import {
-  createFromForest,
-  MasterData,
-  MasterDataChild,
-} from 'src/app/model/masterData.model';
-import { RoleModel } from 'src/app/model/roles.model';
-import { UserLoginData } from 'src/app/model/user.model';
+import { CreateFrom } from 'src/app/shared/constant/createFrom';
+import { Status, StatusCustom } from 'src/app/shared/constant/status';
+import { DeclareHarvests, FilterModelProfile } from 'src/app/shared/model/declareHarvests.model';
+import { createFromForest, MasterData, MasterDataChild } from 'src/app/shared/model/masterData.model';
+import { RoleModel } from 'src/app/shared/model/roles.model';
+import { UserLoginData } from 'src/app/shared/model/user.model';
 import { ForestProfileService } from 'src/app/shared/service/forest-profile.service';
 import { RolesService } from 'src/app/shared/service/roles.service';
 import { UserService } from 'src/app/shared/service/user.service';

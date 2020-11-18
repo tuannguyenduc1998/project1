@@ -6,7 +6,7 @@ img{
 .form-container {
     display:block;
     width:90%;
-    padding:2em;
+    padding:1em;
     margin: 2em auto;
     background:#fff;
 }
@@ -28,7 +28,10 @@ button:focus{
   border: none;
 }
 
-.login-container{
-  margin-top: 10%;
-  margin-bottom: 10%;
+.auth{
+  background-color: rgb(175, 175, 175);
+}
+
+.form{
+  background-color: white;
 }

@@ -1,10 +1,9 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
-import { debounceTime } from 'rxjs/operators';
-import { TypeForm } from 'src/app/constant/type-form';
-import { Employees } from 'src/app/model/data';
-import { MyserviceService } from 'src/app/shared/components/service/myservice.service';
+import { TypeForm } from 'src/app/shared/constant/type-form';
+import { Employees } from 'src/app/shared/model/data';
+import { MyserviceService } from 'src/app/shared/service/myservice.service';
 import { FormEmployeeComponent } from '../form-employee/form-employee.component';
 
 @Component({

@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { HarvestDeclare } from 'src/app/model/declare-harvests';
-import { ProfileForest } from 'src/app/model/profile-forest.model';
+import { HarvestDeclare } from 'src/app/shared/model/declare-harvests';
+import { ProfileForest } from 'src/app/shared/model/profile-forest.model';
 import { ForestProfileService } from 'src/app/shared/service/forest-profile.service';
 import { ProfileRegistrationCreateComponent } from '../profile-registration-create/profile-registration-create.component';
 

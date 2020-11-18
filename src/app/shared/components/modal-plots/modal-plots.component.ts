@@ -1,11 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { NzModalRef } from 'ng-zorro-antd/modal';
-import {
-  ForestPilot,
-  ForestPilots,
-  ProfileForest,
-} from 'src/app/model/profile-forest.model';
+import { ForestPilot, ForestPilots, ProfileForest } from '../../model/profile-forest.model';
 import { ForestProfileService } from '../../service/forest-profile.service';
 
 @Component({

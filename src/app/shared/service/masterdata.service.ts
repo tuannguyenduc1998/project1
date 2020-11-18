@@ -1,8 +1,8 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { MasterDataAddress } from 'src/app/model/masterData.model';
-import { UserLoginData } from 'src/app/model/user.model';
+import { MasterDataAddress } from '../model/masterData.model';
+import { UserLoginData } from '../model/user.model';
 
 @Injectable({
   providedIn: 'root'

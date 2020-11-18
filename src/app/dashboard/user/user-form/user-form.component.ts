@@ -1,7 +1,11 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { forkJoin } from 'rxjs';
-import { TypeForestOwn, TypeForm } from 'src/app/constant/type-form';
+import { DatePipe } from '@angular/common';
+import { MasterdataService } from 'src/app/shared/service/masterdata.service';
+import { UserService } from 'src/app/shared/service/user.service';
+import { HttpClient } from '@angular/common/http';
+import { ImgeFiles, User } from 'src/app/shared/model/user.model';
 import {
   MasterData,
   MasterDataAddress,
@@ -9,15 +13,9 @@ import {
   MasterDataAddressChildProvince,
   MasterDataAddressChildWard,
   MasterDataChild,
-} from 'src/app/model/masterData.model';
-import { ImgeFiles, User } from 'src/app/model/user.model';
-import { DatePipe } from '@angular/common';
-import { MasterdataService } from 'src/app/shared/service/masterdata.service';
-import { UserService } from 'src/app/shared/service/user.service';
-import { HttpClient } from '@angular/common/http';
-import { NzUploadFile } from 'ng-zorro-antd/upload';
-import { ActivatedRoute, Router } from '@angular/router';
-import { ModalImagesComponent } from 'src/app/shared/components/modal-images/modal-images.component';
+} from 'src/app/shared/model/masterData.model';
+import { Router } from '@angular/router';
+import { TypeForestOwn, TypeForm } from 'src/app/shared/constant/type-form';
 
 @Component({
   selector: 'app-user-form',
@@ -104,7 +102,7 @@ export class UserFormComponent implements OnInit {
       province: [this.userModel.province.code],
       forestOwnerType: [this.userModel.forestOwnerType.code],
       houseRegistrationImages: [this.userModel.houseRegistrationImages],
-      address: [this.address]
+      address: [this.address],
     });
   }
 
@@ -146,7 +144,7 @@ export class UserFormComponent implements OnInit {
     });
   }
 
-  showModalImage(img: string[], id: string, index: number): void{
+  showModalImage(img: string[], id: string, index: number): void {
     this.showModal = true;
     this.imgeModel = img;
     this.id = id;

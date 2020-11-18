@@ -1,18 +1,18 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { UserLogin } from '../model/data';
 import * as CryptoJS from 'crypto-js';
-import { User, UserLoginData } from '../model/user.model';
-import { MyserviceService } from '../shared/service/myservice.service';
-import { UserService } from '../shared/service/user.service';
+import { UserLogin } from 'src/app/shared/model/data';
+import { UserLoginData } from 'src/app/shared/model/user.model';
+import { MyserviceService } from 'src/app/shared/service/myservice.service';
+import { UserService } from 'src/app/shared/service/user.service';
 
 @Component({
-  selector: 'app-login-form',
-  templateUrl: './login-form.component.html',
-  styleUrls: ['./login-form.component.scss']
+  selector: 'app-sign-in',
+  templateUrl: './sign-In.component.html',
+  styleUrls: ['./sign-In.component.scss']
 })
-export class LoginFormComponent implements OnInit {
+export class SignInComponent implements OnInit {
 
     userForm: FormGroup;
     isSubmit: boolean;

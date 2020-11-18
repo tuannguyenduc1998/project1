@@ -3,9 +3,9 @@ import { Injectable } from '@angular/core';
 import { stringify } from 'querystring';
 import { Observable } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
-import { FilterModelProfile } from 'src/app/model/declareHarvests.model';
-import { ForestCreate } from 'src/app/model/profile-forest.model';
-import { UserLoginData } from 'src/app/model/user.model';
+import { FilterModelProfile } from '../model/declareHarvests.model';
+import { ForestCreate } from '../model/profile-forest.model';
+import { UserLoginData } from '../model/user.model';
 
 @Injectable({
   providedIn: 'root'

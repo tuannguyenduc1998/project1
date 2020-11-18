@@ -1,8 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule, PreloadAllModules } from '@angular/router';
-import { DashboardComponent } from './dashboard/dashboard.component';
-import { LoginFormComponent } from './login-form/login-form.component';
-import { CustomPreloadingStrategy } from './model/custom-preloading';
+import { CustomPreloadingStrategy } from './shared/model/custom-preloading';
 import { AuthGuardService } from './shared/service/auth-guard.service';
 
 const routes: Routes = [
@@ -23,8 +21,8 @@ const routes: Routes = [
     data: {preload: true}
    },
   {
-    path: 'login',
-    component: LoginFormComponent
+    path: 'auth',
+    loadChildren: () => import('./auth/auth.module').then(mod => mod.AuthModule)
   }
 ];
 
