@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Location } from '@angular/common';
 import { MyserviceService } from 'src/app/shared/service/myservice.service';
-import { Employees, EmployeeWorks } from 'src/app/shared/model/data';
+import { Employees, EmployeeWorks, WorkItem } from 'src/app/shared/model/data';
 import { TypeForm } from 'src/app/shared/constant/type-form';
 @Component({
   selector: 'app-form-employee',

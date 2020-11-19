@@ -1,1 +1,267 @@
-<p>sign-up-enterprise works!</p>
+<div [style.display]="isActive ? 'block' : 'none'" class="modal ant-layout" id="imagemodal" aria-hidden="true">
+  <section class="auth">
+    <div class="container font">
+      <div class="auth-popup row">
+        <div class="content col-md-12">
+          <div class="form">
+            <h3 for="tieude" class="d-flex justify-content-center text-uppercase font-weight-bold">HOÀN TẤT ĐĂNG KÝ
+              <span class="font-italic font-eng-child mt-1">(COMPLETE A SIGN UP)</span></h3>
+            <h4 for="tieude" class="d-flex justify-content-center font-weight-bold">Doanh nghiệp/Tổ chức/Hợp tác xã
+              <span class="font-italic font-eng-child mt-1">(Enterprise/Organization/Cooperative)</span></h4>
+            <div class="d-flex">
+              <form [formGroup]="userCreateForm" class="form-content" *ngIf="userCreateForm">
+                <div class="row pt-5">
+                  <div class="col-md-6">
+                    <div class="form-group row">
+                      <div class="col-md-12">
+                        <label for="text-input" class="col-md-5 col-form-label label-generate py-0">Tên tổ chức/Doanh
+                          nghiệp:<span class="required"></span>
+                          <h6 class="font-italic">(Enterprise/Operation name)</h6>
+                        </label>
+                        <input nz-input class="form-control col-md-7" type="text" placeholder="Text"
+                          formControlName="fullname" [class.is-invalid]="formErrors?.fullname">
+                      </div>
+                      <p class="warning text-danger">{{formErrors?.fullname}}</p>
+                    </div>
+                    <div class="form-group row pt-2">
+                      <div class="col-md-12">
+                        <label for="text-input" class="col-md-5 col-form-label label-generate py-0">Mã số thuế:<span
+                            class="required"></span>
+                          <h6 class="font-italic">(Tax code)</h6>
+                        </label>
+                        <input nz-input class="form-control color-input col-md-7" placeholder="Number" type="number"
+                          id="text-input" formControlName="cellPhoneNumber">
+                      </div>
+                    </div>
+                    <div class="form-group row pt-2">
+                      <div class="col-md-12">
+                        <label for="text-input" class="col-md-5 col-form-label label-generate py-0">Ảnh GPKD:
+                          <h6 class="font-italic">(Business registration information photos)</h6>
+                        </label>
+                        <div class="upload-image col-md-7 px-0">
+                          <input #upload class="upload" type='file' (change)="onSelectFile($event)" name="avatar"
+                            accept=".jpg, .jpeg, .png, .gif">
+                          <ng-container *ngIf="imgeModel">
+                            <div class="display-img" *ngFor="let itemImg of imgeModel;let index = index">
+                              <img [src]="url + itemImg" class="img"
+                                (click)="showModalImage(userCreateModel.images, itemImg, index)">
+                              <div class="icon-delete-image">
+                                <i class="fa fa-times" aria-hidden="true" (click)="removeSelectedFile(index)"></i>
+                              </div>
+                            </div>
+                          </ng-container>
+                          <ng-container *ngIf="imgeModel.length < 2">
+                            <div class="perspective-image" (click)="upload.click()">
+                              <i class="fa fa-file"></i>
+                            </div>
+                          </ng-container>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <div class="col-md-12">
+                        <label for="text-input" class="col-md-5 col-form-label label-generate py-0">Tên viết tắt:
+                          <span class="required"></span>
+                          <h6 class="font-italic">(Abbreviations)</h6>
+                        </label>
+                        <input nz-input class="form-control col-md-7" type="text" placeholder="Text"
+                          formControlName="fullname" [class.is-invalid]="formErrors?.fullname">
+                      </div>
+                      <p class="warning text-danger">{{formErrors?.fullname}}</p>
+                    </div>
+                    <div class="form-group row">
+                      <div class="col-md-12">
+                        <label for="text-input" class="col-md-5 col-form-label label-generate py-0">Người đại diện:
+                          <span class="required"></span>
+                          <h6 class="font-italic">(Representative)</h6>
+                        </label>
+                        <input nz-input class="form-control col-md-7" type="text" placeholder="Text"
+                          formControlName="fullname" [class.is-invalid]="formErrors?.fullname">
+                      </div>
+                      <p class="warning text-danger">{{formErrors?.fullname}}</p>
+                    </div>
+                    <div class="form-group row pt-2">
+                      <div class="col-md-12">
+                        <label for="text-input" class="col-md-5 col-form-label label-generate py-0">Điện thoại di
+                          động:<span class="required"></span>
+                          <h6 class="font-italic">(Cellphone number)</h6>
+                        </label>
+                        <input nz-input class="form-control color-input col-md-7" placeholder="Number" type="number"
+                          id="text-input" formControlName="cellPhoneNumber">
+                      </div>
+                    </div>
+                    <div class="form-group row pt-2">
+                      <div class="col-md-12">
+                        <label for="text-input" class="col-md-5 col-form-label label-generate py-0">Điện thoại cố
+                          định:
+                          <h6 class="font-italic">(Phone number)</h6>
+                        </label>
+                        <input nz-input class="form-control color-input col-md-7" placeholder="Number" type="number"
+                          id="text-input" formControlName="cellPhoneNumber">
+                      </div>
+                    </div>
+                    <div class="form-group row pt-2">
+                      <div class="col-md-12">
+                        <label for="text-input" class="col-md-5 col-form-label label-generate py-0">Fax:
+                          <h6 class="font-italic">(Fax)</h6>
+                        </label>
+                        <input nz-input class="form-control color-input col-md-7" placeholder="Number" type="number"
+                          id="text-input" formControlName="cellPhoneNumber">
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <div class="col-md-12">
+                        <label for="text-input" class="col-md-5 col-form-label label-generate py-0">Địa chỉ trang web:
+                          <h6 class="font-italic">(Website)</h6>
+                        </label>
+                        <input nz-input class="form-control col-md-7" type="text" placeholder="Text"
+                          formControlName="fullname" [class.is-invalid]="formErrors?.fullname">
+                      </div>
+                      <p class="warning text-danger">{{formErrors?.fullname}}</p>
+                    </div>
+                    <div class="form-group row pt-2">
+                      <div class="col-md-12 pl-5">
+                        <label for="text-input" class="col-form-label label-generate py-0">ĐỊA CHỈ LIÊN HỆ</label>
+                        <span class="font-italic">(CONTACT ADDRESS)</span>
+                      </div>
+                    </div>
+                    <div class="form-group row pt-2">
+                      <div class="col-md-12">
+                        <label for="text-input" class="col-md-5 col-form-label label-generate py-0">- Tỉnh/Thành phố
+                          <h6 class="font-italic">(Province/City)</h6>
+                        </label>
+                        <select class="form-control color-input col-md-7" formControlName="province" id="level" required
+                          (change)="onSelectDistrict($event.target.value)">
+                          <option value="" selected disabled>-Chọn (Select)-</option>
+                          <option *ngFor="let lvl of this.masterDataAddressChildProvince" [value]="lvl.code">
+                            {{ lvl.name }}
+                          </option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="form-group row pt-2">
+                      <div class="col-md-12">
+                        <label for="text-input" class="col-md-5 col-form-label label-generate py-0">- Quận/Huyện
+                          <h6 class="font-italic">(District)</h6>
+                        </label>
+                        <select class="form-control color-input col-md-7" formControlName="district" id="level" required
+                          (change)="onSelectWard($event.target.value)">
+                          <option value="" selected disabled>-Chọn (Select)-</option>
+                          <option *ngFor="let lvl of this.masterDataAddressChildDistrict" [value]="lvl.code">
+                            {{ lvl.name }}
+                          </option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="form-group row pt-2">
+                      <div class="col-md-12">
+                        <label for="text-input" class="col-md-5 col-form-label label-generate py-0">- Phường/Xã
+                          <h6 class="font-italic">(commune/Commune)</h6>
+                        </label>
+                        <select class="form-control color-input col-md-7" formControlName="commune" id="level" required>
+                          <option value="" selected disabled>-Chọn (Select)-</option>
+                          <option *ngFor="let lvl of this.masterDataAddressChildWard" [value]="lvl.code">{{ lvl.name }}
+                          </option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="form-group row pt-2">
+                      <div class="col-md-12">
+                        <label for="text-input" class="col-md-5 col-form-label label-generate py-0">- Thôn/Bản
+                          <h6 class="font-italic">(Village)</h6>
+                        </label>
+                        <input nz-input class="form-control color-input col-md-7" placeholder="Text" type="text"
+                          id="text-input" formControlName="village">
+                      </div>
+                    </div>
+                    <div class="form-group row pt-2">
+                      <div class="col-md-12">
+                        <label for="text-input" class="col-md-5 col-form-label label-generate py-0">- Số nhà/Tên đường
+                          <h6 class="font-italic">(House number/Street)</h6>
+                        </label>
+                        <input nz-input class="form-control color-input col-md-7" placeholder="Text" type="text"
+                          id="text-input" formControlName="street">
+                      </div>
+                    </div>
+                    <div class="form-group row pt-2">
+                      <div class="col-md-12">
+                        <label for="email-input" class="col-md-5 col-form-label label-generate py-0">- Địa chỉ
+                          <h6 class="font-italic">(Address)</h6>
+                        </label>
+                        <textarea class="form-control color-input col-md-7" type="text" formControlName="address">
+                      </textarea>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group row">
+                      <div class="col-md-12">
+                        <div class="col-md-5">
+                          <label for="text-input" class="col-form-label label-generate py-0">Loại vai trò mong
+                            muốn:<span class="required"></span>
+                            <h6 class="font-italic">(Expected role(s))</h6>
+                          </label>
+                        </div>
+                        <div class="col-md-7">
+                          <div>
+                            <label nz-checkbox>Người dùng thông thường
+                              <span class="font-italic">(Normal User)</span>
+                            </label>
+                          </div>
+                          <div>
+                            <label nz-checkbox>Chủ rừng
+                              <span class="font-italic">(Forest Owner)</span>
+                            </label>
+                          </div>
+                          <div>
+                            <label nz-checkbox>Kinh doanh/Chế biến gỗ
+                              <span class="font-italic">(Wood Trader/Processor)</span>
+                            </label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <div class="col-md-12">
+                        <label for="text-input" class="col-md-5 col-form-label label-generate py-0">Các chức năng kinh
+                          doanh:
+                          <h6 class="font-italic">(Business functions)</h6>
+                        </label>
+                        <div class="col-md-7">
+                          <nz-tree [nzData]="dataBusinessTypes" nzCheckable>
+                          </nz-tree>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="text-center mt-3 text-primary">
+                  <u nz-checkbox class="text-primary" [(nzChecked)]="checked" formControlName="checked">Tôi đồng ý với điều khoản sử dụng của Hawa DDS</u>
+                  <span class="font-italic">(By clicking Sign up, you agree to HAWA DDS's Conditions of Use and
+                    terms.)</span>
+                </div>
+                <div class="row d-flex justify-content-center">
+                  <button nz-button class="text-uppercase col-md-4 mt-3 mr-3 w-100 ant-btn">
+                    <span>Trở về
+                      <span class="font-italic" (click)="goBack()">(Back)</span>
+                    </span>
+                  </button>
+                  <button nz-button class="text-uppercase col-md-4 mt-3 mr-3w-100 ant-btn" [disabled]="!checked" [class.color-btn]="checked">
+                    <span>Đăng kí
+                      <span class="font-italic">(signup)</span>
+                    </span>
+                  </button>
+                </div>
+                <div class="text-center mt-4">
+                  © 2020 HAWA. All right reserved. Powered by BYS
+                </div>
+              </form>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

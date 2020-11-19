@@ -115,3 +115,9 @@ html {
 .shadow{
   box-shadow: 3px 3px 3px 3px #d4d4d4;
 }
+
+.required:after {
+  content: "*";
+  color: red;
+  font-style: italic;
+}

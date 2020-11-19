@@ -25,7 +25,14 @@ export class SignUpData {
         sortOrder: number;
         registFor: string
       };
-      children: []
+      children: {
+        id: string;
+        name: string;
+        description: string;
+        parentId: string;
+        sortOrder: number;
+        registFor: string
+      }[]
     }[];
   enterpriseTypes:
     {

@@ -55,9 +55,4 @@ export class UserService {
     const httpOptions = this.getHttpOptions('application/json');
     return this.http.post(this.url + `user/create`, httpOptions);
   }
-
-  getSignUpData(): Observable<any>{
-    const httpOptions = this.getHttpOptions('application/json');
-    return this.http.get(this.url + `data/getsignupdata`, httpOptions);
-  }
 }

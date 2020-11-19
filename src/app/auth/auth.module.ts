@@ -9,6 +9,9 @@ import { SignUpHouseholdComponent } from './sign-up/sign-up-household/sign-up-ho
 import { SignUpEnterpriseComponent } from './sign-up/sign-up-enterprise/sign-up-enterprise.component';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
+import { NzSelectModule } from 'ng-zorro-antd/select';
+import { FormsModule } from '@angular/forms';
+import { NzTreeModule } from 'ng-zorro-antd/tree';
 
 @NgModule({
   declarations: [SignUpComponent , SignInComponent, SignUpHouseholdComponent, SignUpEnterpriseComponent],
@@ -17,7 +20,10 @@ import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
     AuthRoutingModule,
     SharedModule,
     NzInputModule,
-    NzCheckboxModule
+    NzCheckboxModule,
+    NzSelectModule,
+    FormsModule,
+    NzTreeModule
   ]
 })
 export class AuthModule { }

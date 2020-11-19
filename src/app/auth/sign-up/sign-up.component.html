@@ -103,7 +103,7 @@
         <div class="form">
           <h1 class="text-center text-uppercase">Đăng kí</h1>
           <div class="d-flex">
-            <form [formGroup]="userForm" class="form-content">
+            <form [formGroup]="userForm" class="form-content" (ngSubmit)="onSubmit()">
               <div class="form-group row">
                 <div class="col-md-12 input-group">
                   <div class="input-group-prepend">
@@ -161,18 +161,18 @@
                 </a>
               </div>
                 <div class="wrapper pb-3">
-                  <div class="account-type text-center p-4" [class.active]="isActive" (click)="chooseTypeSignUp()">
+                  <div class="account-type text-center p-4" [class.active]="isActiveH" (click)="chooseTypeSignUpH()">
                     <i class="fa fa-check-circle-o" aria-hidden="true"></i>
                     <span> Cá nhân/Hộ gia đình</span>
                   </div>
-                  <div class="account-type text-center p-4" [class.active]="!isActive" (click)="chooseTypeSignUp()">
+                  <div class="account-type text-center p-4" [class.active]="isActiveE" (click)="chooseTypeSignUpE()">
                     <i class="fa fa-check-circle-o" aria-hidden="true"></i>
                     <span> Doanh nghiệp/Tổ chức/HTX </span>
                   </div>
                 </div>
               <div class="form-group row">
                 <div class="col-md-12 input-group">
-                  <button class="form-control color-btn" type="submit" (click)="showModalSignUp()">Tiếp tục</button>
+                  <button class="form-control color-btn" type="submit">Tiếp tục</button>
                 </div>
               </div>
               <div class="form-group row">
@@ -192,4 +192,5 @@
     </div>
   </div>
 </section>
-<app-sign-up-household *ngIf="isActive" [isActive]="isActive"></app-sign-up-household>
+<app-sign-up-household *ngIf="isActive && isActiveH" [isActive]="isActiveH"></app-sign-up-household>
+<app-sign-up-enterprise *ngIf="isActive && isActiveE" [isActive]="isActiveE"></app-sign-up-enterprise>

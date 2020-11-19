@@ -19,6 +19,8 @@ export class SignUpComponent implements OnInit {
   users: UserLogin[];
   currentUser: UserLoginData;
   invalidMessages: string[] = [];
+  isActiveE = false;
+  isActiveH = true;
   isActive = false;
   formErrors = {
   username: '',
@@ -30,9 +32,9 @@ export class SignUpComponent implements OnInit {
 validationMessages = {
   required: 'Trường này là bắt buộc nhập',
   minlength: 'Mật khẩu phải ít nhất 6 kí tự',
+  email: 'Email không đúng định dạng'
 };
-  constructor(private formBuilder: FormBuilder,
-    private myserviceService: MyserviceService, private router: Router, private userService: UserService) { }
+  constructor(private formBuilder: FormBuilder, private router: Router, private userService: UserService) { }
 
   ngOnInit(): void {
     this.createForm();
@@ -87,12 +89,25 @@ validationMessages = {
     return errorMessages;
   }
 
-  chooseTypeSignUp(): void {
-    this.isActive = !this.isActive;
+  onSubmit(): void{
+    this.isSubmit = true;
+    if (this.validateForm()) {
+        if (this.isActiveE === true){
+          this.isActive = true;
+        }
+        if (this.isActiveH === true){
+          this.isActive = true;
+        }
+      }
+    }
+
+  chooseTypeSignUpE(): void {
+    this.isActiveE = !this.isActiveE;
+    this.isActiveH = !this.isActiveE;
   }
 
-  showModalSignUp(): void {
-    this.isActive = true;
+  chooseTypeSignUpH(): void {
+    this.isActiveH = !this.isActiveH;
+    this.isActiveE = !this.isActiveH;
   }
-
 }
