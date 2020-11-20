@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { NzFormatEmitEvent } from 'ng-zorro-antd/tree';
 import { forkJoin } from 'rxjs';
 import {
+  AddressMasterData,
   MasterDataAddress,
   MasterDataAddressChildDistrict,
   MasterDataAddressChildProvince,
@@ -26,14 +27,13 @@ export class SignUpHouseholdComponent implements OnInit {
   checked = false;
   showModal: boolean;
   imgeModel: string[] = [];
-  address: string;
   masterDataAddress: MasterDataAddress = new MasterDataAddress();
   signUpData: SignUpData = new SignUpData();
   dataBusinessTypes;
   dataBusinessTypes1;
-  masterDataAddressChildProvince: MasterDataAddressChildProvince[];
-  masterDataAddressChildDistrict: MasterDataAddressChildDistrict[];
-  masterDataAddressChildWard: MasterDataAddressChildWard[];
+  masterDataAddressChildProvince: AddressMasterData[];
+  masterDataAddressChildDistrict: AddressMasterData[];
+  masterDataAddressChildWard: AddressMasterData[];
   url = 'http://hawaddsapi.bys.vn/api/file/';
   id: string;
   index: number;
@@ -122,7 +122,7 @@ export class SignUpHouseholdComponent implements OnInit {
       return;
     }
     const errorMessages = [];
-    for (let field in formErrors) {
+    for (const field in formErrors) {
       formErrors[field] = '';
       const control = form.get(field);
       if (control && !control.valid) {
@@ -153,7 +153,7 @@ export class SignUpHouseholdComponent implements OnInit {
     )[0].childs;
   }
 
-  mappingData(item) {
+  mappingData(item): object {
     const itemReturn = {
       title: item.item.name,
       key: item.item.id,
@@ -194,5 +194,59 @@ export class SignUpHouseholdComponent implements OnInit {
 
   goBack(): void {
     this.location.back();
+  }
+
+  compareDataNZSelect(itemOne, itemTwo): boolean {
+    return itemOne && itemTwo
+      ? +itemOne.code === +itemTwo.code
+      : itemOne === itemTwo;
+  }
+
+  changeProvince(event): void {
+    this.userCreateForm.get('district').patchValue(null);
+    this.userCreateForm.get('commune').patchValue(null);
+    this.masterDataAddressChildWard = null;
+    if (!event) {
+      this.masterDataAddressChildDistrict = null;
+      return;
+    }
+    this.masterDataAddressChildDistrict = this.masterDataService.getDistrict(
+      event ? event.key : null,
+      this.masterDataAddressChildProvince
+    );
+  }
+  changeDistrict(event): void {
+    this.userCreateForm.get('commune').patchValue(null);
+    if (!event) {
+      this.masterDataAddressChildWard = null;
+      return;
+    }
+    this.masterDataAddressChildWard = this.masterDataService.getCommune(
+      event ? event.key : null,
+      this.masterDataAddressChildDistrict
+    );
+  }
+
+  get address(): string {
+    if (!this.userCreateForm) {
+      return '';
+    }
+    const valueForm = this.userCreateForm.value;
+    return this.addressData([
+      valueForm.address,
+      valueForm.commune && valueForm.commune.value,
+      valueForm.district && valueForm.district.value,
+      valueForm.province && valueForm.province.value,
+    ]);
+  }
+
+  addressData(data: any[]): string {
+    let address = '';
+    data.forEach(item => {
+      address =
+        address +
+        (address !== '' ? (item ? ', ' + item : '') : item ? item : '');
+    });
+    return address;
   }
 }

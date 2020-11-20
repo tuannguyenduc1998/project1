@@ -14,7 +14,7 @@
                   <div class="input-group-prepend">
                     <span class="input-group-text"> <i class="fa fa-user-o" aria-hidden="true"></i></span>
                   </div>
-                  <input class="form-control" type="text" formControlName="username"
+                  <input class="form-control" type="text" formControlName="username" placeholder="Tên tài khoản (Username) (*)"
                     [class.is-invalid]="formErrors?.username">
                 </div>
                 <p class="warning text-danger">{{formErrors?.username}}</p>
@@ -24,7 +24,7 @@
                   <div class="input-group-prepend">
                     <span class="input-group-text"> <i class="fa fa-key" aria-hidden="true"></i></span>
                   </div>
-                  <input class="form-control" type="password" formControlName="password"
+                  <input class="form-control" type="password" formControlName="password" placeholder="Mật khẩu (password) (*)"
                     [class.is-invalid]="formErrors?.password">
                 </div>
                 <p class="warning text-danger">{{formErrors?.password}}</p>

@@ -11,6 +11,14 @@ export class MasterDataChild {
   typeGroup: string;
 }
 
+export class AddressMasterData{
+  id: number;
+  code: string;
+  name: string;
+  type: string;
+  parentId: string;
+  childs: AddressMasterData[];
+}
 export class MasterDataAddress {
   id: number;
   code: string;

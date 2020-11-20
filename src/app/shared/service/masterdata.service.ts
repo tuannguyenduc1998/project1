@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { MasterDataAddress } from '../model/masterData.model';
+import { AddressMasterData, MasterDataAddress, MasterDataAddressChildDistrict, MasterDataAddressChildProvince } from '../model/masterData.model';
 import { SignUpData } from '../model/sign-up-data.model';
 import { UserLoginData } from '../model/user.model';
 
@@ -41,5 +41,15 @@ export class MasterdataService {
 
   getSignUpData(): BehaviorSubject<SignUpData>{
     return this.signUpData$;
+  }
+
+  getDistrict(idProvince: string, dataCountry: AddressMasterData[]): AddressMasterData[] {
+    const data = (dataCountry || []).find(item => item.code === idProvince);
+    return data ? data.childs : null;
+  }
+
+  getCommune(idDistrict: string, dataDistrict: AddressMasterData[]): AddressMasterData[] {
+    const data = (dataDistrict || []).find(item => item.code === idDistrict);
+    return data ? data.childs : null;
   }
 }
