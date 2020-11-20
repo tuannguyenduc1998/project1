@@ -2,12 +2,13 @@ import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NzFormatEmitEvent } from 'ng-zorro-antd/tree';
-import { MasterDataAddress, MasterDataAddressChildDistrict, MasterDataAddressChildProvince, MasterDataAddressChildWard } from 'src/app/shared/model/masterData.model';
+import { AddressMasterData, MasterDataAddress } from 'src/app/shared/model/masterData.model';
 import { SignUpData } from 'src/app/shared/model/sign-up-data.model';
 import { UserCreate } from 'src/app/shared/model/user-create.model';
 import { MasterdataService } from 'src/app/shared/service/masterdata.service';
 import { UserService } from 'src/app/shared/service/user.service';
 import {Location} from '@angular/common';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-sign-up-enterprise',
@@ -20,14 +21,13 @@ export class SignUpEnterpriseComponent implements OnInit {
   userCreateModel: UserCreate = new UserCreate();
   showModal: boolean;
   imgeModel: string[] = [];
-  address: string;
   masterDataAddress: MasterDataAddress = new MasterDataAddress();
   signUpData: SignUpData = new SignUpData();
   dataBusinessTypes;
   dataBusinessTypes1;
-  masterDataAddressChildProvince: MasterDataAddressChildProvince[];
-  masterDataAddressChildDistrict: MasterDataAddressChildDistrict[];
-  masterDataAddressChildWard: MasterDataAddressChildWard[];
+  masterDataAddressChildProvince: AddressMasterData[];
+  masterDataAddressChildDistrict: AddressMasterData[];
+  masterDataAddressChildWard: AddressMasterData[];
   url = 'http://hawaddsapi.bys.vn/api/file/';
   id: string;
   index: number;
@@ -40,6 +40,9 @@ export class SignUpEnterpriseComponent implements OnInit {
     email: '',
     password: '',
     confirmpassword: '',
+    shortName: '',
+    representativeName: '',
+    taxCode: ''
   };
   validationMessages = {
     required: 'Trường này là bắt buộc nhập',
@@ -54,37 +57,33 @@ export class SignUpEnterpriseComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // forkJoin([this.masterDataService.addressmasterdata$, this.masterDataService.signUpData$]).subscribe((res) => {
-    //   if (res[0]) {
-    //     this.masterDataAddress = res[0];
-    //     this.masterDataAddressChildProvince = this.masterDataAddress[0].childs;
-    //   }
-    //   if (res[1]){
-    //     this.signUpData = res[1];
-    //     this.dataBusinessTypes = this.signUpData.businessTypes.map((item) => {
-    //       this.mappingData(item);
-    //       console.log(this.mappingData(item));
-    //     });
-    //   }
-    // });
-    this.masterDataService.addressmasterdata$.subscribe((res) => {
-      if (res) {
-        this.masterDataAddress = res;
-        this.masterDataAddressChildProvince = this.masterDataAddress[0].childs;
-      }
-    });
-    this.masterDataService.signUpData$.subscribe((result) => {
-      if (result){
-        this.signUpData = result;
-        this.dataBusinessTypes1 = this.signUpData.businessTypes.filter( x => x.children.filter( y => y.registFor === 'All'));
-        this.dataBusinessTypes = this.signUpData.businessTypes.filter( x => x.item.registFor === 'All').map((item) => {
+    forkJoin([this.masterDataService.getMasterDataAddress(), this.masterDataService.getSignUp()]).subscribe(([res1, res2]) => {
+      this.masterDataAddress = res1.data;
+      this.masterDataAddressChildProvince = this.masterDataAddress[0].childs;
+      this.signUpData = res2.data;
+      this.dataBusinessTypes = this.signUpData.businessTypes.map((item) => {
           return this.mappingData(item);
         });
-        console.log(this.dataBusinessTypes);
-        console.log(this.dataBusinessTypes1);
-      }
+      this.createForm();
     });
-    this.createForm();
+    // this.masterDataService.addressmasterdata$.subscribe((res) => {
+    //   if (res) {
+    //     this.masterDataAddress = res;
+    //     this.masterDataAddressChildProvince = this.masterDataAddress[0].childs;
+    //   }
+    // });
+    // this.masterDataService.signUpData$.subscribe((result) => {
+    //   if (result){
+    //     this.signUpData = result;
+    //     this.dataBusinessTypes1 = this.signUpData.businessTypes.filter( x => x.children.filter( y => y.registFor === 'All'));
+    //     this.dataBusinessTypes = this.signUpData.businessTypes.filter( x => x.item.registFor === 'All').map((item) => {
+    //       return this.mappingData(item);
+    //     });
+    //     console.log(this.dataBusinessTypes);
+    //     console.log(this.dataBusinessTypes1);
+    //   }
+    // });
+    // this.createForm();
   }
 
   createForm(): void {
@@ -94,6 +93,12 @@ export class SignUpEnterpriseComponent implements OnInit {
       identityCard: ['', Validators.required],
       cellPhoneNumber: ['', Validators.required],
       images: [''],
+      shortName: [''],
+      taxCode: [''],
+      representativeName: [''],
+      fax: [''],
+      website: [''],
+      phoneNumber: [''],
       province: [''],
       district: [''],
       commune: [''],
@@ -135,20 +140,7 @@ export class SignUpEnterpriseComponent implements OnInit {
     return errorMessages;
   }
 
-  onSelectDistrict(countryid): void {
-    this.masterDataAddressChildDistrict = this.masterDataAddressChildProvince.filter(
-      (x) => x.code === countryid
-    )[0].childs;
-    this.masterDataAddressChildWard = this.masterDataAddressChildDistrict[0].childs;
-  }
-
-  onSelectWard(countryid): void {
-    this.masterDataAddressChildWard = this.masterDataAddressChildDistrict.filter(
-      (x) => x.code === countryid
-    )[0].childs;
-  }
-
-  mappingData(item) {
+  mappingData(item): object {
     const itemReturn = {
       title: item.item.name,
       key: item.item.id,
@@ -169,7 +161,7 @@ export class SignUpEnterpriseComponent implements OnInit {
   }
 
   removeSelectedFile(index): void {
-    this.userCreateModel.images.splice(index, 1);
+    this.imgeModel.splice(index, 1);
   }
 
   showModalImage(img: string[], id: string, index: number): void {
@@ -189,6 +181,56 @@ export class SignUpEnterpriseComponent implements OnInit {
 
   goBack(): void {
     this.location.back();
+  }
+
+  changeProvince(event): void {
+    this.userCreateForm.get('district').patchValue(null);
+    this.userCreateForm.get('commune').patchValue(null);
+    this.masterDataAddressChildWard = null;
+    if (!event) {
+      this.masterDataAddressChildDistrict = null;
+      return;
+    }
+    this.masterDataAddressChildDistrict = this.masterDataService.getDistrict(
+      event ? event.code : null,
+      this.masterDataAddressChildProvince
+    );
+  }
+
+  changeDistrict(event): void {
+    this.userCreateForm.get('commune').patchValue(null);
+    if (!event) {
+      this.masterDataAddressChildWard = null;
+      return;
+    }
+    this.masterDataAddressChildWard = this.masterDataService.getCommune(
+      event ? event.code : null,
+      this.masterDataAddressChildDistrict
+    );
+  }
+
+  get address(): string {
+    if (!this.userCreateForm) {
+      return '';
+    }
+    const valueForm = this.userCreateForm.value;
+    return this.addressData([
+      valueForm.street,
+      valueForm.village,
+      valueForm.commune && valueForm.commune.name,
+      valueForm.district && valueForm.district.name,
+      valueForm.province && valueForm.province.name,
+    ]);
+  }
+
+  addressData(data: any[]): string {
+    let address = '';
+    data.forEach(item => {
+      address =
+        address +
+        (address !== '' ? (item ? ', ' + item : '') : item ? item : '');
+    });
+    return address;
   }
 
 }

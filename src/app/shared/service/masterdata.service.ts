@@ -1,10 +1,12 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { shareReplay } from 'rxjs/operators';
 import { AddressMasterData, MasterDataAddress, MasterDataAddressChildDistrict, MasterDataAddressChildProvince } from '../model/masterData.model';
 import { SignUpData } from '../model/sign-up-data.model';
 import { UserLoginData } from '../model/user.model';
 
+const CACHE_SIZE = 1;
 @Injectable({
   providedIn: 'root'
 })
@@ -15,7 +17,7 @@ export class MasterdataService {
   private masterDataUrl = 'http://hawaddsapi.bys.vn/api/data';
   private loggedInStatus = JSON.parse(localStorage.getItem('LoginStatus'));
   user: UserLoginData;
-  public addressmasterdata$ = new BehaviorSubject<MasterDataAddress>(null);
+  public addressmasterdata$: Observable<MasterDataAddress[]>;
   public signUpData$ = new BehaviorSubject<SignUpData>(null);
 
   getMasterData(): Observable<any>{
@@ -31,7 +33,16 @@ export class MasterdataService {
     return this.http.get(this.masterDataUrl + '/addressmasterdata');
   }
 
-  getAddressMasterData(): BehaviorSubject<MasterDataAddress>{
+  // getAddressMasterData(): BehaviorSubject<MasterDataAddress>{
+  //   return this.addressmasterdata$;
+  // }
+
+  get addressMaster(): Observable<AddressMasterData[]> {
+    if (!this.addressmasterdata$) {
+      this.addressmasterdata$ = this.getMasterData().pipe(
+        shareReplay(CACHE_SIZE)
+      );
+    }
     return this.addressmasterdata$;
   }
 
@@ -41,6 +52,13 @@ export class MasterdataService {
 
   getSignUpData(): BehaviorSubject<SignUpData>{
     return this.signUpData$;
+  }
+
+  getProvince(idCountry: string, dataAddressMasterData: AddressMasterData[]): AddressMasterData[] {
+    const data = (dataAddressMasterData || []).find(
+      item => item.code === idCountry
+    );
+    return data ? data.childs : null;
   }
 
   getDistrict(idProvince: string, dataCountry: AddressMasterData[]): AddressMasterData[] {

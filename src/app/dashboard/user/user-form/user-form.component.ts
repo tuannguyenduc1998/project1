@@ -7,6 +7,7 @@ import { UserService } from 'src/app/shared/service/user.service';
 import { HttpClient } from '@angular/common/http';
 import { ImgeFiles, User } from 'src/app/shared/model/user.model';
 import {
+  AddressMasterData,
   MasterData,
   MasterDataAddress,
   MasterDataAddressChildDistrict,
@@ -42,9 +43,10 @@ export class UserFormComponent implements OnInit {
   pipe = new DatePipe('en-US');
   forestOwnerTypeDefault: MasterDataChild = new MasterDataChild();
   masterDataAddress: MasterDataAddress = new MasterDataAddress();
-  masterDataAddressChildProvince: MasterDataAddressChildProvince[];
-  masterDataAddressChildDistrict: MasterDataAddressChildDistrict[];
-  masterDataAddressChildWard: MasterDataAddressChildWard[];
+  addressMasterData: AddressMasterData[];
+  masterDataAddressChildProvince: AddressMasterData[];
+  masterDataAddressChildDistrict: AddressMasterData[];
+  masterDataAddressChildWard: AddressMasterData[];
   cpfFormatadoValue: string;
   @Input() type: string;
   url = 'http://hawaddsapi.bys.vn/api/file/';
@@ -58,8 +60,9 @@ export class UserFormComponent implements OnInit {
     forkJoin([
       this.userService.getUserDetails(),
       this.masterDataService.getMasterData(),
-    ]).subscribe((result) => {
-      this.userModel = result[0].data;
+      this.masterDataService.addressMaster
+    ]).subscribe(([result1, result2, result3]) => {
+      this.userModel = result1.data;
       this.address = this.userModel.street.concat(
         ', ',
         this.userModel.commune.value,
@@ -69,20 +72,27 @@ export class UserFormComponent implements OnInit {
         this.userModel.province.value
       );
       if (this.userModel.userType === this.typeForestOwn.household) {
-        this.masterDataUserType = result[1].data;
-        this.masterDataService.addressmasterdata$.subscribe((value) => {
-          if (value) {
-            this.masterDataAddress = value;
-            this.masterDataAddressChildProvince = this.masterDataAddress[0].childs;
-            this.masterDataAddressChildDistrict = this.masterDataAddressChildProvince.filter(
-              (x) => x.code === this.userModel.province.code
-            )[0].childs;
-            this.masterDataAddressChildWard = this.masterDataAddressChildDistrict.filter(
-              (x) => x.code === this.userModel.district.code
-            )[0].childs;
-          }
-        });
-        this.masterDataChild = this.masterDataUserType[0].childs;
+        this.masterDataUserType = result2.data;
+        this.masterDataAddressChildProvince = this.masterDataService.getProvince('1', result3);
+        this.masterDataAddressChildDistrict = this.masterDataService.getDistrict(
+          parseInt(this.userModel.province.code, 0),
+          this.masterDataAddressChildProvince
+        );
+        this.masterDataAddressChildWard = this.masterDataService.getCommune(
+          parseInt(this.userModel.district && this.userModel.district.code, 0),
+          this.masterDataAddressChildDistrict
+        );
+        // if (result3) {
+        //     this.addressMasterData = result3;
+        //     this.masterDataAddressChildProvince = this.addressMasterData.childs;
+        //     this.masterDataAddressChildDistrict = this.masterDataAddressChildProvince.filter(
+        //       (x) => x.code === this.userModel.province.code
+        //     )[0].childs;
+        //     this.masterDataAddressChildWard = this.masterDataAddressChildDistrict.filter(
+        //       (x) => x.code === this.userModel.district.code
+        //     )[0].childs;
+        //   }
+        // this.masterDataChild = this.masterDataUserType[0].childs;
       }
       this.createForm();
     });

@@ -42,8 +42,8 @@ export class SignInComponent implements OnInit {
       password: [this.userLogin.password, [Validators.required, Validators.minLength(6)]],
     });
   }
+
   ngOnInit(): void {
-    //this.getUsers();
     this.createForm();
     this.userForm.valueChanges.subscribe(
       _ => {
@@ -72,25 +72,6 @@ export class SignInComponent implements OnInit {
   onSubmit(): void{
     this.isSubmit = true;
     if (this.validateForm()) {
-
-      // this.myserviceService.login(this.userForm.controls.username.value, this.userForm.controls.password.value)
-      // .subscribe(
-      // matched => {
-      //   if (matched) {
-      //     this.router.navigateByUrl(`/employee/list`);
-      //   } else {
-      //     alert('Tài khoản hoặc mật khẩu không đúng!');
-      //   }
-      // });
-      // tslint:disable-next-line: max-line-length
-      // if (this.users.find(x => x.username === this.userForm.get('username').value && x.password === this.userForm.get('password').value))
-      // {
-      //   this.myserviceService.setLoginStatus(true);
-      //   this.router.navigateByUrl(`/employee/list`);
-      // }
-      // else {
-      //   alert('Tài khoản hoặc mật khẩu không đúng!');
-      // }
       this.userLogin.password = this.enStr(this.userForm.get('password').value);
       this.userLogin.userName = this.userForm.get('username').value;
       this.myserviceService.getUserApis(this.userLogin).subscribe(res => {
@@ -98,7 +79,8 @@ export class SignInComponent implements OnInit {
         this.userService.setLoginStatus(this.currentUser);
         console.log(this.currentUser);
         this.router.navigateByUrl(`/dashboard`);
-      });
+      },
+      err => {alert('Tài khoản hoặc hoặc mật khẩu không đúng'); });
     }
   }
 
@@ -133,7 +115,7 @@ export class SignInComponent implements OnInit {
     return errorMessages;
   }
 
-  enStr(pass){
+  enStr(pass): any{
     // tslint:disable-next-line: max-line-length
     const parsedSalt = CryptoJS.enc.Base64.parse('uGa5buIox4+fX4ViZ7p3TyR4cx5evpoBqFsE8dueBqheYs6faRQ1VxCr0oQ1hqXQGyjc8rKA5kWXjHMxAByt0Q==');
     const result = CryptoJS.PBKDF2( pass, parsedSalt, {

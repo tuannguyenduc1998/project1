@@ -157,11 +157,11 @@ export class MyserviceService {
   // onLoadUser(): UserLogin[] {
   //   return this.userLogin;
   // }
-  getUsers(){
+  getUsers(): Observable<any>{
     return this.http.get('http://localhost:3000/userlogin');
  }
 
-  getUserApis(user: UserLogin){
+  getUserApis(user: UserLogin): Observable<any>{
     return this.http.post(this.userUrl, user);
  }
 

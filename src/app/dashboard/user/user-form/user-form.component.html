@@ -73,7 +73,7 @@
                   </div>
                   <ng-container *ngIf="userModel.houseRegistrationImages.length < 2">
                     <div [class.hidden]="type === typeForm.view" class="perspective-image" (click)="upload.click()">
-                      <i class="fa fa-file"></i>
+                      <i nz-icon nzType="file-add" nzTheme="outline"></i>
                     </div>
                   </ng-container>
                 </div>

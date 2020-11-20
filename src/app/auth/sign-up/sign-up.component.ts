@@ -102,12 +102,22 @@ validationMessages = {
     }
 
   chooseTypeSignUpE(): void {
-    this.isActiveE = !this.isActiveE;
+    if (this.isActiveE){
+      this.isActiveE = true;
+    }
+    else {
+      this.isActiveE = this.isActiveH;
+    }
     this.isActiveH = !this.isActiveE;
   }
 
   chooseTypeSignUpH(): void {
-    this.isActiveH = !this.isActiveH;
+    if (this.isActiveH){
+      this.isActiveH = true;
+    }
+    else {
+      this.isActiveH = this.isActiveE;
+    }
     this.isActiveE = !this.isActiveH;
   }
 }

@@ -26,6 +26,9 @@ export class ModalImagesComponent implements OnInit {
 
   nextMove(): void{
     this.index = this.index < this.imgeModel.length - 1 ? this.index + 1 : this.index - 1 ;
+    if (this.index < 0){
+      this.index = 0;
+    }
     this.currentImage = this.imgeModel[this.index];
   }
 

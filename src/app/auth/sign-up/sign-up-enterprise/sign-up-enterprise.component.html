@@ -1,9 +1,10 @@
-<div [style.display]="isActive ? 'block' : 'none'" class="modal ant-layout" id="imagemodal" aria-hidden="true">
-  <section class="auth">
+<div [style.display]="isActive ? 'block' : 'none'" class="ant-layout" id="imagemodal" aria-hidden="true">
+  <section class="auth" *ngIf="isActive">
     <div class="container font">
       <div class="auth-popup row">
         <div class="content col-md-12">
           <div class="form">
+            <img src="./assets/logo.jpg" alt="" class="logo">
             <h3 for="tieude" class="d-flex justify-content-center text-uppercase font-weight-bold">HOÀN TẤT ĐĂNG KÝ
               <span class="font-italic font-eng-child mt-1">(COMPLETE A SIGN UP)</span></h3>
             <h4 for="tieude" class="d-flex justify-content-center font-weight-bold">Doanh nghiệp/Tổ chức/Hợp tác xã
@@ -30,8 +31,9 @@
                           <h6 class="font-italic">(Tax code)</h6>
                         </label>
                         <input nz-input class="form-control color-input col-md-7" placeholder="Number" type="number"
-                          id="text-input" formControlName="cellPhoneNumber">
+                          id="text-input" formControlName="taxCode" [class.is-invalid]="formErrors?.taxCode">
                       </div>
+                      <p class="warning text-danger">{{formErrors?.taxCode}}</p>
                     </div>
                     <div class="form-group row pt-2">
                       <div class="col-md-12">
@@ -44,7 +46,7 @@
                           <ng-container *ngIf="imgeModel">
                             <div class="display-img" *ngFor="let itemImg of imgeModel;let index = index">
                               <img [src]="url + itemImg" class="img"
-                                (click)="showModalImage(userCreateModel.images, itemImg, index)">
+                                (click)="showModalImage(imgeModel, itemImg, index)">
                               <div class="icon-delete-image">
                                 <i class="fa fa-times" aria-hidden="true" (click)="removeSelectedFile(index)"></i>
                               </div>
@@ -52,7 +54,7 @@
                           </ng-container>
                           <ng-container *ngIf="imgeModel.length < 2">
                             <div class="perspective-image" (click)="upload.click()">
-                              <i class="fa fa-file"></i>
+                              <i nz-icon nzType="file-add" nzTheme="outline"></i>
                             </div>
                           </ng-container>
                         </div>
@@ -65,9 +67,9 @@
                           <h6 class="font-italic">(Abbreviations)</h6>
                         </label>
                         <input nz-input class="form-control col-md-7" type="text" placeholder="Text"
-                          formControlName="fullname" [class.is-invalid]="formErrors?.fullname">
+                          formControlName="shortName" [class.is-invalid]="formErrors?.shortName">
                       </div>
-                      <p class="warning text-danger">{{formErrors?.fullname}}</p>
+                      <p class="warning text-danger">{{formErrors?.shortName}}</p>
                     </div>
                     <div class="form-group row">
                       <div class="col-md-12">
@@ -76,9 +78,9 @@
                           <h6 class="font-italic">(Representative)</h6>
                         </label>
                         <input nz-input class="form-control col-md-7" type="text" placeholder="Text"
-                          formControlName="fullname" [class.is-invalid]="formErrors?.fullname">
+                          formControlName="representativeName" [class.is-invalid]="formErrors?.representativeName">
                       </div>
-                      <p class="warning text-danger">{{formErrors?.fullname}}</p>
+                      <p class="warning text-danger">{{formErrors?.representativeName}}</p>
                     </div>
                     <div class="form-group row pt-2">
                       <div class="col-md-12">
@@ -97,7 +99,7 @@
                           <h6 class="font-italic">(Phone number)</h6>
                         </label>
                         <input nz-input class="form-control color-input col-md-7" placeholder="Number" type="number"
-                          id="text-input" formControlName="cellPhoneNumber">
+                          id="text-input" formControlName="phoneNumber">
                       </div>
                     </div>
                     <div class="form-group row pt-2">
@@ -106,7 +108,7 @@
                           <h6 class="font-italic">(Fax)</h6>
                         </label>
                         <input nz-input class="form-control color-input col-md-7" placeholder="Number" type="number"
-                          id="text-input" formControlName="cellPhoneNumber">
+                          id="text-input" formControlName="fax">
                       </div>
                     </div>
                     <div class="form-group row">
@@ -115,7 +117,7 @@
                           <h6 class="font-italic">(Website)</h6>
                         </label>
                         <input nz-input class="form-control col-md-7" type="text" placeholder="Text"
-                          formControlName="fullname" [class.is-invalid]="formErrors?.fullname">
+                          formControlName="website" [class.is-invalid]="formErrors?.fullname">
                       </div>
                       <p class="warning text-danger">{{formErrors?.fullname}}</p>
                     </div>
@@ -130,13 +132,11 @@
                         <label for="text-input" class="col-md-5 col-form-label label-generate py-0">- Tỉnh/Thành phố
                           <h6 class="font-italic">(Province/City)</h6>
                         </label>
-                        <select class="form-control color-input col-md-7" formControlName="province" id="level" required
-                          (change)="onSelectDistrict($event.target.value)">
-                          <option value="" selected disabled>-Chọn (Select)-</option>
-                          <option *ngFor="let lvl of this.masterDataAddressChildProvince" [value]="lvl.code">
-                            {{ lvl.name }}
-                          </option>
-                        </select>
+                        <nz-select class="form-control col-md-7" formControlName="province" nzAllowClear nzPlaceHolder="-Chọn (Select)-"
+                          (ngModelChange)="changeProvince($event)">
+                          <nz-option *ngFor="let item of masterDataAddressChildProvince" [nzLabel]="item.name"
+                            [nzValue]="item"></nz-option>
+                        </nz-select>
                       </div>
                     </div>
                     <div class="form-group row pt-2">
@@ -144,13 +144,12 @@
                         <label for="text-input" class="col-md-5 col-form-label label-generate py-0">- Quận/Huyện
                           <h6 class="font-italic">(District)</h6>
                         </label>
-                        <select class="form-control color-input col-md-7" formControlName="district" id="level" required
-                          (change)="onSelectWard($event.target.value)">
-                          <option value="" selected disabled>-Chọn (Select)-</option>
-                          <option *ngFor="let lvl of this.masterDataAddressChildDistrict" [value]="lvl.code">
-                            {{ lvl.name }}
-                          </option>
-                        </select>
+                        <nz-select class="form-control col-md-7" [nzDisabled]="!userCreateForm.get('province').value" formControlName="district"
+                          nzAllowClear nzPlaceHolder="-Chọn (Select)-"
+                          (ngModelChange)="changeDistrict($event)">
+                          <nz-option *ngFor="let item of masterDataAddressChildDistrict" [nzLabel]="item.name"
+                            [nzValue]="item"></nz-option>
+                        </nz-select>
                       </div>
                     </div>
                     <div class="form-group row pt-2">
@@ -158,11 +157,11 @@
                         <label for="text-input" class="col-md-5 col-form-label label-generate py-0">- Phường/Xã
                           <h6 class="font-italic">(commune/Commune)</h6>
                         </label>
-                        <select class="form-control color-input col-md-7" formControlName="commune" id="level" required>
-                          <option value="" selected disabled>-Chọn (Select)-</option>
-                          <option *ngFor="let lvl of this.masterDataAddressChildWard" [value]="lvl.code">{{ lvl.name }}
-                          </option>
-                        </select>
+                        <nz-select class="form-control col-md-7" [nzDisabled]="!userCreateForm.get('district').value" formControlName="commune"
+                          nzAllowClear nzPlaceHolder="-Chọn (Select)-">
+                          <nz-option *ngFor="let item of masterDataAddressChildWard" [nzLabel]="item.name"
+                            [nzValue]="item"></nz-option>
+                        </nz-select>
                       </div>
                     </div>
                     <div class="form-group row pt-2">
@@ -185,10 +184,10 @@
                     </div>
                     <div class="form-group row pt-2">
                       <div class="col-md-12">
-                        <label for="email-input" class="col-md-5 col-form-label label-generate py-0">- Địa chỉ
+                        <label for="text-input" class="col-md-5 col-form-label label-generate py-0">- Địa chỉ
                           <h6 class="font-italic">(Address)</h6>
                         </label>
-                        <textarea class="form-control color-input col-md-7" type="text" formControlName="address">
+                        <textarea disabled class="form-control color-input col-md-7" type="text" formControlName="address">{{address}}
                       </textarea>
                       </div>
                     </div>
@@ -242,11 +241,13 @@
                 </div>
                 <div class="row d-flex justify-content-center">
                   <button nz-button class="text-uppercase col-md-4 mt-3 mr-3 w-100 ant-btn">
+                    <i class="fa fa-arrow-left mr-1" aria-hidden="true"></i>
                     <span>Trở về
                       <span class="font-italic" (click)="goBack()">(Back)</span>
                     </span>
                   </button>
                   <button nz-button class="text-uppercase col-md-4 mt-3 mr-3w-100 ant-btn" [disabled]="!checked" [class.color-btn]="checked">
+                    <i class="fa fa-user-plus mr-1" aria-hidden="true"></i>
                     <span>Đăng kí
                       <span class="font-italic">(signup)</span>
                     </span>
@@ -265,3 +266,4 @@
     </div>
   </section>
 </div>
+<app-modal-images *ngIf="showModal" (closed)="closeImageModal()" [id]="id" [imgeModel]="imgeModel" [index]="index"></app-modal-images>

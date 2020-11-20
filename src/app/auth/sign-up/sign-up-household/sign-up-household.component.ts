@@ -59,17 +59,13 @@ export class SignUpHouseholdComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    forkJoin([this.masterDataService.getMasterDataAddress(), this.masterDataService.getSignUp()]).subscribe((res) => {
-      if (res[0].data) {
-        this.masterDataAddress = res[0].data;
-        this.masterDataAddressChildProvince = this.masterDataAddress[0].childs;
-      }
-      if (res[1].data){
-        this.signUpData = res[1].data;
-        this.dataBusinessTypes = this.signUpData.businessTypes.map((item) => {
+    forkJoin([this.masterDataService.getMasterDataAddress(), this.masterDataService.getSignUp()]).subscribe(([res1, res2]) => {
+      this.masterDataAddress = res1.data;
+      this.masterDataAddressChildProvince = this.masterDataAddress[0].childs;
+      this.signUpData = res2.data;
+      this.dataBusinessTypes = this.signUpData.businessTypes.map((item) => {
           return this.mappingData(item);
         });
-      }
       this.createForm();
     });
     // this.masterDataService.addressmasterdata$.subscribe((res) => {
@@ -140,19 +136,6 @@ export class SignUpHouseholdComponent implements OnInit {
     return errorMessages;
   }
 
-  onSelectDistrict(countryid): void {
-    this.masterDataAddressChildDistrict = this.masterDataAddressChildProvince.filter(
-      (x) => x.code === countryid
-    )[0].childs;
-    this.masterDataAddressChildWard = this.masterDataAddressChildDistrict[0].childs;
-  }
-
-  onSelectWard(countryid): void {
-    this.masterDataAddressChildWard = this.masterDataAddressChildDistrict.filter(
-      (x) => x.code === countryid
-    )[0].childs;
-  }
-
   mappingData(item): object {
     const itemReturn = {
       title: item.item.name,
@@ -174,7 +157,7 @@ export class SignUpHouseholdComponent implements OnInit {
   }
 
   removeSelectedFile(index): void {
-    this.userCreateModel.images.splice(index, 1);
+    this.imgeModel.splice(index, 1);
   }
 
   showModalImage(img: string[], id: string, index: number): void {
@@ -196,12 +179,6 @@ export class SignUpHouseholdComponent implements OnInit {
     this.location.back();
   }
 
-  compareDataNZSelect(itemOne, itemTwo): boolean {
-    return itemOne && itemTwo
-      ? +itemOne.code === +itemTwo.code
-      : itemOne === itemTwo;
-  }
-
   changeProvince(event): void {
     this.userCreateForm.get('district').patchValue(null);
     this.userCreateForm.get('commune').patchValue(null);
@@ -211,10 +188,11 @@ export class SignUpHouseholdComponent implements OnInit {
       return;
     }
     this.masterDataAddressChildDistrict = this.masterDataService.getDistrict(
-      event ? event.key : null,
+      event ? event.code : null,
       this.masterDataAddressChildProvince
     );
   }
+
   changeDistrict(event): void {
     this.userCreateForm.get('commune').patchValue(null);
     if (!event) {
@@ -222,7 +200,7 @@ export class SignUpHouseholdComponent implements OnInit {
       return;
     }
     this.masterDataAddressChildWard = this.masterDataService.getCommune(
-      event ? event.key : null,
+      event ? event.code : null,
       this.masterDataAddressChildDistrict
     );
   }
@@ -233,10 +211,11 @@ export class SignUpHouseholdComponent implements OnInit {
     }
     const valueForm = this.userCreateForm.value;
     return this.addressData([
-      valueForm.address,
-      valueForm.commune && valueForm.commune.value,
-      valueForm.district && valueForm.district.value,
-      valueForm.province && valueForm.province.value,
+      valueForm.street,
+      valueForm.village,
+      valueForm.commune && valueForm.commune.name,
+      valueForm.district && valueForm.district.name,
+      valueForm.province && valueForm.province.name,
     ]);
   }
 

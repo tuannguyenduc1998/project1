@@ -14,9 +14,8 @@ export class DashboardComponent implements OnInit {
   constructor(private roleService: RolesService, private masterDataService: MasterdataService) { }
 
   ngOnInit(): void {
-    forkJoin([this.roleService.getRoles(), this.masterDataService.getMasterDataAddress()]).subscribe((result) =>{
+    forkJoin([this.roleService.getRoles()]).subscribe((result) =>{
       this.roleService.roles$.next(result[0].data);
-      this.masterDataService.addressmasterdata$.next(result[1].data);
     });
   }
 }
