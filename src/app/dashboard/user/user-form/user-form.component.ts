@@ -73,14 +73,13 @@ export class UserFormComponent implements OnInit {
       );
       if (this.userModel.userType === this.typeForestOwn.household) {
         this.masterDataUserType = result2.data;
-        this.masterDataAddressChildProvince = this.masterDataService.getProvince('1', result3);
+        this.masterDataAddressChildProvince = this.masterDataService.getProvince(1, result3.data);
         this.masterDataAddressChildDistrict = this.masterDataService.getDistrict(
-          parseInt(this.userModel.province.code, 0),
+          this.userModel.province.code,
           this.masterDataAddressChildProvince
         );
         this.masterDataAddressChildWard = this.masterDataService.getCommune(
-          parseInt(this.userModel.district && this.userModel.district.code, 0),
-          this.masterDataAddressChildDistrict
+          this.userModel.district.code, this.masterDataAddressChildDistrict
         );
         // if (result3) {
         //     this.addressMasterData = result3;

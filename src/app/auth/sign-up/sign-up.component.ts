@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { MustMatch } from 'src/app/shared/helpers/must-match.validator';
 import { UserLogin } from 'src/app/shared/model/data';
 import { UserLoginData } from 'src/app/shared/model/user.model';
 import { MyserviceService } from 'src/app/shared/service/myservice.service';
@@ -27,12 +28,14 @@ export class SignUpComponent implements OnInit {
   fullname: '',
   email: '',
   password: '',
-  confirmpassword: ''
+  confirmpassword: '',
+  mustMatch: ''
   };
 validationMessages = {
   required: 'Trường này là bắt buộc nhập',
   minlength: 'Mật khẩu phải ít nhất 6 kí tự',
-  email: 'Email không đúng định dạng'
+  email: 'Email không đúng định dạng',
+  mustMatch: 'Mật khẩu không khớp'
 };
   constructor(private formBuilder: FormBuilder, private router: Router, private userService: UserService) { }
 
@@ -55,7 +58,11 @@ validationMessages = {
       email: ['', Validators.email],
       password: ['', [Validators.required, Validators.minLength(6)]],
       confirmpassword: ['', [Validators.required, Validators.minLength(6)]]
-    });
+    },
+    {
+      validator: MustMatch('password', 'confirmpassword')
+  }
+    );
   }
 
   validateForm(): boolean {

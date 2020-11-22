@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { shareReplay } from 'rxjs/operators';
+import { map, shareReplay } from 'rxjs/operators';
 import { AddressMasterData, MasterDataAddress, MasterDataAddressChildDistrict, MasterDataAddressChildProvince } from '../model/masterData.model';
 import { SignUpData } from '../model/sign-up-data.model';
 import { UserLoginData } from '../model/user.model';
@@ -17,15 +17,15 @@ export class MasterdataService {
   private masterDataUrl = 'http://hawaddsapi.bys.vn/api/data';
   private loggedInStatus = JSON.parse(localStorage.getItem('LoginStatus'));
   user: UserLoginData;
-  public addressmasterdata$: Observable<MasterDataAddress[]>;
+  public addressmasterdata$: Observable<AddressMasterData[]>;
   public signUpData$ = new BehaviorSubject<SignUpData>(null);
 
   getMasterData(): Observable<any>{
-    this.user = this.loggedInStatus;
-    const httpOptions = {
-      headers: new HttpHeaders({ 'Content-Type': 'application/json' , Authorization:
-      `Bearer ${this.user.jwtToken}`})
-    };
+    // this.user = this.loggedInStatus;
+    // const httpOptions = {
+    //   headers: new HttpHeaders({ 'Content-Type': 'application/json' , Authorization:
+    //   `Bearer ${this.user.jwtToken}`})
+    // };
     return this.http.get(this.masterDataUrl + '/masterdata?groupsName=HouseholdForestOwnerType');
   }
 
@@ -37,9 +37,9 @@ export class MasterdataService {
   //   return this.addressmasterdata$;
   // }
 
-  get addressMaster(): Observable<AddressMasterData[]> {
+  get addressMaster(): Observable<any> {
     if (!this.addressmasterdata$) {
-      this.addressmasterdata$ = this.getMasterData().pipe(
+      this.addressmasterdata$ = this.getMasterDataAddress().pipe(
         shareReplay(CACHE_SIZE)
       );
     }
@@ -54,9 +54,9 @@ export class MasterdataService {
     return this.signUpData$;
   }
 
-  getProvince(idCountry: string, dataAddressMasterData: AddressMasterData[]): AddressMasterData[] {
+  getProvince(idCountry: number, dataAddressMasterData: AddressMasterData[]): AddressMasterData[] {
     const data = (dataAddressMasterData || []).find(
-      item => item.code === idCountry
+      item => item.id === idCountry
     );
     return data ? data.childs : null;
   }

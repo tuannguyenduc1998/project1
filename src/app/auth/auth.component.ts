@@ -13,9 +13,9 @@ export class AuthComponent implements OnInit {
   constructor(private roleService: RolesService, private masterDataService: MasterdataService) { }
 
   ngOnInit(): void {
-    forkJoin([this.masterDataService.getMasterDataAddress(), this.masterDataService.getSignUp()]).subscribe((result) =>{
-      this.masterDataService.addressmasterdata$.next(result[0].data);
-      this.masterDataService.signUpData$.next(result[1].data);
+    forkJoin([ this.masterDataService.getSignUp()]).subscribe((result) => {
+      // this.masterDataService.addressmasterdata$.next(result[0].data);
+      this.masterDataService.signUpData$.next(result[0].data);
     });
   }
 
